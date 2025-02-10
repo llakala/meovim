@@ -1,0 +1,5 @@
+require("myconfig.keybinds")
+require("myconfig.options")
+require("myconfig.mini")
+require("myconfig.plugins")
+require("myconfig.textobject")
