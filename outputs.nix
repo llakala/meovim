@@ -32,6 +32,11 @@ in
         # Absolute path needed
         devPluginPaths = lib.singleton "/home/emanresu/Documents/projects/meovim/nvim";
 
+        extraBinPath = with pkgs;
+        [
+          nixd
+        ];
+
     # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md for updates
 
         plugins = import ./plugins.nix { inherit pkgs neovimPlugins lib; };
@@ -45,7 +50,7 @@ in
     {
       default = pkgs.mkShell
       {
-        packages = lib.singleton self.packages.x86_64-linux.default.devMode;
+        packages = lib.singleton self.packages.${pkgs.system}.default.devMode;
       };
     }
   );

@@ -12,6 +12,8 @@ let
     nvim-autopairs
 
     nvim-treesitter.withAllGrammars
+
+    nvim-lspconfig
   ];
   extraPlugins = with neovimPlugins.packages.${pkgs.system};
   [
