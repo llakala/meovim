@@ -14,6 +14,12 @@ let
     nvim-treesitter.withAllGrammars
 
     nvim-lspconfig
+
+    nvim-cmp
+    cmp-nvim-lsp
+
+    luasnip
+    cmp_luasnip
   ];
   extraPlugins = with neovimPlugins.packages.${pkgs.system};
   [
