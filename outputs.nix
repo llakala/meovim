@@ -35,6 +35,7 @@ in
         extraBinPath = with pkgs;
         [
           nixd
+          jdt-language-server
         ];
 
     # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md for updates

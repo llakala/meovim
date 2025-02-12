@@ -20,6 +20,8 @@ let
 
     luasnip
     cmp_luasnip
+
+    nvim-jdtls
   ];
   extraPlugins = with neovimPlugins.packages.${pkgs.system};
   [
