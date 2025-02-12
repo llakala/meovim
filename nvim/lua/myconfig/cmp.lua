@@ -1,22 +1,31 @@
-local cmpmap = require("cmp").mapping
-require("cmp").setup({
-    snippet = {
-        -- Exclusive to LuaSnip, check nvim-cmp documentation for usage with a different snippet engine
-        expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-        end
-    },
-    mapping = {
-          -- Accept ([y]es) the completion.
-          --  This will auto-import if your LSP supports it.
-          --  This will expand snippets if the LSP sent a snippet.
-          ["<Enter>"] = cmpmap.confirm({ select = true }),
+local cmp = require("cmp")
+local cmpmap = cmp.mapping
 
-          ["<S-Tab>"] = cmpmap.select_prev_item(),
-          ["<Tab>"] = cmpmap.select_next_item(),
-    },
-    sources = {
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
-    },
+-- Flip between, but don't preview. Only fill in on enter
+local selectBehavior = { behavior = cmp.SelectBehavior.Select }
+
+require("cmp").setup({
+  snippet =
+  {
+    expand = function(args)
+      vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+    end,
+  },
+
+  mapping =
+  {
+    -- Accept ([y]es) the completion.
+    --  This will auto-import if your LSP supports it.
+    --  This will expand snippets if the LSP sent a snippet.
+    ["<Enter>"] = cmpmap.confirm({ select = true }),
+
+    ["<S-Tab>"] = cmpmap.select_prev_item(selectBehavior),
+    ["<Tab>"] = cmpmap.select_next_item(selectBehavior);
+  },
+
+  sources =
+  {
+    { name = "nvim_lsp" },
+  },
+
 })
