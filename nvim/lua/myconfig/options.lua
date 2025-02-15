@@ -8,6 +8,8 @@ o.mouse = "" -- Disable mouse
 o.cursorline = true
 o.hlsearch = true -- Highlight search matches
 o.number = true
+
+o.ignorecase = true
 o.smartcase = true
 
 o.autoindent = true
