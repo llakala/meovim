@@ -26,6 +26,10 @@ function vmap(key, map)
   mkRemap("v", key, map)
 end
 
+function imap(key, map)
+  mkRemap("i", key, map)
+end
+
 
 function nnoremap(key, map)
   mkNoremap("n", key, map)
@@ -33,6 +37,10 @@ end
 
 function vnoremap(key, map)
   mkNoremap("v", key, map)
+end
+
+function inoremap(key, map)
+  mkNoremap("i", key, map)
 end
 
 
@@ -95,3 +103,7 @@ vmap("#", "gcgv")
 -- Clear highlights on search when pressing <Esc> in normal mode
 -- From kickstart
 nnoremap("<Esc>", "<cmd>nohlsearch<CR>")
+
+-- Helix-style. i<Esc> won't move the cursor at all, while a<Esc> will move the cursor
+-- one to the right. I prefer this, as I use i more than a.
+inoremap("<Esc>", "<Esc>l")
