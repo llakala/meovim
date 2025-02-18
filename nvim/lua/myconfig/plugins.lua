@@ -1,6 +1,17 @@
 require("nvim-autopairs").setup()
 
-require"nvim-treesitter.configs".setup
+-- No, that's not a typo, the string has setup in it
+require("rainbow-delimiters.setup").setup({
+  highlight = {
+    "RainbowDelimiterRed",
+    "RainbowDelimiterViolet",
+    "RainbowDelimiterCyan",
+    "RainbowDelimiterOrange",
+    "RainbowDelimiterGreen",
+  },
+})
+
+require("nvim-treesitter.configs").setup
 {
   highlight =
   {

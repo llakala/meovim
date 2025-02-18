@@ -22,6 +22,7 @@ let
     cmp_luasnip
 
     nvim-jdtls
+    rainbow-delimiters-nvim
   ];
   extraPlugins = with neovimPlugins.packages.${pkgs.system};
   [
