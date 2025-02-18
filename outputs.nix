@@ -36,6 +36,7 @@ in
         [
           nixd
           jdt-language-server
+          fish-lsp
         ];
 
     # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md for updates

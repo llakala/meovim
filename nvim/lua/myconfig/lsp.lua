@@ -15,3 +15,4 @@ require("lspconfig").nixd.setup({
   -- },
 })
 
+require("lspconfig").fish_lsp.setup {}
