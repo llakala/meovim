@@ -10,6 +10,7 @@ o.cursorline = true
 o.hlsearch = true -- Highlight search matches
 o.number = true
 o.breakindent = true -- Continue indented wrapped line at same level
+o.laststatus = 3 -- Only one statusline, for better separator between horizontal splits
 
 o.ignorecase = true
 o.smartcase = true
@@ -31,5 +32,7 @@ o.smoothscroll = true -- Shows a continuation `>>>` when wrapping line is cut of
 
 o.backup = false
 o.writebackup = false
+
+o.helpheight = 9999
 
 g.mapleader = " "
