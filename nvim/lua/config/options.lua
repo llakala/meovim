@@ -1,5 +1,6 @@
 o = vim.opt
 g = vim.g -- Global variables
+
 o.termguicolors = true
 
 o.clipboard = "unnamed"

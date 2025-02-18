@@ -24,7 +24,8 @@ in
 
         initLua =
         ''
-          require("myconfig")
+          require("config")
+          require("plugins")
         '';
 
         devExcludedPlugins = lib.singleton ./nvim;
