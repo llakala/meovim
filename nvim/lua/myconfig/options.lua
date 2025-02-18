@@ -1,5 +1,5 @@
-local o = vim.opt
-local g = vim.g -- Global variables
+o = vim.opt
+g = vim.g -- Global variables
 
 o.clipboard = "unnamed"
 o.undofile = true -- Persistent undo

@@ -1,4 +1,4 @@
-vim.opt.termguicolors = true
+o.termguicolors = true
 vim.cmd.colorscheme("onedark_vivid")
 
 require("nvim-autopairs").setup()
