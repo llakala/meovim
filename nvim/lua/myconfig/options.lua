@@ -17,6 +17,8 @@ o.expandtab = true -- spaces as tab
 o.tabstop = 2 -- 2 spaces for tabs
 o.shiftwidth = 2 -- 2 spaces for tabs
 
-o.timeoutlen = 50 -- Makes something like binding a to A in visual mode not take forever
+-- Timeout isn't intuitive. We want it for `a` in visual mode, but that's a
+-- PR for another day.
+o.timeout = false
 
 g.mapleader = " "
