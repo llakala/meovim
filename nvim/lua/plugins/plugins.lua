@@ -5,7 +5,6 @@ require("rainbow-delimiters.setup").setup({
   highlight = {
     "RainbowDelimiterRed",
     "RainbowDelimiterViolet",
-    "RainbowDelimiterCyan",
     "RainbowDelimiterOrange",
     "RainbowDelimiterGreen",
   },
