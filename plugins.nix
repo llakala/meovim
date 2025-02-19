@@ -6,6 +6,7 @@ let
     mini-move
     mini-cursorword
     mini-trailspace
+    mini-surround
 
     vim-textobj-user
 

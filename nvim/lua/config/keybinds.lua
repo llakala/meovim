@@ -77,6 +77,10 @@ vnoremap("B", "b")
 vnoremap("i", "<Esc>`<i")
 vnoremap("a", "<Esc>`>a")
 
+-- Helix-style match-in-word and match-around-word
+nnoremap("mi", "vi")
+nnoremap("ma", "va")
+
 noremap("d", "\"_x") -- Delete current character, and don't copy to clipboard
 noremap("c", "\"_s") -- Change, and don't copy to clipboard
 

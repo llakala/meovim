@@ -9,3 +9,13 @@ require("mini.cursorword").setup({
 })
 
 require("mini.move").setup()
+
+require("mini.surround").setup({
+  mappings = {
+    add = "ms", -- Add surrounding in Normal and Visual modes
+    delete = "md", -- Delete surrounding
+    replace = "mr", -- Replace surrounding
+  }
+})
+
+vim.keymap.set('n', 'ms', [[v:lua MiniSurround.add('visual')<CR>]], { silent = true })
