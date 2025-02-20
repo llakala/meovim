@@ -24,7 +24,12 @@ let
 
     nvim-jdtls
     rainbow-delimiters-nvim
+    yazi-nvim
+
+    bufferline-nvim
+    nvim-web-devicons
   ];
+
   extraPlugins = with neovimPlugins.packages.${pkgs.system};
   [
     onedarkpro-nvim
