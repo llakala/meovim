@@ -6,4 +6,4 @@ require("yazi").setup({
   },
 })
 
-nnoremap("to", ":Yazi toggle<CR>")
+nnoremap("to", ":Yazi<CR>")
