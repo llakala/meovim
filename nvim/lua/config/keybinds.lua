@@ -1,12 +1,12 @@
 -- Create a map with noremap set to false
 -- Need to also set remap to true for some binds to work
 local function mkRemap(mode, key, map)
-  vim.keymap.set(mode, key, map, { remap = true, noremap = false })
+  vim.keymap.set(mode, key, map, { remap = true, noremap = false, silent = true })
 end
 
 -- Create a map with noremap set to true
 local function mkNoremap(mode, key, map)
-  vim.keymap.set(mode, key, map, { noremap = true })
+  vim.keymap.set(mode, key, map, { noremap = true, silent = true })
 end
 
 
