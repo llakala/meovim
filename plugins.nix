@@ -3,30 +3,35 @@
 let
   pkgsPlugins = with pkgs.vimPlugins;
   [
+     # Basic essentials
+    nvim-treesitter.withAllGrammars
+    nvim-lspconfig
+
+    # Features
+    rainbow-delimiters-nvim
+    nvim-autopairs
+    vim-textobj-user
+    yazi-nvim
+
+    # Completion
+    nvim-cmp
+    cmp-nvim-lsp
+
+    # Snippets
+    luasnip
+    cmp_luasnip
+
+    # Overhauls
+    bufferline-nvim
+
+    # From mini.nvim
     mini-move
     mini-cursorword
     mini-trailspace
     mini-surround
 
-    vim-textobj-user
-
-    nvim-autopairs
-
-    nvim-treesitter.withAllGrammars
-
-    nvim-lspconfig
-
-    nvim-cmp
-    cmp-nvim-lsp
-
-    luasnip
-    cmp_luasnip
-
+    # Other
     nvim-jdtls
-    rainbow-delimiters-nvim
-    yazi-nvim
-
-    bufferline-nvim
     nvim-web-devicons
   ];
 
