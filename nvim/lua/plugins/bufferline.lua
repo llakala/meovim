@@ -9,5 +9,5 @@ require("bufferline").setup({
 nnoremap("th", ":tabprev<CR>")
 nnoremap("tl", ":tabnext<CR>")
 
-nnoremap("tt", ":tabnew<CR>")
+nnoremap("tf", ":tabnew<CR>") -- Create fresh tab
 nnoremap("td", ":tabclose<CR>")
