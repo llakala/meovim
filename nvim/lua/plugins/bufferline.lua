@@ -1,8 +1,13 @@
-require("bufferline").setup()
+require("bufferline").setup({
+  options =
+  {
+    mode = "tabs"
+  },
+})
 
 -- Tab management
-nnoremap("th", ":BufferLineCyclePrev<CR>")
-nnoremap("tl", ":BufferLineCycleNext<CR>")
+nnoremap("th", ":tabprev<CR>")
+nnoremap("tl", ":tabnext<CR>")
 
-nnoremap("tt", ":ene<CR>")
-nnoremap("td", ":bdelete<CR>")
+nnoremap("tt", ":tabnew<CR>")
+nnoremap("td", ":tabclose<CR>")
