@@ -16,6 +16,7 @@ let
     # Pretty
     rainbow-delimiters-nvim
     nvim-highlight-colors
+    gitsigns-nvim
 
     # Completion
     nvim-cmp
@@ -34,9 +35,12 @@ let
     mini-trailspace
     mini-surround
 
+    # Dependencies
+    nvim-web-devicons # For bufferline
+    nvim-yarp # For wilder
+
     # Other
     nvim-jdtls
-    nvim-web-devicons
   ];
 
   # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md
