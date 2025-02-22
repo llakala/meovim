@@ -12,6 +12,7 @@ let
     nvim-autopairs
     vim-textobj-user
     yazi-nvim
+    auto-session
 
     # Completion
     nvim-cmp
