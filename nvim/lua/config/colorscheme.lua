@@ -1,4 +1,23 @@
 -- Global variable for access elsewhere
-colors = require("onedarkpro.helpers").get_colors("onedark_vivid")
+-- Check the value with: `:tabnew Colors|pu=execute(':=colors')`
+-- Putting it in a buffer lets it be colorized with our hexcode previewer
+-- TODO: add an alias to do this easily
+colors = require("tokyonight.colors").setup()
 
-vim.cmd.colorscheme("onedark_vivid")
+require("tokyonight").setup({
+  style = "night",
+
+  -- Change base colors
+  on_colors = function(colors)
+  end,
+
+
+  on_highlights = function(highlights, colors)
+     highlights["@variable"] = { fg = colors.red }
+  end
+})
+
+vim.cmd[[colorscheme tokyonight]]
+
+-- Colorize hex codes
+require('nvim-highlight-colors').setup({})

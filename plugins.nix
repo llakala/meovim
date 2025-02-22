@@ -3,16 +3,19 @@
 let
   pkgsPlugins = with pkgs.vimPlugins;
   [
-     # Basic essentials
+    # Basic essentials
     nvim-treesitter.withAllGrammars
     nvim-lspconfig
 
     # Features
-    rainbow-delimiters-nvim
     nvim-autopairs
     vim-textobj-user
     yazi-nvim
     auto-session
+
+    # Pretty
+    rainbow-delimiters-nvim
+    nvim-highlight-colors
 
     # Completion
     nvim-cmp
@@ -36,9 +39,11 @@ let
     nvim-web-devicons
   ];
 
+  # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md
   extraPlugins = with neovimPlugins.packages.${pkgs.system};
   [
     onedarkpro-nvim
+    tokyonight-nvim
   ];
 
   textobj-line = pkgs.vimUtils.buildVimPlugin
