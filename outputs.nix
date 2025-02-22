@@ -52,7 +52,7 @@ in
   (
     pkgs:
     {
-      default = pkgs.mkShell
+      default = pkgs.mkShellNoCC
       {
         packages = lib.singleton self.packages.${pkgs.system}.default.devMode;
       };
