@@ -41,6 +41,7 @@ let
 
     # Other
     nvim-jdtls
+    lazydev-nvim
   ];
 
   # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md

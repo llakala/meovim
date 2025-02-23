@@ -39,6 +39,7 @@ in
           jdt-language-server
           fish-lsp
           yazi
+          lua-language-server
         ];
 
     # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md for updates
