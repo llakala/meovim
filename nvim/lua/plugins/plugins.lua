@@ -1,4 +1,3 @@
-require("nvim-autopairs").setup()
 require("gitsigns").setup()
 
 -- Completion in commandline
