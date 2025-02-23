@@ -1,5 +1,6 @@
-vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
-vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action)
+nnoremap("<leader>r", vim.lsp.buf.rename)
+nnoremap("<leader>a", vim.lsp.buf.code_action)
+nnoremap("<leader>d", vim.diagnostic.open_float)
 
 require("lspconfig").nixd.setup({
   cmd =
