@@ -5,6 +5,18 @@ local cmpmap = cmp.mapping
 local selectBehavior = { behavior = cmp.SelectBehavior.Select }
 
 require("cmp").setup({
+
+
+  -- Disable completions while in a comment
+  enabled = function()
+    local context = require("cmp.config.context")
+    if context.in_treesitter_capture("comment") == true or context.in_syntax_group("Comment") then
+      return false
+    end
+
+    return true
+  end,
+
   snippet =
   {
     expand = function(args)
