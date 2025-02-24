@@ -6,12 +6,15 @@ o.termguicolors = true
 o.clipboard = "unnamed"
 o.undofile = true -- Persistent undo
 o.mouse = "" -- Disable mouse
+o.hidden = false -- Some people swear by it, but I want closing tabs to actually close them
+o.shiftround = true -- Round to the nearest indentation level when using `<` and `>`
 
 o.cursorline = true
 o.hlsearch = true -- Highlight search matches
 o.number = true
 o.breakindent = true -- Continue indented wrapped line at same level
 o.laststatus = 3 -- Only one statusline, for better separator between horizontal splits
+o.signcolumn = "yes"
 
 o.ignorecase = true
 o.smartcase = true
