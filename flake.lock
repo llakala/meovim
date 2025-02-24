@@ -18,6 +18,26 @@
         "type": "github"
       }
     },
+    "llakaLib": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1739839259,
+        "narHash": "sha256-en0/SyLC0u7RNbFJgEr+88a4UsPdtgpm7op/DCU10Sc=",
+        "owner": "llakala",
+        "repo": "llakaLib",
+        "rev": "3b6de0152f776570bba21ff57e2062abfca89e61",
+        "type": "github"
+      },
+      "original": {
+        "owner": "llakala",
+        "repo": "llakaLib",
+        "type": "github"
+      }
+    },
     "mnw": {
       "locked": {
         "lastModified": 1738852285,
@@ -124,6 +144,7 @@
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
+        "llakaLib": "llakaLib",
         "mnw": "mnw",
         "neovimPlugins": "neovimPlugins",
         "nixpkgs": "nixpkgs"

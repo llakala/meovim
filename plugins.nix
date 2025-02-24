@@ -1,4 +1,4 @@
-{ pkgs, neovimPlugins, lib }:
+{ pkgs, neovimPlugins, lib, llakaLib }:
 
 let
   pkgsPlugins = with pkgs.vimPlugins;
@@ -51,6 +51,14 @@ let
     tokyonight-nvim
   ];
 
-  customPlugins = import ./custom.nix { inherit pkgs lib; };
+  customPluginsAttrs = llakaLib.collectDirectoryPackages
+  {
+    inherit pkgs;
+    directory = ./plugins;
+  };
+
+  # collectDirectoryPackages gives us an attrset as output. we grab the values of the attrs
+  # when they're derivations, going recursively through `lib.collect`
+  customPlugins = lib.collect lib.isDerivation customPluginsAttrs;
 
 in pkgsPlugins ++ extraPlugins ++ customPlugins

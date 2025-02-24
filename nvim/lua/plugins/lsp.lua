@@ -41,3 +41,16 @@ require("lazydev").setup({
       { path = "${3rd}/luv/library", words = { "vim%.uv" } },
    },
 })
+
+require("lspconfig").pylsp.setup({
+  settings =
+  {
+    pylsp =
+    {
+      plugins =
+      {
+        pycodestyle = { enabled = true },
+      }
+    }
+  }
+})

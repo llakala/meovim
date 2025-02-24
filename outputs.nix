@@ -1,6 +1,8 @@
-{ nixpkgs, mnw, neovimPlugins, self, ... }:
+{ self, ... } @ inputs:
 
 let
+  inherit (inputs) nixpkgs neovimPlugins;
+
   lib = nixpkgs.lib;
 
   # It's a personal repo, not supporting other systems right now
@@ -14,9 +16,10 @@ in
 {
   packages = forAllSystems
   (
-    pkgs:
+    pkgs: let llakaLib = inputs.llakaLib.fullLib.${pkgs.system};
+    in
     {
-      default = mnw.lib.wrap pkgs
+      default = inputs.mnw.lib.wrap pkgs
       {
         appName = "nvim";
 
@@ -33,18 +36,11 @@ in
         # Absolute path needed
         devPluginPaths = lib.singleton "/home/emanresu/Documents/projects/meovim/nvim";
 
-        extraBinPath = with pkgs;
-        [
-          nixd
-          jdt-language-server
-          fish-lsp
-          yazi
-          lua-language-server
-        ];
+        extraBinPath = import ./packages.nix { inherit pkgs lib llakaLib; };
 
     # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md for updates
 
-        plugins = import ./plugins.nix { inherit pkgs neovimPlugins lib; };
+        plugins = import ./plugins.nix { inherit pkgs neovimPlugins lib llakaLib; };
       };
     }
   );
