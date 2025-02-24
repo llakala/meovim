@@ -24,6 +24,8 @@ o.autoindent = true
 o.cindent = true -- Smarter than smartindent
 o.smartindent = false
 
+g.loaded_matchit = 1 -- Lets us remap `%`
+
 o.expandtab = true -- spaces as tab
 o.tabstop = 2 -- 2 spaces for tabs
 o.shiftwidth = 0 -- Reuse value of tabstop
