@@ -98,7 +98,7 @@ noremap(">", ">>")
 vnoremap("<", "<gv")
 vnoremap(">", ">gv")
 
-noremap("%", "ggVG") -- Select entire file
+nnoremap("%", "ggVG") -- Select entire file
 noremap("gG","G") -- gG to go to end of file
 
 -- Comment/uncomment lines, Neovim 0.10 feature
