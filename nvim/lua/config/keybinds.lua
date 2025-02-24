@@ -48,8 +48,8 @@ end
 -- System clipboard always
 nnoremap("y", "v\"+y")
 vnoremap("y", "\"+ygv") -- Bring back selection after copying
-noremap("p", "\"+P") -- Paste before
-noremap("P", "\"+p") -- Paste after
+noremap("p", "\"+[P") -- Paste before
+noremap("P", "\"+[p") -- Paste after
 
 -- Have j and k navigate visual lines rather than logical ones
 nmap("j", "gj")
