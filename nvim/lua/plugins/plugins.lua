@@ -1,5 +1,10 @@
 require("gitsigns").setup()
 
+-- Indent blankline
+require("ibl").setup({
+  scope = { enabled = false },
+})
+
 -- Completion in commandline
 -- If you're getting weird Python errors and have yarp installed, run:
 -- `:UpdateRemotePlugins` and restart

@@ -30,10 +30,6 @@ o.expandtab = true -- spaces as tab
 o.tabstop = 2 -- 2 spaces for tabs
 o.shiftwidth = 0 -- Reuse value of tabstop
 
--- Show indentation
-o.list = true
-o.listchars = {leadmultispace = "│ "}
-
 -- Timeout isn't intuitive. We want it for `a` in visual mode, but that's a
 -- PR for another day.
 o.timeout = false
