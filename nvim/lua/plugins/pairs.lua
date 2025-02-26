@@ -19,8 +19,6 @@ end
 
 -- For testing, just run `:e` after sourcing on a given file
 npairs.add_rules({
-  Rule("$", "{}", {"nix"}),
-
   Rule("/*", "*/", {"nix"}),
 
   replacePunctuation(","),
