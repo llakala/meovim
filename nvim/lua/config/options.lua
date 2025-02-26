@@ -43,6 +43,4 @@ o.smoothscroll = true -- Shows a continuation `>>>` when wrapping line is cut of
 o.backup = false
 o.writebackup = false
 
-o.helpheight = 9999
-
 g.mapleader = " "
