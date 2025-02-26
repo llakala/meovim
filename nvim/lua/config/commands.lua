@@ -28,7 +28,7 @@ vim.api.nvim_create_user_command("Allman", function()
   Finally, we end with options - `g`, to replace globally, and `e`,
   to not cause an error if we don't match anything.
   --]]
-  vim.cmd[[:%s/\(\S\)\s\+\([\[{(]\)$/\=submatch(1) . "\r" . matchstr(getline("."),"^\s*") . submatch(2)/ge]]
+  vim.cmd[[:%s/\(\S\)\s\+\([\[{(]\)$/\=submatch(1) . "\r" . matchstr(getline("."),'^\s*') . submatch(2)/ge]]
 end, {})
 
 cabbrev("alm", "Allman")
