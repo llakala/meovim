@@ -2,7 +2,10 @@ nnoremap("<leader>r", vim.lsp.buf.rename)
 nnoremap("<leader>a", vim.lsp.buf.code_action)
 nnoremap("<leader>d", vim.diagnostic.open_float)
 
+local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+
 require("lspconfig").nixd.setup({
+  capabilities = lsp_capabilities,
   cmd =
   {
     "nixd",
@@ -16,9 +19,12 @@ require("lspconfig").nixd.setup({
   -- },
 })
 
-require("lspconfig").fish_lsp.setup {}
+require("lspconfig").fish_lsp.setup({
+  capabilities = lsp_capabilities,
+})
 
 require("lspconfig").lua_ls.setup({
+  capabilities = lsp_capabilities,
   settings =
   {
     Lua =
@@ -35,14 +41,15 @@ require("lspconfig").lua_ls.setup({
 })
 
 require("lazydev").setup({
-   library = {
-      -- See the configuration section for more details
-      -- Load luvit types when the `vim.uv` word is found
-      { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-   },
+  library = {
+    -- See the configuration section for more details
+    -- Load luvit types when the `vim.uv` word is found
+    { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+  },
 })
 
 require("lspconfig").pylsp.setup({
+  capabilities = lsp_capabilities,
   settings =
   {
     pylsp =
