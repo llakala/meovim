@@ -4,7 +4,6 @@ let
   [
     nixd
     jdt-language-server
-    fish-lsp
     yazi
     lua-language-server
   ];
