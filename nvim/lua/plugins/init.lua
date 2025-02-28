@@ -7,5 +7,5 @@ require("plugins.bufferline")
 require("plugins.mini")
 require("plugins.plugins")
 require("plugins.textobject")
-
+require("plugins.wilder")
 require("plugins.pairs")
