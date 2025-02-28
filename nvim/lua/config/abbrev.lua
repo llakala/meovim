@@ -1,4 +1,4 @@
-cabbrev = vim.cmd.abbrev
+cabbrev = vim.cmd.cabbrev
 
 cabbrev("t", "tab")
 cabbrev("h", "tab help")
