@@ -1,4 +1,4 @@
-{ pkgs, lib, llakaLib }:
+{ pkgs }:
 let
   packages = with pkgs;
   [
@@ -8,14 +8,4 @@ let
     lua-language-server
   ];
 
-  customPackagesAttrs = llakaLib.collectDirectoryPackages
-  {
-    inherit pkgs;
-    directory = ./packages;
-  };
-
-  # collectDirectoryPackages gives us an attrset as output. we grab the values of the attrs
-  # when they're derivations, going recursively through `lib.collect`
-  customPackages = lib.collect lib.isDerivation customPackagesAttrs;
-
-in packages ++ customPackages
+in packages
