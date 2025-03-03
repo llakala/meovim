@@ -6,6 +6,7 @@ let
     jdt-language-server
     yazi
     lua-language-server
+    gleam
   ];
 
   customPackagesAttrs = llakaLib.collectDirectoryPackages
