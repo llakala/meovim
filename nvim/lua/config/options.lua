@@ -20,8 +20,8 @@ o.ignorecase = true
 o.smartcase = true
 
 vim.cmd('filetype plugin indent on')
-o.autoindent = true
-o.cindent = true -- Smarter than smartindent
+o.autoindent = false
+o.cindent = false -- Smarter than smartindent
 o.smartindent = false
 
 g.loaded_matchit = 1 -- Lets us remap `%`
