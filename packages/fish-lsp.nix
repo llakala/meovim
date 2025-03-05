@@ -1,4 +1,4 @@
-{ pkgs, fetchFromGitHub, fetchYarnDeps, lib }:
+{ pkgs, fetchFromGitHub, fetchYarnDeps }:
 
 # Content from my PR to update the package, while I wait for it to be merged.
 # See: https://github.com/NixOS/nixpkgs/pull/385076
@@ -22,10 +22,9 @@ pkgs.fish-lsp.overrideAttrs
       hash = "sha256-83QhVDG/zyMbHJbV48m84eimXejLKdeVrdk1uZjI8bk=";
     };
 
-    postPatch =
-    ''
-      substituteInPlace bin/fish-lsp \
-        --replace "#!/usr/bin/env node" "#!${lib.getExe pkgs.nodejs}"
-    '';
+  postPatch =
+  ''
+    patchShebangs bin/fish-lsp
+  '';
   }
 )
