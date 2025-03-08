@@ -30,5 +30,10 @@ local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local cmp = require('cmp')
 cmp.event:on(
   'confirm_done',
-  cmp_autopairs.on_confirm_done()
+  cmp_autopairs.on_confirm_done({
+    filetypes =
+    {
+      gleam = false -- Adds parentheses in pipes when we don't want them
+    }
+  })
 )
