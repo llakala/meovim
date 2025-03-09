@@ -14,7 +14,6 @@ let
     auto-session
 
     # Pretty
-    rainbow-delimiters-nvim
     nvim-highlight-colors
     gitsigns-nvim
     indent-blankline-nvim # Same as `indent-blankline-nvim-lua`
