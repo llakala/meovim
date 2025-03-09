@@ -15,26 +15,50 @@ local openMultipleNewTab = function(chosen_files, cfg, state)
   end
 end
 
--- Open in current tab
--- I'd like to have opened_multiple_files open the first file in the current editor,
--- then open the rest in new tabs, but I couldn't get that working
+local yazi = require("yazi")
+
+yazi.setup({
+  open_for_directories = true,
+
+
+  -- Override open_file_function to open all files in new tabs
+  -- We do this rather than specifying a keybind for this
+  -- This is because if we set open_file_in_tab to something like `o`,
+  -- it would mess up typing `o` in zoxide.
+  hooks = {
+    yazi_opened_multiple_files = openMultipleNewTab
+  }
+})
+
+-- Replace current tab, starting Yazi from the location of the current file
 nnoremap("to", function()
-  require("yazi").yazi({
-    hooks = {
-      yazi_opened_multiple_files = openMultipleNewTab
-    }
+  require("yazi").yazi()
+end)
+
+-- Create a new tab, starting Yazi from the location of the current file
+nnoremap("tt", function()
+  yazi.yazi({
+    open_file_function = openNewTab,
   })
 end)
 
--- Open Yazi, but with open_file_function overriden to open all files in new tabs
--- We do this rather than specifying a keybind for this
--- This is because if we set open_file_in_tab to something like `o`,
--- it would mess up typing `o` in zoxide.
-nnoremap("tt", function()
-  require("yazi").yazi({
-    open_file_function = openNewTab,
-    hooks = {
-      yazi_opened_multiple_files = openMultipleNewTab
-    }
-  })
+-- Create a new tab from wherever Yazi was last opened. Same as `Yazi toggle`, but using Lua so I can customize other things.
+-- Sadly doesn't seem to bring back the last filter which is why I wanted this :(. Might make an issue for this
+nnoremap("ta", function()
+  local path = yazi.previous_state and yazi.previous_state.last_hovered or nil
+
+  if path then yazi.yazi(
+    {
+      open_file_function = openNewTab
+    },
+    path,
+    { reveal_path = path }
+  )
+  else yazi.yazi(
+    {
+      open_file_function = openNewTab
+    },
+    path
+  )
+  end
 end)
