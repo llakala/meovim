@@ -7,7 +7,7 @@ vimPlugins.rainbow-delimiters-nvim.overrideAttrs
   {
     owner = "llakala";
     repo = "rainbow-delimiters.nvim";
-    rev = "2fef0566f811b1a5d79f3484e61194576b870db3";
-    hash = "sha256-hnIE4jxi+scFhV6C8baKQ4bsRTHU0//RJab7pDKVx/I=";
+    rev = "d3c50f95fe100e84371fae6d2bbebf36b9e5dc53";
+    hash = "sha256-MaDEWkxyl5i9lIUO8V5ggwRQxRl3FPRft2Pu1I/tzmc=";
   };
 }
