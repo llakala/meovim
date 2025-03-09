@@ -1,7 +1,5 @@
-require("yazi").setup()
-
 -- Function from yazi.nvim source that opens files in new tab
-local openNewTab = function(chosen_file, cfg, state)
+local openNewTab = function(chosen_file, _, _)
   local is_directory = vim.fn.isdirectory(chosen_file) == 1
   if not is_directory then
     vim.cmd(string.format("tabedit %s", vim.fn.fnameescape(chosen_file)))
