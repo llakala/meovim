@@ -7,6 +7,7 @@ let
     yazi
     lua-language-server
     gleam
+    fish-lsp
   ];
 
 in packages
