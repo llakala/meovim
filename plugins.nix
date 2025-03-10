@@ -12,6 +12,7 @@ let
     vim-textobj-user
     yazi-nvim
     auto-session
+    markdown-preview-nvim
 
     # Pretty
     nvim-highlight-colors
