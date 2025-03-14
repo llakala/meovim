@@ -1,7 +1,31 @@
 local cmp = require("cmp")
 local cmpmap = cmp.mapping
 
-require("cmp_git").setup({})
+require("cmp_git").setup({
+  trigger_actions = {
+    {
+      debug_name = "git_commits",
+      trigger_character = "$", -- Changed from the default to not trigger with commit types
+      action = function(sources, trigger_char, callback, params, git_info)
+        return sources.git:get_commits(callback, params, trigger_char)
+      end,
+    },
+    {
+      debug_name = "github_issues_and_pr",
+      trigger_character = "#",
+      action = function(sources, trigger_char, callback, params, git_info)
+        return sources.github:get_issues_and_prs(callback, git_info, trigger_char)
+      end,
+    },
+    {
+      debug_name = "github_mentions",
+      trigger_character = "@",
+      action = function(sources, trigger_char, callback, params, git_info)
+        return sources.github:get_mentions(callback, git_info, trigger_char)
+      end,
+    },
+    },
+})
 
 
 -- Flip between, but don't preview. Only fill in on enter
