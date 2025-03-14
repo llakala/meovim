@@ -8,8 +8,6 @@ require("mini.cursorword").setup({
   delay = 10,
 })
 
-require("mini.move").setup()
-
 require("mini.surround").setup({
   mappings = {
     add = "ms", -- Add surrounding in Normal and Visual modes

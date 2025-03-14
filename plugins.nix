@@ -35,7 +35,6 @@ let
     bufferline-nvim
 
     # From mini.nvim
-    mini-move
     mini-cursorword
     mini-trailspace
     mini-surround
