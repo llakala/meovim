@@ -13,6 +13,7 @@ let
     yazi-nvim
     auto-session
     markdown-preview-nvim
+    helpview-nvim
 
     # Pretty
     nvim-highlight-colors
