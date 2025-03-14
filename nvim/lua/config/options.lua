@@ -5,7 +5,7 @@ o.termguicolors = true
 
 o.clipboard = "unnamed"
 o.undofile = true -- Persistent undo
-o.mouse = "" -- Disable mouse
+o.mouse = "a" -- Enable mouse. I try not to use it, but it's useful for scrolling diagnostics
 o.hidden = false -- Some people swear by it, but I want closing tabs to actually close them
 o.shiftround = true -- Round to the nearest indentation level when using `<` and `>`
 
