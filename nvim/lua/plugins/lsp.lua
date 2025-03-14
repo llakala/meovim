@@ -63,4 +63,6 @@ require("lspconfig").pylsp.setup({
   }
 })
 
-require("lspconfig").gleam.setup({})
+require("lspconfig").gleam.setup({
+  capabilities = lsp_capabilities
+})
