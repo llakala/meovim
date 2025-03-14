@@ -22,6 +22,10 @@ let
     # Completion
     nvim-cmp
     cmp-nvim-lsp
+    cmp-buffer
+    cmp-async-path
+    cmp-nvim-lsp-signature-help
+    cmp-git
 
     # Snippets
     luasnip
