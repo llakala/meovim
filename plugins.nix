@@ -12,15 +12,14 @@ let
     vim-textobj-user
     yazi-nvim
     auto-session
-    markdown-preview-nvim
-    helpview-nvim
-    lualine-nvim
-    lualine-lsp-progress
+    snacks-nvim
 
     # Pretty
     nvim-highlight-colors
     gitsigns-nvim
     indent-blankline-nvim # Same as `indent-blankline-nvim-lua`
+    helpview-nvim
+    markdown-preview-nvim
 
     # Completion
     nvim-cmp
@@ -36,11 +35,14 @@ let
 
     # Overhauls
     bufferline-nvim
+    lualine-nvim
+    lualine-lsp-progress
 
     # From mini.nvim
     mini-cursorword
     mini-trailspace
     mini-surround
+    mini-indentscope
 
     # Dependencies
     nvim-web-devicons # For bufferline
