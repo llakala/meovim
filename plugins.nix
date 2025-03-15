@@ -14,6 +14,8 @@ let
     auto-session
     markdown-preview-nvim
     helpview-nvim
+    lualine-nvim
+    lualine-lsp-progress
 
     # Pretty
     nvim-highlight-colors

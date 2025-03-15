@@ -13,8 +13,11 @@ o.cursorline = true
 o.hlsearch = true -- Highlight search matches
 o.number = true
 o.breakindent = true -- Continue indented wrapped line at same level
-o.laststatus = 3 -- Only one statusline, for better separator between horizontal splits
 o.signcolumn = "yes"
+
+o.showmode = false -- Using lualine
+o.showcmd = false -- Shows when we press keypresses, which we don't need
+o.laststatus = 3 -- Only one statusline, for better separator between horizontal splits
 
 o.ignorecase = true
 o.smartcase = true
