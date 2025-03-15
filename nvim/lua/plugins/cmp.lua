@@ -49,6 +49,10 @@ cmp.setup({
     return true
   end,
 
+  matching = {
+    disallow_fuzzy_matching = true
+  },
+
   snippet =
   {
     expand = function(args)
