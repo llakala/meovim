@@ -27,6 +27,9 @@ o.autoindent = true
 o.cindent = true -- Smarter than smartindent
 o.smartindent = false
 
+-- Continue line comments in all languages. Without adding `ro`, it only seemed to work in some languages.
+o.formatoptions = "tcqjro/"
+
 g.loaded_matchit = 1 -- Lets us remap `%`
 
 o.expandtab = true -- spaces as tab

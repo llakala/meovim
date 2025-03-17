@@ -5,4 +5,5 @@ o.tabstop = 2
 o.cindent = false
 o.smartindent = true
 
+-- Seems to be unset by default for gleam
 o.commentstring = "// %s"
