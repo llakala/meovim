@@ -13,6 +13,7 @@ let
     yazi-nvim
     auto-session
     snacks-nvim
+    ts-comments-nvim
 
     # Pretty
     nvim-highlight-colors

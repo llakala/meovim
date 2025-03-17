@@ -5,5 +5,5 @@ o.tabstop = 2
 o.cindent = false
 o.smartindent = true
 
--- Seems to be unset by default for gleam
-o.commentstring = "// %s"
+-- Provides multiple comment strings, sorted longest-shortest for precedence
+o.comments = ":////,:///,://"

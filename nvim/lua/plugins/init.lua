@@ -1,6 +1,6 @@
 require("plugins.lsp")
-require("plugins.cmp")
 require("plugins.yazi")
+require("plugins.cmp")
 require("plugins.session")
 
 require("plugins.bufferline")
@@ -11,3 +11,4 @@ require("plugins.wilder")
 require("plugins.pairs")
 require("plugins.lualine")
 require("plugins.snacks")
+require("plugins.comment")
