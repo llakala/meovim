@@ -14,6 +14,7 @@ let
     auto-session
     snacks-nvim
     ts-comments-nvim
+    conform-nvim
 
     # Pretty
     nvim-highlight-colors
