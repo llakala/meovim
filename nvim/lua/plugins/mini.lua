@@ -19,9 +19,8 @@ require("mini.surround").setup({
 local isc = require("mini.indentscope")
 isc.setup({
   options = {
-    -- We don't care about where the cursor is on a line
-    -- Instead, we just care whether we're within a given scope
-    indent_at_cursor = false,
+    -- Change where the line is based on the horizontal position within the line
+    indent_at_cursor = true,
 
     -- Show the indent scope if the next line begins one, to make it
     -- a header more associated with its scope
