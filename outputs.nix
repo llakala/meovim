@@ -51,6 +51,8 @@ in
         initLua =
         /* lua */
         ''
+          vim.g.mapleader = " " -- Needs to be set before lazy
+
           require("config")
           require("plugins")
           require("lsp")

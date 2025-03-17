@@ -54,6 +54,4 @@ opt.smoothscroll = true -- Shows a continuation `>>>` when wrapping line is cut 
 opt.backup = false
 opt.writebackup = false
 
-g.mapleader = " "
-
 vim.o.winborder = "rounded"
