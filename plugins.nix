@@ -6,6 +6,7 @@ let
     # Basic essentials
     nvim-treesitter.withAllGrammars
     nvim-lspconfig
+    lazy-nvim
 
     # Features
     nvim-autopairs
