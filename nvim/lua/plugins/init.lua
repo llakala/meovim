@@ -1,9 +1,12 @@
-require("plugins.lsp")
+-- Basics for getting around Neovim. If something else breaks,
+-- these should be loaded so we can fix it
 require("plugins.yazi")
-require("plugins.cmp")
 require("plugins.session")
-
 require("plugins.bufferline")
+
+require("plugins.lsp")
+require("plugins.cmp")
+
 require("plugins.mini")
 require("plugins.plugins")
 require("plugins.textobject")
