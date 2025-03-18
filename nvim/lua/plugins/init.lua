@@ -7,8 +7,6 @@ require("plugins.bufferline")
 -- Less vital, but make my life better.
 require("plugins.conform")
 require("plugins.textobject")
-
-require("plugins.lsp")
 require("plugins.cmp")
 
 require("plugins.mini")

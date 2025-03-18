@@ -53,6 +53,7 @@ in
         ''
           require("config")
           require("plugins")
+          require("lsp")
         '';
 
         devExcludedPlugins = lib.singleton ./nvim;
