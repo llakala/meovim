@@ -24,7 +24,7 @@ require("cmp_git").setup({
         return sources.github:get_mentions(callback, git_info, trigger_char)
       end,
     },
-    },
+  },
 })
 
 
@@ -66,7 +66,7 @@ cmp.setup({
     ["<Enter>"] = cmpmap.confirm({ select = false }),
 
     ["<S-Tab>"] = cmpmap.select_prev_item(selectBehavior),
-    ["<Tab>"] = cmpmap.select_next_item(selectBehavior);
+    ["<Tab>"] = cmpmap.select_next_item(selectBehavior),
   },
 
   sources = cmp.config.sources({
