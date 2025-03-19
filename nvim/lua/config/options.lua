@@ -1,5 +1,10 @@
+-- Improves startup time
+-- We do it before everything so it can help us the most
+vim.loader.enable()
+
+-- Global variables
 o = vim.opt
-g = vim.g -- Global variables
+g = vim.g
 
 o.termguicolors = true
 
