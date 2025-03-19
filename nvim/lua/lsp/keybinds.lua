@@ -1,7 +1,21 @@
 nnoremap("<leader>r", vim.lsp.buf.rename)
-nnoremap("<leader>a", vim.lsp.buf.code_action)
-nnoremap("<leader>d", vim.diagnostic.open_float) -- d for diagnostics
-nnoremap("<leader>h", vim.lsp.buf.hover)         -- h for help/hover
+noremap("<leader>h", vim.lsp.buf.hover) -- h for help/hover
+
+-- Mode independent - will show code actions on selection if
+-- in visual mode
+noremap("<leader>a", vim.lsp.buf.code_action)
+
+vim.diagnostic.config({
+  severity_sort = true,
+  float = {
+    border = "rounded"
+  }
+})
+
+noremap("<leader>d",
+  function()
+    vim.diagnostic.open_float() -- d for diagnostics
+  end)
 
 -- I use mnw for Neovim, which provies a wonderful feature that lets
 -- me hot-reload the config, while keeping it declarative as a Nix
