@@ -30,6 +30,7 @@ let
     cmp-async-path
     cmp-nvim-lsp-signature-help
     cmp-git
+    lsp_signature-nvim
 
     # Snippets
     luasnip

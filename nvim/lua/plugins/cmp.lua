@@ -77,16 +77,29 @@ cmp.setup({
     { name = "nvim_lsp" },
     { name = "async_path" },
     { name = "git" },
-    { name = 'nvim_lsp_signature_help' },
     {
       name = 'lazydev',
       -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
       group_index = 0,
     },
+
     -- Disabling for now until I can stop words in comments from being added
     -- {
     --   name = "buffer",
     --   keyword_length = 1
     -- },
   })
+})
+
+-- Better live signature popups
+require("lsp_signature").setup({
+  -- Don't show docs, just the signature
+  -- You can see the docs with lsp `vim.lsp.buf.hover()`
+  doc_lines = 0,
+
+  hint_prefix = {
+    above = "↙ ", -- hint is on line above
+    current = "← ", -- hint is on same line
+    below = "↖ " -- hint is on below line
+  }
 })
