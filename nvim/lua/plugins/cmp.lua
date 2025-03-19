@@ -33,12 +33,6 @@ local selectBehavior = { behavior = cmp.SelectBehavior.Select }
 
 cmp.setup({
 
-  completion =
-  {
-    completeopt = "menu,menuone,noinsert"
-  },
-
-
   -- Disable completions while in a comment
   enabled = function()
     local context = require("cmp.config.context")
@@ -48,6 +42,16 @@ cmp.setup({
 
     return true
   end,
+
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+
+  completion =
+  {
+    completeopt = "menu,menuone,noinsert"
+  },
 
   matching = {
     disallow_fuzzy_matching = true
