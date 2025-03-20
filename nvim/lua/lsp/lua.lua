@@ -4,6 +4,11 @@ lspconfig.lua_ls.setup({
   {
     Lua =
     {
+      hint = {
+        enable = true,
+        arrayIndex = "Disable"
+      },
+
       diagnostics =
       {
         -- Neovim and Yazi globals
