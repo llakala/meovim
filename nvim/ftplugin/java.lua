@@ -7,11 +7,20 @@ require("jdtls").start_or_attach({
 
   settings =
   {
-    inlayHints =
-    {
-      parameterNames =
-      {
-        enabled = "all", -- Would disable, but it doesn't seem to work and I'd like it to, so leaving it on for debugging
+    -- make sure things are under `settings.java`, or things just
+    -- won't apply and you'll have no clue why!
+    java = {
+      signatureHelp = {
+        enabled = true,
+        description = {
+          enabled = true
+        }
+      },
+
+      inlayHints = {
+        parameterNames = {
+          enabled = "none", -- jdtls inlay hints are pretty useless
+        }
       }
     }
   }
