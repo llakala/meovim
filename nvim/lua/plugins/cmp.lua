@@ -97,9 +97,5 @@ require("lsp_signature").setup({
   -- You can see the docs with lsp `vim.lsp.buf.hover()`
   doc_lines = 0,
 
-  hint_prefix = {
-    above = "↙ ", -- hint is on line above
-    current = "← ", -- hint is on same line
-    below = "↖ " -- hint is on below line
-  }
+  hint_enable = false
 })
