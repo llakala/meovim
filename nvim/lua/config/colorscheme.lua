@@ -9,17 +9,15 @@ require("tokyonight").setup({
   style = "night",
 
   -- Change base colors
-  on_colors = function(colors)
-  end,
-
+  on_colors = function(colors) end,
 
   on_highlights = function(hl, colors)
-     hl["@variable"] = { fg = colors.red }
-     hl.ColorColumn = { bg = colors.bg_highlight }
-  end
+    hl["@variable"] = { fg = colors.red }
+    hl.ColorColumn = { bg = colors.bg_highlight }
+  end,
 })
 
-vim.cmd[[colorscheme tokyonight]]
+vim.cmd([[colorscheme tokyonight]])
 
 -- Colorize hex codes
-require('nvim-highlight-colors').setup({})
+require("nvim-highlight-colors").setup({})

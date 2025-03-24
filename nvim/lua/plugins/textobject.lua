@@ -15,4 +15,3 @@ vnoremap("X", "kg_")
 -- delete something that isn't a line. TODO: come back to this when
 -- I have more neovim experience and can make a custom mode
 -- vnoremap("d", "$d")
-

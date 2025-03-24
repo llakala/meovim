@@ -9,15 +9,13 @@ local function mkNoremap(mode, key, map)
   vim.keymap.set(mode, key, map, { noremap = true, silent = true })
 end
 
-
-function map (key, map)
+function map(key, map)
   mkRemap("", key, map)
 end
 
-function noremap (key, map)
+function noremap(key, map)
   mkNoremap("", key, map)
 end
-
 
 function nmap(key, map)
   mkRemap("n", key, map)
@@ -31,7 +29,6 @@ function imap(key, map)
   mkRemap("i", key, map)
 end
 
-
 function nnoremap(key, map)
   mkNoremap("n", key, map)
 end
@@ -44,12 +41,11 @@ function inoremap(key, map)
   mkNoremap("i", key, map)
 end
 
-
 -- System clipboard always
-nnoremap("y", "v\"+y")
-vnoremap("y", "\"+ygv") -- Bring back selection after copying
-noremap("p", "\"+[P") -- Paste before
-noremap("P", "\"+[p") -- Paste after
+nnoremap("y", 'v"+y')
+vnoremap("y", '"+ygv') -- Bring back selection after copying
+noremap("p", '"+[P') -- Paste before
+noremap("P", '"+[p') -- Paste after
 
 -- Have j and k navigate visual lines rather than logical ones
 nmap("j", "gj")
@@ -82,8 +78,8 @@ vnoremap("a", "<Esc>`>a")
 nnoremap("mi", "vi")
 nnoremap("ma", "va")
 
-noremap("d", "\"_x") -- Delete current character, and don't copy to clipboard
-noremap("c", "\"_s") -- Change, and don't copy to clipboard
+noremap("d", '"_x') -- Delete current character, and don't copy to clipboard
+noremap("c", '"_s') -- Change, and don't copy to clipboard
 
 noremap("U", "<C-r>") -- Redo
 
@@ -100,7 +96,7 @@ vnoremap(">", ">gv")
 
 nnoremap("%", "ggVG") -- Select entire file
 vnoremap("%", "<Nop>")
-noremap("gG","G") -- gG to go to end of file
+noremap("gG", "G") -- gG to go to end of file
 
 -- Comment/uncomment lines, Neovim 0.10 feature
 nmap("#", "gcc")

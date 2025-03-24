@@ -1,3 +1,3 @@
 lspconfig.gleam.setup({
-  capabilities = lsp_capabilities
+  capabilities = lsp_capabilities,
 })

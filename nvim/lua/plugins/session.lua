@@ -29,15 +29,17 @@ session.setup({
         -- auto-session will consider us to be in the right
         -- directory.
         vim.api.nvim_cmd({
-          cmd = "cd", args = { get_repo_root() }
+          cmd = "cd",
+          args = { get_repo_root() },
         }, {})
 
         vim.api.nvim_cmd({
-          cmd = "SessionRestore", args = { get_repo_root() }
+          cmd = "SessionRestore",
+          args = { get_repo_root() },
         }, {})
       end
-    end
-  }
+    end,
+  },
 })
 
 -- We save most things to session, but *not* buffers.

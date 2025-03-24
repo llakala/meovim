@@ -27,7 +27,6 @@ require("cmp_git").setup({
   },
 })
 
-
 -- Flip between, but don't preview. Only fill in on enter
 local selectBehavior = { behavior = cmp.SelectBehavior.Select }
 
@@ -48,24 +47,21 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
 
-  completion =
-  {
-    completeopt = "menu,menuone,noinsert"
+  completion = {
+    completeopt = "menu,menuone,noinsert",
   },
 
   matching = {
-    disallow_fuzzy_matching = true
+    disallow_fuzzy_matching = true,
   },
 
-  snippet =
-  {
+  snippet = {
     expand = function(args)
       vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
     end,
   },
 
-  mapping =
-  {
+  mapping = {
     -- Select is false, so you have to actually press tab to choose a completion
     ["<Enter>"] = cmpmap.confirm({ select = false }),
 
@@ -78,7 +74,7 @@ cmp.setup({
     { name = "async_path" },
     { name = "git" },
     {
-      name = 'lazydev',
+      name = "lazydev",
       -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
       group_index = 0,
     },
@@ -88,7 +84,7 @@ cmp.setup({
     --   name = "buffer",
     --   keyword_length = 1
     -- },
-  })
+  }),
 })
 
 -- Better live signature popups
@@ -97,5 +93,5 @@ require("lsp_signature").setup({
   -- You can see the docs with lsp `vim.lsp.buf.hover()`
   doc_lines = 0,
 
-  hint_enable = false
+  hint_enable = false,
 })

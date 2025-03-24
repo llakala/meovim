@@ -6,6 +6,6 @@
 -- The order does seem to matter, I had to do it longest-shortest
 require("ts-comments").setup({
   lang = {
-    gleam = { "// %s", "/// %s", "//// %s"}
-  }
+    gleam = { "// %s", "/// %s", "//// %s" },
+  },
 })

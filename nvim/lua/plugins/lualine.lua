@@ -1,10 +1,10 @@
 local lsp_progress = {
   "lsp_progress",
   display_components = {
-		"lsp_client_name",
-		"spinner",
-	},
-  colors = { use = true }
+    "lsp_client_name",
+    "spinner",
+  },
+  colors = { use = true },
 }
 require("lualine").setup({
   sections = {
@@ -13,5 +13,5 @@ require("lualine").setup({
     lualine_x = { lsp_progress },
     lualine_y = { "filetype" },
     lualine_z = { "location" },
-  }
+  },
 })

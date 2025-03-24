@@ -6,34 +6,40 @@ local ts_cond = require("nvim-autopairs.ts-conds")
 npairs.setup()
 -- print(vim.inspect(cond))
 
-
-  -- If there's punctuation after your cursor, and you type that character, don't do anything
+-- If there's punctuation after your cursor, and you type that character, don't do anything
 local function replacePunctuation(punct)
   return Rule("", punct, "lua")
-    :with_move(function(opts) return opts.char == punct end)
-    :with_pair(function() return false end)
-    :with_del(function() return false end)
-    :with_cr(function() return false end)
+    :with_move(function(opts)
+      return opts.char == punct
+    end)
+    :with_pair(function()
+      return false
+    end)
+    :with_del(function()
+      return false
+    end)
+    :with_cr(function()
+      return false
+    end)
     :use_key(punct)
 end
 
 -- For testing, just run `:e` after sourcing on a given file
 npairs.add_rules({
-  Rule("/*", "*/", {"nix"}),
+  Rule("/*", "*/", { "nix" }),
 
   replacePunctuation(","),
-  replacePunctuation(";")
+  replacePunctuation(";"),
 })
 
 -- Complete parentheses for functions
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-local cmp = require('cmp')
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+local cmp = require("cmp")
 cmp.event:on(
-  'confirm_done',
+  "confirm_done",
   cmp_autopairs.on_confirm_done({
-    filetypes =
-    {
-      gleam = false -- Adds parentheses in pipes when we don't want them
-    }
+    filetypes = {
+      gleam = false, -- Adds parentheses in pipes when we don't want them
+    },
   })
 )

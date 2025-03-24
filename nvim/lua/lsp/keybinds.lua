@@ -8,15 +8,13 @@ noremap("<leader>a", vim.lsp.buf.code_action)
 vim.diagnostic.config({
   severity_sort = true,
   float = {
-    border = "rounded"
-  }
+    border = "rounded",
+  },
 })
 
-noremap("<leader>d",
-  function()
-    vim.diagnostic.open_float() -- d for diagnostics
-  end)
-
+noremap("<leader>d", function()
+  vim.diagnostic.open_float() -- d for diagnostics
+end)
 
 local cfg = {
   -- Autoconfirm would be nice, but it makes it open in the current
@@ -33,7 +31,7 @@ local cfg = {
   filter = {
     paths = {
       ["/nix/store"] = false,
-    }
+    },
   },
 
   -- Open selected files in new tab, set in both `list` and `inputs`
@@ -62,15 +60,11 @@ if Snacks.git.get_root() ~= nil then
 end
 
 -- i for implementation
-nnoremap("<leader>i",
-  function()
-    Snacks.picker.lsp_definitions(cfg)
-  end
-)
+nnoremap("<leader>i", function()
+  Snacks.picker.lsp_definitions(cfg)
+end)
 
 -- u for usage
-nnoremap("<leader>u",
-  function()
-    Snacks.picker.lsp_references(cfg)
-  end
-)
+nnoremap("<leader>u", function()
+  Snacks.picker.lsp_references(cfg)
+end)

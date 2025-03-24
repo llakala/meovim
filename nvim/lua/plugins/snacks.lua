@@ -7,7 +7,7 @@ Snacks.setup({
     enabled = true,
     focus = "list", -- Start in normal mode
     ui_select = true,
-  }
+  },
 })
 
 vim.ui.input = "Snacks.input"

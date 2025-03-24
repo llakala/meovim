@@ -18,14 +18,13 @@ local yazi = require("yazi")
 yazi.setup({
   open_for_directories = true,
 
-
   -- Override open_file_function to open all files in new tabs
   -- We do this rather than specifying a keybind for this
   -- This is because if we set open_file_in_tab to something like `o`,
   -- it would mess up typing `o` in zoxide.
   hooks = {
-    yazi_opened_multiple_files = openMultipleNewTab
-  }
+    yazi_opened_multiple_files = openMultipleNewTab,
+  },
 })
 
 -- Replace current tab, starting Yazi from the location of the current file
@@ -45,18 +44,13 @@ end)
 nnoremap("ta", function()
   local path = yazi.previous_state and yazi.previous_state.last_hovered or nil
 
-  if path then yazi.yazi(
-    {
-      open_file_function = openNewTab
-    },
-    path,
-    { reveal_path = path }
-  )
-  else yazi.yazi(
-    {
-      open_file_function = openNewTab
-    },
-    path
-  )
+  if path then
+    yazi.yazi({
+      open_file_function = openNewTab,
+    }, path, { reveal_path = path })
+  else
+    yazi.yazi({
+      open_file_function = openNewTab,
+    }, path)
   end
 end)

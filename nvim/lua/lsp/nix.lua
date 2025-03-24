@@ -1,10 +1,9 @@
 lspconfig.nixd.setup({
   capabilities = lsp_capabilities,
-  cmd =
-  {
+  cmd = {
     "nixd",
     "--inlay-hints=false",
-    "-semantic-tokens=true" -- NEEDED, makes syntax highlighting much better
+    "-semantic-tokens=true", -- NEEDED, makes syntax highlighting much better
   },
   -- settings.nixd =
   -- {
