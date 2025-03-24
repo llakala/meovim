@@ -1,6 +1,17 @@
 require("conform").setup({
+  formatters_by_ft = {
+    java = { "google-java-format" },
+  },
+
   default_format_opts = {
-    lsp_format = "fallback",
+    lsp_format = "fallback"
+  },
+
+  formatters = {
+    ["google-java-format"] = {
+      command = "google-java-format",
+      args = { "--aosp", "-" },
+    },
   },
 
   format_on_save = function(bufnr)

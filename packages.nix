@@ -8,6 +8,7 @@ let
     lua-language-server
     gleam
     fish-lsp
+    google-java-format
   ];
 
 in packages
