@@ -28,11 +28,11 @@ local cfg = {
   -- package. However, doing this means that you get duplicate code
   -- stored in the `.direnv` folder, which lsps can find and assume
   -- is actual code. We filter out anything in `.direnv` or `/nix/store`,
-  -- as no actual code should be stored there.
+  -- as no actual code should be stored there. The `.direnv` block is
+  -- further down, since sometimes we won't be in a git repo.
   filter = {
     paths = {
       ["/nix/store"] = false,
-      [Snacks.git.get_root() .. "/.direnv"] = false,
     }
   },
 
@@ -53,6 +53,14 @@ local cfg = {
     },
   },
 }
+
+-- Don't make `.direnv` files searchable. We need to gate this behind a
+-- condition to prevent issues where if we're not in a git repo, `get_root`
+-- returns null, and lua freaks.
+if Snacks.git.get_root() ~= nil then
+  cfg.filter.paths[Snacks.git.get_root() .. "/.direnv"] = false
+end
+
 -- i for implementation
 nnoremap("<leader>i",
   function()
