@@ -1,10 +1,12 @@
 require("conform").setup({
   formatters_by_ft = {
     java = { "google-java-format" },
+    nix = { "nixfmt" },
+    lua = { "stylua" },
   },
 
   default_format_opts = {
-    lsp_format = "fallback"
+    lsp_format = "fallback",
   },
 
   formatters = {
