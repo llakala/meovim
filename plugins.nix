@@ -30,7 +30,6 @@ let
     cmp-async-path
     cmp-nvim-lsp-signature-help
     cmp-git
-    lsp_signature-nvim
 
     # Snippets
     luasnip
@@ -61,6 +60,7 @@ let
   [
     onedarkpro-nvim
     tokyonight-nvim
+    lsp-signature-nvim # Currently not bumped in nixpkgs for Neovim 0.11 support
   ];
 
 in pkgsPlugins ++ extraPlugins
