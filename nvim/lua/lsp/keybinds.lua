@@ -34,22 +34,8 @@ local cfg = {
     },
   },
 
-  -- Open selected files in new tab, set in both `list` and `inputs`
-  -- so whether we type for the file or scroll to it, it'll still
-  -- behave the same. snacks is smart and doesn't use the new tab
-  -- if the instance we selected was in the same file.
-  win = {
-    list = {
-      keys = {
-        ["<CR>"] = { "tab", mode = { "n", "i" } },
-      },
-    },
-    input = {
-      keys = {
-        ["<CR>"] = { "tab", mode = { "n", "i" } },
-      },
-    },
-  },
+  -- Open files in new tab
+  win = snacks_new_tab
 }
 
 -- Don't make `.direnv` files searchable. We need to gate this behind a
