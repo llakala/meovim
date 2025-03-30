@@ -15,6 +15,7 @@ let
     snacks-nvim
     ts-comments-nvim
     conform-nvim
+    tiny-inline-diagnostic-nvim
 
     # Pretty
     nvim-highlight-colors
