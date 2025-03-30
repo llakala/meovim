@@ -17,14 +17,25 @@ function at_repo_root()
   return get_repo_root() == vim.uv.cwd()
 end
 
+-- Is true when Neovim is called with no arguments or a folder argument. Helps
+-- to ensure that sessions don't get improperly loaded when we should just be
+-- opening a specific file. Credit goes to:
+-- https://github.com/mike-jl/dotfiles/blob/953f6f1b40c4e3fe7642038d183384fd040e11ad/.config/nvim/lua/custom/plugins/auto-session.lua#L14
+local arg_count = vim.fn.argc()
+local first_arg = vim.fn.argv(1)
+local passed_nothing_or_dir = arg_count == 0
+    or (arg_count == 1 and vim.fn.isdirectory(first_arg) == 1)
+
+
 session.setup({
   -- Only create a new session if you're at the root of a git repo
   auto_create = at_repo_root,
 
-  -- If you're in a subdirectory of a git repo, activate the session for the repo's root
+  -- If you're in a subdirectory of a git repo, and neovim wasn't called with a
+  -- specific file to be opened, activate the session for the repo's root.
   no_restore_cmds = {
     function()
-      if in_git_repo() and not at_repo_root() then
+      if in_git_repo() and not at_repo_root() and passed_nothing_or_dir then
         -- Neovim cd, not shell cd. Means when we exit Neovim,
         -- auto-session will consider us to be in the right
         -- directory.
