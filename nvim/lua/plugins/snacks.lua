@@ -17,7 +17,27 @@ snacks_new_tab = {
   },
 }
 
-
+-- Layout based off the dropdown layout, but with 100% width
+local custom_layout = {
+  layout = {
+    backdrop = false,
+    row = 1,
+    width = 0.4,
+    min_width = 100,
+    height = 0.8,
+    border = "none",
+    box = "vertical",
+    { win = "preview", title = "{preview}", height = 0.4, border = "rounded" },
+    {
+      box = "vertical",
+      border = "rounded",
+      title = "{title} {live} {flags}",
+      title_pos = "center",
+      { win = "input", height = 1,     border = "bottom" },
+      { win = "list",  border = "none" },
+    },
+  },
+}
 
 Snacks.setup({
   quickfile = { enabled = true },
@@ -26,6 +46,10 @@ Snacks.setup({
     enabled = true,
     focus = "list", -- Start in normal mode
     ui_select = true,
+
+    layouts = {
+      custom = custom_layout
+    }
   },
 })
 
