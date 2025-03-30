@@ -54,3 +54,10 @@ end)
 nnoremap("<leader>u", function()
   Snacks.picker.lsp_references(cfg)
 end)
+
+-- w for workspace. Shows workspace diagnostics, so you can see errors in other
+-- files. Great for Gleam dev, since the Gleam LSP gets stuck if one file has errors.
+-- Note that this doesn't work for all LSPs!
+nnoremap("<leader>w", function()
+  Snacks.picker.diagnostics(cfg)
+end)
