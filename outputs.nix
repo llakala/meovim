@@ -10,6 +10,7 @@ let
     (system: function nixpkgs.legacyPackages.${system});
 
   llakaLib = inputs.llakaLib.pureLib; # Don't need any impure functions
+  llakaLibPackages = inputs.llakaLib.packages;
 in
 {
   /**
@@ -69,7 +70,8 @@ in
           builtins.attrValues self.neovimPlugins.${pkgs.system};
         extraBinPath =
           import ./packages.nix { inherit pkgs; } ++
-          builtins.attrValues self.neovimPackages.${pkgs.system};
+          builtins.attrValues self.neovimPackages.${pkgs.system}
+          ++ lib.singleton llakaLibPackages.${pkgs.system}.gleam;
       };
     }
   );
@@ -82,11 +84,6 @@ in
       {
         packages = [
           self.packages.${pkgs.system}.default.devMode
-
-          # For some reason, if I don't add this to $PATH, the system gleam shadows
-          # my custom version. `lib.hiPrio` seemed to do nothing. If you know why
-          # this might be, let me know!
-          self.neovimPackages.${pkgs.system}.gleam
         ];
       };
     }
