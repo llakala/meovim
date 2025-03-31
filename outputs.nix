@@ -80,7 +80,14 @@ in
     {
       default = pkgs.mkShellNoCC
       {
-        packages = lib.singleton self.packages.${pkgs.system}.default.devMode;
+        packages = [
+          self.packages.${pkgs.system}.default.devMode
+
+          # For some reason, if I don't add this to $PATH, the system gleam shadows
+          # my custom version. `lib.hiPrio` seemed to do nothing. If you know why
+          # this might be, let me know!
+          self.neovimPackages.${pkgs.system}.gleam
+        ];
       };
     }
   );
