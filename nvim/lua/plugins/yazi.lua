@@ -39,8 +39,10 @@ nnoremap("tt", function()
   })
 end)
 
--- Create a new tab from wherever Yazi was last opened. Same as `Yazi toggle`, but using Lua so I can customize other things.
--- Sadly doesn't seem to bring back the last filter which is why I wanted this :(. Might make an issue for this
+-- Create a new tab from wherever Yazi was last opened. Same as `Yazi toggle`, but
+-- using Lua so I can make things open in new tabs. Sadly doesn't seem to bring back
+-- the last filter, which is why I wanted this :(. Made an issue for that
+-- functionality here: https://github.com/mikavilpas/yazi.nvim/issues/862
 nnoremap("ta", function()
   local path = yazi.previous_state and yazi.previous_state.last_hovered or nil
 
@@ -54,3 +56,9 @@ nnoremap("ta", function()
     }, path)
   end
 end)
+
+-- Replace current tab with a file from the current directory. Great for if you
+-- accidentally opened some other directory and want to go back to normalcy
+-- TODO: rewrite in lua so this also opens in a new tab (may be hacky as I'm)
+-- not sure if there's a lua equivalent in the public config
+nnoremap("tc", ":Yazi cwd<cr>")
