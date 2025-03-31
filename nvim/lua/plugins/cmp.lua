@@ -5,7 +5,10 @@ require("cmp_git").setup({
   trigger_actions = {
     {
       debug_name = "git_commits",
-      trigger_character = "$", -- Changed from the default to not trigger with commit types
+
+      -- Changed from the default `:` to not trigger with conventional commits
+      trigger_character = "$",
+
       action = function(sources, trigger_char, callback, params, git_info)
         return sources.git:get_commits(callback, params, trigger_char)
       end,
