@@ -6,7 +6,6 @@ let
     jdt-language-server
     yazi
     lua-language-server
-    gleam
     fish-lsp
     google-java-format
   ];
