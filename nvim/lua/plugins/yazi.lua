@@ -28,8 +28,9 @@ yazi.setup({
 })
 
 -- Replace current tab, starting Yazi from the location of the current file
+-- Note that if opening multiple files, they'll all be in new tabs
 nnoremap("to", function()
-  require("yazi").yazi()
+  yazi.yazi()
 end)
 
 -- Create a new tab, starting Yazi from the location of the current file
