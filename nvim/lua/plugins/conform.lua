@@ -1,4 +1,7 @@
 require("conform").setup({
+  -- Sometimes a formatter will fail. We should write to the file anyways
+  notify_on_error = false,
+
   formatters_by_ft = {
     java = { "google-java-format" },
     nix = { "nixfmt" },
