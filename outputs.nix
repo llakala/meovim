@@ -10,7 +10,6 @@ let
     (system: function nixpkgs.legacyPackages.${system});
 
   llakaLib = inputs.llakaLib.pureLib; # Don't need any impure functions
-  llakaLibPackages = inputs.llakaLib.packages;
 in
 {
   /**
@@ -70,8 +69,7 @@ in
           builtins.attrValues self.neovimPlugins.${pkgs.system};
         extraBinPath =
           import ./packages.nix { inherit pkgs; } ++
-          builtins.attrValues self.neovimPackages.${pkgs.system}
-          ++ lib.singleton llakaLibPackages.${pkgs.system}.gleam;
+          builtins.attrValues self.neovimPackages.${pkgs.system};
       };
     }
   );
