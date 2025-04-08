@@ -3,54 +3,54 @@
 vim.loader.enable()
 
 -- Global variables
-o = vim.opt
+opt = vim.opt
 g = vim.g
 
-o.termguicolors = true
+opt.termguicolors = true
 
-o.clipboard = "unnamed"
-o.undofile = true -- Persistent undo
-o.mouse = "a" -- Enable mouse. I try not to use it, but it's useful for scrolling diagnostics
-o.hidden = false -- Some people swear by it, but I want closing tabs to actually close them
-o.shiftround = true -- Round to the nearest indentation level when using `<` and `>`
+opt.clipboard = "unnamed"
+opt.undofile = true -- Persistent undo
+opt.mouse = "a" -- Enable mouse. I try not to use it, but it's useful for scrolling diagnostics
+opt.hidden = false -- Some people swear by it, but I want closing tabs to actually close them
+opt.shiftround = true -- Round to the nearest indentation level when using `<` and `>`
 
-o.cursorline = true
-o.hlsearch = true -- Highlight search matches
-o.number = true
-o.breakindent = true -- Continue indented wrapped line at same level
-o.signcolumn = "yes"
+opt.cursorline = true
+opt.hlsearch = true -- Highlight search matches
+opt.number = true
+opt.breakindent = true -- Continue indented wrapped line at same level
+opt.signcolumn = "yes"
 
-o.showmode = false -- Using lualine
-o.showcmd = false -- Shows when we press keypresses, which we don't need
-o.laststatus = 3 -- Only one statusline, for better separator between horizontal splits
+opt.showmode = false -- Using lualine
+opt.showcmd = false -- Shows when we press keypresses, which we don't need
+opt.laststatus = 3 -- Only one statusline, for better separator between horizontal splits
 
-o.ignorecase = true
-o.smartcase = true
+opt.ignorecase = true
+opt.smartcase = true
 
 vim.cmd("filetype plugin indent on")
-o.autoindent = true
-o.cindent = true -- Smarter than smartindent
-o.smartindent = false
+opt.autoindent = true
+opt.cindent = true -- Smarter than smartindent
+opt.smartindent = false
 
 -- Continue line comments in all languages. Without adding `ro`, it only seemed to work in some languages.
-o.formatoptions = "tcqjro/"
+opt.formatoptions = "tcqjro/"
 
 g.loaded_matchit = 1 -- Lets us remap `%`
 
-o.expandtab = true -- spaces as tab
-o.tabstop = 2 -- 2 spaces for tabs
-o.shiftwidth = 0 -- Reuse value of tabstop
+opt.expandtab = true -- spaces as tab
+opt.tabstop = 2 -- 2 spaces for tabs
+opt.shiftwidth = 0 -- Reuse value of tabstop
 
 -- Timeout isn't intuitive. We want it for `a` in visual mode, but that's a
 -- PR for another day.
-o.timeout = false
+opt.timeout = false
 
 -- Open new buffers in new tabs. Helpful for quickfix stuff
-o.switchbuf = "useopen,usetab,newtab"
+opt.switchbuf = "useopen,usetab,newtab"
 
-o.smoothscroll = true -- Shows a continuation `>>>` when wrapping line is cut off
+opt.smoothscroll = true -- Shows a continuation `>>>` when wrapping line is cut off
 
-o.backup = false
-o.writebackup = false
+opt.backup = false
+opt.writebackup = false
 
 g.mapleader = " "

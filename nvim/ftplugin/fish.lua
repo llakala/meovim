@@ -1,2 +1,2 @@
-o.tabstop = 4
-o.shiftwidth = 4
+opt.tabstop = 4
+opt.shiftwidth = 4

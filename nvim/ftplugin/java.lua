@@ -1,5 +1,5 @@
-o.tabstop = 4
-o.shiftwidth = 4
+opt.tabstop = 4
+opt.shiftwidth = 4
 
 require("jdtls").start_or_attach({
   cmd = { "jdtls" },
