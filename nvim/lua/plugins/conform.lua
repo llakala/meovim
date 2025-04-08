@@ -8,8 +8,11 @@ require("conform").setup({
     lua = { "stylua" },
   },
 
+  -- I don't currently have any lsp formatters, and often they just seem to randomly
+  -- start being used. So, for now, just don't use them. Better not forget about this
+  -- in the future!
   default_format_opts = {
-    lsp_format = "fallback",
+    lsp_format = "never",
   },
 
   formatters = {

@@ -8,6 +8,7 @@ let
     lua-language-server
     fish-lsp
     google-java-format
+    stylua
     gleam
   ];
 
