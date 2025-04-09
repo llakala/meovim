@@ -11,7 +11,6 @@ require("plugins.cmp")
 
 require("plugins.mini")
 require("plugins.plugins")
-require("plugins.wilder")
 require("plugins.pairs")
 require("plugins.lualine")
 require("plugins.snacks")

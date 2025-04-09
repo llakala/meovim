@@ -24,17 +24,11 @@ let
     helpview-nvim
     markdown-preview-nvim
 
-    # Completion
-    nvim-cmp
-    cmp-nvim-lsp
-    cmp-buffer
-    cmp-async-path
-    cmp-nvim-lsp-signature-help
-    cmp-git
+    # Completions
+    blink-cmp
 
     # Snippets
     luasnip
-    cmp_luasnip
 
     # Overhauls
     bufferline-nvim
@@ -61,7 +55,7 @@ let
   [
     onedarkpro-nvim
     tokyonight-nvim
-    lsp-signature-nvim # Currently not bumped in nixpkgs for Neovim 0.11 support
+    colorful-menu-nvim
   ];
 
 in pkgsPlugins ++ extraPlugins

@@ -3,7 +3,7 @@ opt.shiftwidth = 4
 
 require("jdtls").start_or_attach({
   cmd = { "jdtls" },
-  capabilities = require("cmp_nvim_lsp").default_capabilities(),
+  capabilities = lsp_capabilities,
 
   settings = {
     -- make sure things are under `settings.java`, or things just
