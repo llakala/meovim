@@ -5,6 +5,7 @@ vim.loader.enable()
 -- Global variables
 opt = vim.opt
 g = vim.g
+o = vim.o
 
 opt.termguicolors = true
 
@@ -54,3 +55,5 @@ opt.backup = false
 opt.writebackup = false
 
 g.mapleader = " "
+
+vim.o.winborder = "rounded"
