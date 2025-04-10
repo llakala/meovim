@@ -27,6 +27,8 @@ cmp.setup({
       auto_show_delay_ms = 0,
     },
 
+    -- I'd prefer to have this through nvim-autopairs, but I couldn't get it
+    -- working. See https://github.com/windwp/nvim-autopairs/issues/477
     accept = {
       auto_brackets = {
         enabled = true,
@@ -97,6 +99,7 @@ cmp.setup({
 
   -- Prioritizes exact matches higher
   fuzzy = {
+    implementation = "prefer_rust_with_warning",
     sorts = {
       "exact",
       -- defaults
