@@ -11,6 +11,13 @@ cmp.setup({
   },
 
   completion = {
+    list = {
+      selection = {
+        preselect = true,
+        -- Ghost text is preferable
+        auto_insert = false,
+      },
+    },
     ghost_text = {
       enabled = true,
     },
