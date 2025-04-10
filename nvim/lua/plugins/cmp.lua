@@ -4,7 +4,6 @@ lsp_capabilities = cmp.get_lsp_capabilities()
 local colorful_menu = require("colorful-menu")
 
 cmp.setup({
-  -- See comment on above function
   keymap = {
     preset = "enter",
     ["<Tab>"] = { "select_next", "fallback" },
