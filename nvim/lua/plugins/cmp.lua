@@ -59,8 +59,19 @@ cmp.setup({
     },
   },
 
-  -- Removing buffer completion from the defaults
   sources = {
+    -- Prioritizes snippets higher - not the actual snippets, but the LSP snippets.
+    -- Thanks to https://github.com/wlh320/wlh-dotfiles/blob/aa9be6ffbe587452a42520626befc10ed5a614b8/config/nvim/init.lua#L349-L356
+    -- for being a wonderful example of how to do something like this
+    transform_items = function(_, items)
+      for _, item in ipairs(items) do
+        if item.kind == require("blink.cmp.types").CompletionItemKind.Snippet then
+          item.score_offset = item.score_offset + 10
+        end
+      end
+      return items
+    end,
+    -- Removing buffer completion from the defaults
     default = {
       "lsp",
       "path",
