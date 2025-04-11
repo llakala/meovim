@@ -60,6 +60,6 @@ end)
 
 -- Replace current tab with a file from the current directory. Great for if you
 -- accidentally opened some other directory and want to go back to normalcy
--- TODO: rewrite in lua so this also opens in a new tab (may be hacky as I'm)
--- not sure if there's a lua equivalent in the public config
-nnoremap("tc", ":Yazi cwd<cr>")
+-- TODO: rewrite in lua so this also opens in a new tab (may be hacky as I'm
+-- not sure if there's a lua equivalent in the public config)
+nnoremap("tp", ":Yazi cwd<cr>")
