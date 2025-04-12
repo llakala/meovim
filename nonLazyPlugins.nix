@@ -4,8 +4,8 @@ let
   pkgsPlugins = with pkgs.vimPlugins;
   [
     # Basic essentials
-    nvim-treesitter.withAllGrammars
     nvim-lspconfig
+    nvim-treesitter.withAllGrammars
     lz-n
 
     # Features
@@ -17,8 +17,6 @@ let
 
     # Pretty
     nvim-highlight-colors
-    gitsigns-nvim
-    indent-blankline-nvim # Same as `indent-blankline-nvim-lua`
     helpview-nvim
     markdown-preview-nvim
     rainbow-delimiters-nvim
