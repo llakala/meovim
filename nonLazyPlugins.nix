@@ -7,15 +7,13 @@ let
     nvim-treesitter.withAllGrammars
     nvim-lspconfig
     lz-n
-    lzn-auto-require
 
     # Features
     nvim-autopairs
-    vim-textobj-user
     auto-session
+    vim-textobj-user
     snacks-nvim
     ts-comments-nvim
-    conform-nvim
     tiny-inline-diagnostic-nvim
 
     # Pretty
