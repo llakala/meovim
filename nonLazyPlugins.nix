@@ -17,7 +17,6 @@ let
 
     # Pretty
     nvim-highlight-colors
-    helpview-nvim
     markdown-preview-nvim
     rainbow-delimiters-nvim
 

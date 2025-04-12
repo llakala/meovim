@@ -10,6 +10,7 @@ let
     indent-blankline-nvim # Same as `indent-blankline-nvim-lua`
     gitsigns-nvim
     rainbow-delimiters-nvim
+    helpview-nvim
   ];
 in
 pkgsPlugins
