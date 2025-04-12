@@ -41,18 +41,39 @@ in
   packages = forAllSystems
   (
     pkgs:
+    let
+      lazify = plugins: map (p: p // { optional = true; }) lazyPlugins;
+
+      # customPlugins and customPackages are stored in their own flake
+      # inputs, so they can be used in multiple places and only get
+      # evaluated once. We grab them and turn them into a list via attrValues, combining with the list of non-custom plugins/packages
+      nonLazyPlugins = import ./nonLazyPlugins.nix { inherit pkgs neovimPlugins; };
+      lazyPlugins = import ./lazyPlugins.nix { inherit pkgs neovimPlugins; };
+      customPlugins = builtins.attrValues self.neovimPlugins.${pkgs.system};
+
+      packages = import ./packages.nix { inherit pkgs; };
+      customPackages = builtins.attrValues self.neovimPackages.${pkgs.system};
+    in
     {
       default = inputs.mnw.lib.wrap pkgs
       {
         appName = "nvim";
-
         neovim = pkgs.neovim-unwrapped;
+
+        plugins =
+          nonLazyPlugins
+          ++ lazify lazyPlugins
+          ++ customPlugins;
+
+        extraBinPath =
+          packages ++
+          customPackages;
 
         initLua =
         /* lua */
         ''
           require("config")
-          require("plugins")
+          require("lz.n").load("plugins")
           require("lsp")
         '';
 
@@ -60,16 +81,6 @@ in
 
         # Absolute path needed
         devPluginPaths = lib.singleton "/home/emanresu/Documents/projects/meovim/nvim";
-
-        # customPlugins and customPackages are stored in their own flake
-        # inputs, so they can be used in multiple places and only get
-        # evaluated once. We grab them and turn them into a list via attrValues, combining with the list of non-custom plugins/packages
-        plugins =
-          import ./plugins.nix { inherit pkgs neovimPlugins; } ++
-          builtins.attrValues self.neovimPlugins.${pkgs.system};
-        extraBinPath =
-          import ./packages.nix { inherit pkgs; } ++
-          builtins.attrValues self.neovimPackages.${pkgs.system};
       };
     }
   );

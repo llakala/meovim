@@ -6,11 +6,12 @@ let
     # Basic essentials
     nvim-treesitter.withAllGrammars
     nvim-lspconfig
+    lz-n
+    lzn-auto-require
 
     # Features
     nvim-autopairs
     vim-textobj-user
-    yazi-nvim
     auto-session
     snacks-nvim
     ts-comments-nvim
