@@ -70,5 +70,7 @@ end
 
 return {
   "conform.nvim",
+  event = { "BufWritePre" },
+  cmd = { "ConformInfo" },
   after = config,
 }

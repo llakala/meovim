@@ -81,6 +81,7 @@ local keys = {
 
 return {
   "yazi.nvim",
+  event = "DeferredUIEnter", -- Equivalent of VeryLazy
   after = config,
   keys = keys,
 }
