@@ -73,8 +73,9 @@ in
         /* lua */
         ''
           require("config")
-          require("lz.n").load("plugins")
+          require("plugins")
           require("lsp")
+          require("lz.n").load("lazy")
         '';
 
         devExcludedPlugins = lib.singleton ./nvim;

@@ -1,6 +1,5 @@
 -- Basics for getting around Neovim. If something else breaks,
 -- these should be loaded so we can fix it
-require("plugins.yazi")
 require("plugins.session")
 require("plugins.bufferline")
 
