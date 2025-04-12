@@ -9,7 +9,6 @@ let
     lz-n
 
     # Features
-    nvim-autopairs
     auto-session
     vim-textobj-user
     snacks-nvim

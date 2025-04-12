@@ -5,6 +5,7 @@ let
   [
     yazi-nvim
     conform-nvim
+    nvim-autopairs
   ];
 in
 pkgsPlugins
