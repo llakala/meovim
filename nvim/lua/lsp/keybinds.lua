@@ -35,7 +35,7 @@ local cfg = {
   },
 
   -- Open files in new tab
-  win = snacks_new_tab
+  win = snacks_new_tab,
 }
 
 -- Don't make `.direnv` files searchable. We need to gate this behind a
@@ -79,6 +79,6 @@ nnoremap("<leader>w", function()
   Snacks.picker.diagnostics({
     layout = "custom",
     format = format_function,
-    win = snacks_new_tab
+    win = snacks_new_tab,
   })
 end)
