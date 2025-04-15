@@ -23,13 +23,13 @@ end
 -- https://github.com/mike-jl/dotfiles/blob/953f6f1b40c4e3fe7642038d183384fd040e11ad/.config/nvim/lua/custom/plugins/auto-session.lua#L14
 local arg_count = vim.fn.argc()
 local first_arg = vim.fn.argv(1)
-local passed_nothing_or_dir = arg_count == 0
-    or (arg_count == 1 and vim.fn.isdirectory(first_arg) == 1)
-
+local passed_nothing_or_dir = arg_count == 0 or (arg_count == 1 and vim.fn.isdirectory(first_arg) == 1)
 
 session.setup({
   -- Only create a new session if you're at the root of a git repo
   auto_create = at_repo_root,
+
+  use_git_branch = true,
 
   -- If you're in a subdirectory of a git repo, and neovim wasn't called with a
   -- specific file to be opened, activate the session for the repo's root.
