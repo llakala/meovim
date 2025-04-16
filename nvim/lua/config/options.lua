@@ -23,14 +23,24 @@ opt.hidden = false
 opt.shiftround = true
 
 opt.cursorline = true
+-- Highlights the line number of the cursorline
+o.cursorlineopt = "both"
+
 opt.hlsearch = true -- Highlight search matches
 opt.number = true
 opt.breakindent = true -- Continue indented wrapped line at same level
 opt.signcolumn = "yes"
 
+-- When jumping around, don't center the line, so the screen position doesn't change.
+opt.jumpoptions = "stack,view"
+
 opt.showmode = false -- Using lualine
 opt.showcmd = false -- Shows when we press keypresses, which we don't need
 opt.laststatus = 3 -- Only one statusline, for better separator between horizontal splits
+
+-- Custom window title, only showing current filename
+opt.title = true
+vim.o.titlestring = "%t"
 
 opt.ignorecase = true
 opt.smartcase = true
