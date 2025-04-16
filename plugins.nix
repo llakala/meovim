@@ -36,7 +36,6 @@ let
     lualine-lsp-progress
 
     # From mini.nvim
-    mini-cursorword
     mini-trailspace
     mini-surround
     mini-indentscope

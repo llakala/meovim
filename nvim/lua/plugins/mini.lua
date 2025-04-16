@@ -4,10 +4,6 @@ require("mini.trailspace").setup({
 
 vim.api.nvim_set_hl(0, "MiniTrailspace", { bg = "#e55c7a" }) -- Git's "red reverse"
 
-require("mini.cursorword").setup({
-  delay = 10,
-})
-
 require("mini.surround").setup({
   mappings = {
     add = "ms", -- Add surrounding in Normal and Visual modes
