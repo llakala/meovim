@@ -11,9 +11,16 @@ opt.termguicolors = true
 
 opt.clipboard = "unnamed"
 opt.undofile = true -- Persistent undo
-opt.mouse = "a" -- Enable mouse. I try not to use it, but it's useful for scrolling diagnostics
-opt.hidden = false -- Some people swear by it, but I want closing tabs to actually close them
-opt.shiftround = true -- Round to the nearest indentation level when using `<` and `>`
+
+-- Enable mouse (but not in command mode). I try not to use it, but it's useful
+-- for scrolling diagnostics
+opt.mouse = "nva"
+
+-- Some people swear by it, but I want closing tabs to actually close them
+opt.hidden = false
+
+-- Round to the nearest indentation level when using `<` and `>`
+opt.shiftround = true
 
 opt.cursorline = true
 opt.hlsearch = true -- Highlight search matches
