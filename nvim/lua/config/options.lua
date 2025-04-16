@@ -50,8 +50,13 @@ opt.autoindent = true
 opt.cindent = true -- Smarter than smartindent
 opt.smartindent = false
 
--- Continue line comments in all languages. Without adding `ro`, it only seemed to work in some languages.
-opt.formatoptions = "tcqjro/"
+-- Continue line comments in all languages. Without adding `ro`, it only seemed
+-- to work in some languages. Also remove `t`, so our textwidth stuff doesn't
+-- apply to it
+opt.formatoptions = "cqjro/"
+o.wrap = false
+-- Auto-wrap comments (but not other stuff, thanks to the `t` changes above)
+o.textwidth = 80
 
 g.loaded_matchit = 1 -- Lets us remap `%`
 

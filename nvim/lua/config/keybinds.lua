@@ -84,8 +84,8 @@ noremap("c", '"_s') -- Change, and don't copy to clipboard
 noremap("U", "<C-r>") -- Redo
 
 -- Go to beginning/end of visual line
-noremap("H", "g^")
-noremap("L", "g$")
+noremap("H", "^")
+noremap("L", "$")
 
 noremap("<", "<<")
 noremap(">", ">>")
