@@ -31,12 +31,15 @@ opt.number = true
 opt.breakindent = true -- Continue indented wrapped line at same level
 opt.signcolumn = "yes"
 
--- When jumping around, don't center the line, so the screen position doesn't change.
+-- When jumping around, don't center the line, so the screen position doesn't
+-- change.
 opt.jumpoptions = "stack,view"
 
 opt.showmode = false -- Using lualine
 opt.showcmd = false -- Shows when we press keypresses, which we don't need
-opt.laststatus = 3 -- Only one statusline, for better separator between horizontal splits
+
+-- Only one statusline, for better separator between horizontal splits
+opt.laststatus = 3
 
 -- Custom window title, only showing current filename
 opt.title = true
