@@ -23,6 +23,7 @@ let
     indent-blankline-nvim # Same as `indent-blankline-nvim-lua`
     helpview-nvim
     markdown-preview-nvim
+    rainbow-delimiters-nvim
 
     # Completions
     blink-cmp
