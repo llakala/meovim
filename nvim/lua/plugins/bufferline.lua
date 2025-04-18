@@ -10,7 +10,7 @@ nnoremap("tl", ":tabnext<CR>")
 
 nnoremap("tf", ":tabnew New Tab<CR>") -- Create fresh tab
 nnoremap("td", ":tabclose<CR>")
-nnoremap("t!", ":tabclose!<CR>")
+nnoremap("t!", ":quit!<CR>")
 
 -- Go to specific tab number
 for i = 1, 9 do
