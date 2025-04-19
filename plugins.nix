@@ -42,7 +42,6 @@ let
     mini-indentscope
 
     # Dependencies
-    nvim-web-devicons # For bufferline
     nvim-yarp # For wilder
 
     # Other
@@ -56,6 +55,8 @@ let
     onedarkpro-nvim
     tokyonight-nvim
     colorful-menu-nvim
+
+    nvim-web-devicons # For bufferline
   ];
 
 in pkgsPlugins ++ extraPlugins
