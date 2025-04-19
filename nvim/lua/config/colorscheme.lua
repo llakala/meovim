@@ -8,9 +8,6 @@ colors = require("tokyonight.colors").setup()
 require("tokyonight").setup({
   style = "night",
 
-  -- Change base colors
-  on_colors = function(colors) end,
-
   on_highlights = function(hl, colors)
     hl["@variable"] = { fg = colors.red }
     hl.ColorColumn = { bg = colors.bg_highlight }
