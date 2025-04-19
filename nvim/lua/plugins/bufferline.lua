@@ -59,6 +59,7 @@ bfl.setup({
   options = {
     mode = "tabs",
     diagnostics = "nvim_lsp",
+    diagnostics_update_on_event = true,
 
     diagnostics_indicator = function(_, _, diag)
       symbols = { " ", " ", " ", "󰌵" }
