@@ -14,6 +14,13 @@
     # pass in your own flake-utils to prevent duplication
     flake-utils.url = "github:numtide/flake-utils";
 
+    flake-compat =
+    {
+      url = "git+https://git.lix.systems/lix-project/flake-compat.git";
+      # Optional, this repo's flake.nix just imports their default.nix, so this skips a step
+      flake = false;
+    };
+
     neovimPlugins =
     {
       url = "github:NixNeovim/NixNeovimPlugins";
@@ -22,5 +29,18 @@
     };
   };
 
-  outputs = args: import ./outputs.nix args;
+  outputs = inputs:
+  let
+    supportedSystems = [ "x86_64-linux" ];
+    forEachSystem = inputs.nixpkgs.lib.genAttrs supportedSystems;
+  in
+  {
+    packages = forEachSystem (system: {
+      default = import ./default.nix { inherit inputs system; };
+    });
+
+    devShells = forEachSystem (system: {
+      default = import ./shell.nix { inherit inputs system; };
+    });
+  };
 }
