@@ -41,9 +41,9 @@ opt.showcmd = false -- Shows when we press keypresses, which we don't need
 -- Only one statusline, for better separator between horizontal splits
 opt.laststatus = 3
 
--- Custom window title, only showing current filename
+-- Custom window title, showing project cwd and current filename
 opt.title = true
-vim.o.titlestring = "%t"
+vim.o.titlestring = vim.fn.getcwd():match("([^/]+)$") .. ": %t"
 
 opt.ignorecase = true
 opt.smartcase = true
