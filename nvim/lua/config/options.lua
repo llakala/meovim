@@ -41,7 +41,8 @@ opt.showcmd = false -- Shows when we press keypresses, which we don't need
 -- Only one statusline, for better separator between horizontal splits
 opt.laststatus = 3
 
--- Custom window title, showing project cwd and current filename
+-- Custom window title, showing project cwd and current filename. Regex takes
+-- the full cwd and takes everything after the last slash.
 opt.title = true
 vim.o.titlestring = vim.fn.getcwd():match("([^/]+)$") .. ": %t"
 
