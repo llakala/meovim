@@ -58,8 +58,13 @@ nnoremap("ta", function()
   end
 end)
 
--- Replace current tab with a file from the current directory. Great for if you
--- accidentally opened some other directory and want to go back to normalcy
--- TODO: rewrite in lua so this also opens in a new tab (may be hacky as I'm
--- not sure if there's a lua equivalent in the public config)
-nnoremap("tp", ":Yazi cwd<cr>")
+-- Open a new tab, starting from the neovim cwd (not the location of the current
+-- file). Great for if you want to search for a file/text, or just know exactly
+-- where the file you want is. Uses the other `.yazi()` constructor that takes an
+-- input path, so we can emulate the logic of `:Yazi cwd`.
+nnoremap("tp", function()
+  local cfg = { open_file_function = openNewTab }
+  local cwd = vim.fn.getcwd()
+
+  require("yazi").yazi(cfg, cwd)
+end)
