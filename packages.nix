@@ -10,6 +10,7 @@ let
     google-java-format
     stylua
     gleam
+    python3Packages.pylatexenc
   ];
 
 in packages

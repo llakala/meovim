@@ -22,6 +22,7 @@ let
     gitsigns-nvim
     indent-blankline-nvim # Same as `indent-blankline-nvim-lua`
     helpview-nvim
+    render-markdown-nvim
     markdown-preview-nvim
     rainbow-delimiters-nvim
 
