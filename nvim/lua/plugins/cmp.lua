@@ -6,9 +6,12 @@ local colorful_menu = require("colorful-menu")
 cmp.setup({
   keymap = {
     preset = "enter",
-    ["<Tab>"] = { "select_next", "fallback" },
-    ["<S-Tab>"] = { "select_prev", "fallback" },
+
+    ["<Tab>"] = { "snippet_forward", "select_next", "fallback" },
+    ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
   },
+
+  snippets = { preset = "luasnip" },
 
   completion = {
     -- Make completions care about before and after the cursor, which I find is
