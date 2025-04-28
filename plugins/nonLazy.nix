@@ -10,7 +10,6 @@ let
 
     # Features
     nvim-autopairs
-    vim-textobj-user
     yazi-nvim
     auto-session
     snacks-nvim

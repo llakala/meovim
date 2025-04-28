@@ -12,27 +12,30 @@ let
   llakaLib = inputs.llakaLib.pureLib; # Don't need any impure functions
 in
 {
-  # Custom derivations for plugins loaded at startup
+  # Plugins packaged myself that get loaded at startup. Keeping this commented
+  # out for now, since the directory is currently empty, and
+  # `collectDirectoryPackages` freaks out when trying to access an empty
+  # directory.
   customNonLazyPlugins = forAllSystems
+  (
+    pkgs:
+    {}
+
+    # llakaLib.collectDirectoryPackages
+    # {
+    #   inherit pkgs;
+    #   directory = ./plugins/nonLazy;
+    # }
+  );
+
+  # Plugins packaged myself that get loaded lazily.
+  customLazyPlugins = forAllSystems
   (
     pkgs: llakaLib.collectDirectoryPackages
     {
       inherit pkgs;
-      directory = ./plugins/nonLazy;
+      directory = ./plugins/lazy;
     }
-  );
-
-  # Custom derivations for plugins loaded lazily. Keeping this commented out for
-  # now, since the directory is empty, and would fail when trying to access it.
-  customLazyPlugins = forAllSystems
-  (
-    pkgs:
-    {}
-    # llakaLib.collectDirectoryPackages
-    # {
-    #   inherit pkgs;
-    #   directory = ./plugins/lazy;
-    # }
   );
 
   # Custom binaries to add to $PATH
