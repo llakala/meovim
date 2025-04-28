@@ -12,23 +12,30 @@ let
   llakaLib = inputs.llakaLib.pureLib; # Don't need any impure functions
 in
 {
-  /**
-    All the custom packages/plugins that meovim uses.
-    We export these as their own flake outputs, so we can test them
-    in devshells + repl, and also add them to the inputs of the meovim
-    package without any re-evalution by just accessing `self`.
-    These don't include the non-custom stuff from other sources, since
-    they're already accessible for testing elsewhere.
-  */
-  customPlugins = forAllSystems
+  # Custom derivations for plugins loaded at startup
+  customNonLazyPlugins = forAllSystems
   (
     pkgs: llakaLib.collectDirectoryPackages
     {
       inherit pkgs;
-      directory = ./plugins;
+      directory = ./plugins/nonLazy;
     }
   );
 
+  # Custom derivations for plugins loaded lazily. Keeping this commented out for
+  # now, since the directory is empty, and would fail when trying to access it.
+  customLazyPlugins = forAllSystems
+  (
+    pkgs:
+    {}
+    # llakaLib.collectDirectoryPackages
+    # {
+    #   inherit pkgs;
+    #   directory = ./plugins/lazy;
+    # }
+  );
+
+  # Custom binaries to add to $PATH
   customPackages = forAllSystems
   (
     pkgs: llakaLib.collectDirectoryPackages
@@ -40,21 +47,21 @@ in
 
   packages = forAllSystems
   (
-    pkgs:
-    let
-      # customPlugins and customPackages are stored in their own flake inputs,
-      # so they can be used in multiple places and only get evaluated once. We
-      # grab them and turn them into a list via attrValues, combining with the
-      # list of non-custom plugins/packages
-      nonLazyPlugins = import ./nonLazyPlugins.nix { inherit pkgs neovimPlugins; };
-      lazyPlugins = import ./lazyPlugins.nix { inherit pkgs neovimPlugins; };
-      customPlugins = builtins.attrValues self.customPlugins.${pkgs.system};
-
+    pkgs: let
+      # Lists of derivations that we grab from external sources (nixpkgs and
+      # neovimPlugins)
+      nonLazyPlugins = import ./plugins/nonLazy.nix { inherit pkgs neovimPlugins; };
+      lazyPlugins = import ./plugins/lazy.nix { inherit pkgs neovimPlugins; };
       packages = import ./packages.nix { inherit pkgs; };
+
+      # Custom definitions are stored in their own flake inputs, so they can be
+      # checked in the repl and other places to ensure functionality. The current
+      # data is stored as an attrset, so we turn it into a list.
+      customNonLazyPlugins = builtins.attrValues self.customNonLazyPlugins.${pkgs.system};
+      customLazyPlugins = builtins.attrValues self.customLazyPlugins.${pkgs.system};
       customPackages = builtins.attrValues self.customPackages.${pkgs.system};
-    in
-    {
-      default = inputs.mnw.lib.wrap pkgs
+
+      mnw = inputs.mnw.lib.wrap pkgs
       {
         appName = "nvim";
         neovim = pkgs.neovim-unwrapped;
@@ -70,9 +77,11 @@ in
 
         plugins.start =
           nonLazyPlugins
-          ++ customPlugins;
+          ++ customNonLazyPlugins;
 
-        plugins.opt = lazyPlugins;
+        plugins.opt =
+          lazyPlugins
+          ++ customLazyPlugins;
 
         extraBinPath =
           packages ++
@@ -85,7 +94,8 @@ in
         };
 
       };
-    }
+
+    in { default = mnw; }
   );
 
   devShells = forAllSystems
@@ -94,9 +104,7 @@ in
     {
       default = pkgs.mkShellNoCC
       {
-        packages = [
-          self.packages.${pkgs.system}.default.devMode
-        ];
+        packages = lib.singleton self.packages.${pkgs.system}.default.devMode;
       };
     }
   );
