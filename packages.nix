@@ -11,6 +11,7 @@ let
     stylua
     gleam
     python3Packages.pylatexenc
+    typescript-language-server
   ];
 
 in packages
