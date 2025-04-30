@@ -38,6 +38,8 @@ local cfg = {
   win = snacks_new_tab,
 }
 
+local Snacks = require("snacks")
+
 -- Don't make `.direnv` files searchable. We need to gate this behind a
 -- condition to prevent issues where if we're not in a git repo, `get_root`
 -- returns null, and lua freaks.

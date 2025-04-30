@@ -73,7 +73,6 @@ in
         /* lua */
         ''
           require("config")
-          require("plugins")
           require("lsp")
           require("lz.n").load("lazy")
         '';
