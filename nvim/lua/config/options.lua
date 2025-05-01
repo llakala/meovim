@@ -9,7 +9,7 @@ o = vim.o
 
 opt.termguicolors = true
 
-opt.clipboard = "unnamed"
+opt.clipboard = "unnamedplus"
 opt.undofile = true -- Persistent undo
 
 -- Enable mouse (but not in command mode). I try not to use it, but it's useful

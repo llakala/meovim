@@ -41,11 +41,14 @@ function inoremap(key, map)
   mkNoremap("i", key, map)
 end
 
--- System clipboard always
-nnoremap("y", 'v"+y')
-vnoremap("y", '"+ygv') -- Bring back selection after copying
-noremap("p", '"+[P') -- Paste before
-noremap("P", '"+[p') -- Paste after
+nnoremap("y", "vy") -- Select the current character, so `y` just copies a letter
+vnoremap("y", "ygv") -- Bring back selection after copying
+
+-- Paste and format, then jump to where we were before the selection. Means we
+-- can paste something and it'll be properly indented! I'd like to have it place
+-- the cursor after, but that doesn't seem possible with the default marks.
+noremap("p", "P`[myv`]=`y")
+noremap("P", "p`[myv`]=`y")
 
 -- Have j and k navigate visual lines rather than logical ones
 nmap("j", "gj")
