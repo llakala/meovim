@@ -1,5 +1,10 @@
 require("gitsigns").setup()
 
+local otter = require("otter")
+otter.setup({
+  buffers = { set_filetype = true }
+})
+
 -- Indent blankline
 require("ibl").setup({
   scope = { enabled = false },
