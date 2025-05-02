@@ -1,6 +1,10 @@
 cmp = require("blink.cmp")
 lsp_capabilities = cmp.get_lsp_capabilities()
 
+vim.lsp.config("*", {
+  capabilities = lsp_capabilities,
+})
+
 local colorful_menu = require("colorful-menu")
 
 cmp.setup({

@@ -5,7 +5,6 @@ let
   [
     # Basic essentials
     nvim-treesitter.withAllGrammars
-    nvim-lspconfig
     lz-n
 
     # Features
