@@ -1,9 +1,5 @@
-nnoremap("<leader>r", vim.lsp.buf.rename)
-noremap("<leader>h", vim.lsp.buf.hover) -- h for help/hover
-
--- Mode independent - will show code actions on selection if
--- in visual mode
-noremap("<leader>a", vim.lsp.buf.code_action)
+vim.lsp.inlay_hint.enable(true)
+local Snacks = require("snacks")
 
 vim.diagnostic.config({
   severity_sort = true,
@@ -11,10 +7,6 @@ vim.diagnostic.config({
     border = "rounded",
   },
 })
-
-noremap("<leader>d", function()
-  vim.diagnostic.open_float() -- d for diagnostics
-end)
 
 local cfg = {
   -- Autoconfirm would be nice, but it makes it open in the current
@@ -38,25 +30,6 @@ local cfg = {
   win = snacks_new_tab,
 }
 
-local Snacks = require("snacks")
-
--- Don't make `.direnv` files searchable. We need to gate this behind a
--- condition to prevent issues where if we're not in a git repo, `get_root`
--- returns null, and lua freaks.
-if Snacks.git.get_root() ~= nil then
-  cfg.filter.paths[Snacks.git.get_root() .. "/.direnv"] = false
-end
-
--- i for implementation
-nnoremap("<leader>i", function()
-  Snacks.picker.lsp_definitions(cfg)
-end)
-
--- u for usage
-nnoremap("<leader>u", function()
-  Snacks.picker.lsp_references(cfg)
-end)
-
 -- Custom formatting for diagnostics, to only show the diagnostic and the filename
 local format_function = function(item, picker)
   local ret = {}
@@ -73,6 +46,34 @@ local format_function = function(item, picker)
   vim.list_extend(ret, Snacks.picker.format.filename(item, picker))
   return ret
 end
+
+-- Don't make `.direnv` files searchable. We need to gate this behind a
+-- condition to prevent issues where if we're not in a git repo, `get_root`
+-- returns null, and lua freaks.
+if Snacks.git.get_root() ~= nil then
+  cfg.filter.paths[Snacks.git.get_root() .. "/.direnv"] = false
+end
+
+nnoremap("<leader>r", vim.lsp.buf.rename)
+noremap("<leader>h", vim.lsp.buf.hover) -- h for help/hover
+
+-- Mode independent - will show code actions on selection if
+-- in visual mode
+noremap("<leader>a", vim.lsp.buf.code_action)
+
+noremap("<leader>d", function()
+  vim.diagnostic.open_float() -- d for diagnostics
+end)
+
+-- i for implementation
+nnoremap("<leader>i", function()
+  Snacks.picker.lsp_definitions(cfg)
+end)
+
+-- u for usage
+nnoremap("<leader>u", function()
+  Snacks.picker.lsp_references(cfg)
+end)
 
 -- w for workspace. Shows workspace diagnostics, so you can see errors in other
 -- files. Great for Gleam dev, since the Gleam LSP gets stuck if one file has errors.

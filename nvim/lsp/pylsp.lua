@@ -1,5 +1,4 @@
-lspconfig.pylsp.setup({
-  capabilities = lsp_capabilities,
+return {
   settings = {
     pylsp = {
       plugins = {
@@ -7,4 +6,4 @@ lspconfig.pylsp.setup({
       },
     },
   },
-})
+}
