@@ -2,83 +2,82 @@
 -- We do it before everything so it can help us the most
 vim.loader.enable()
 
--- Global variables
-opt = vim.opt
+-- Global variables. `vim.o` is preferred over `vim.opt`
 g = vim.g
 o = vim.o
 
-opt.termguicolors = true
+o.termguicolors = true
 
-opt.clipboard = "unnamedplus"
-opt.undofile = true -- Persistent undo
+o.clipboard = "unnamedplus"
+o.undofile = true -- Persistent undo
 
 -- Enable mouse (but not in command mode). I try not to use it, but it's useful
 -- for scrolling diagnostics
-opt.mouse = "nva"
+o.mouse = "nva"
 
 -- Some people swear by it, but I want closing tabs to actually close them
-opt.hidden = false
+o.hidden = false
 
 -- Round to the nearest indentation level when using `<` and `>`
-opt.shiftround = true
+o.shiftround = true
 
-opt.cursorline = true
+o.cursorline = true
 -- Highlights the line number of the cursorline
 o.cursorlineopt = "both"
 
-opt.hlsearch = true -- Highlight search matches
-opt.number = true
-opt.breakindent = true -- Continue indented wrapped line at same level
-opt.signcolumn = "yes"
+o.hlsearch = true -- Highlight search matches
+o.number = true
+o.breakindent = true -- Continue indented wrapped line at same level
+o.signcolumn = "yes"
 
 -- When jumping around, don't center the line, so the screen position doesn't
 -- change.
-opt.jumpoptions = "stack,view"
+o.jumpoptions = "stack,view"
 
-opt.showmode = false -- Using lualine
-opt.showcmd = false -- Shows when we press keypresses, which we don't need
+o.showmode = false -- Using lualine
+o.showcmd = false -- Shows when we press keypresses, which we don't need
 
 -- Only one statusline, for better separator between horizontal splits
-opt.laststatus = 3
+o.laststatus = 3
 
 -- Custom window title, showing project cwd and current filename. Regex takes
 -- the full cwd and takes everything after the last slash.
-opt.title = true
+o.title = true
 vim.o.titlestring = vim.fn.getcwd():match("([^/]+)$") .. ": %t"
 
-opt.ignorecase = true
-opt.smartcase = true
+o.ignorecase = true
+o.smartcase = true
 
 vim.cmd("filetype plugin indent on")
-opt.autoindent = true
-opt.cindent = true -- Smarter than smartindent
-opt.smartindent = false
+o.autoindent = true
+o.cindent = true -- Smarter than smartindent
+o.smartindent = false
 
 -- Continue line comments in all languages. Without adding `ro`, it only seemed
 -- to work in some languages. Also remove `t`, so our textwidth stuff doesn't
 -- apply to it
-opt.formatoptions = "cqjro/"
+o.formatoptions = "cqjro/"
 o.wrap = false
 -- Auto-wrap comments (but not other stuff, thanks to the `t` changes above)
 o.textwidth = 80
 
 g.loaded_matchit = 1 -- Lets us remap `%`
 
-opt.expandtab = true -- spaces as tab
-opt.tabstop = 2 -- 2 spaces for tabs
-opt.shiftwidth = 0 -- Reuse value of tabstop
+o.expandtab = true -- spaces as tab
+o.tabstop = 2 -- 2 spaces for tabs
+o.shiftwidth = 0 -- Reuse value of tabstop
 
 -- Timeout isn't intuitive. We want it for `a` in visual mode, but that's a
 -- PR for another day.
-opt.timeout = false
+o.timeout = false
 
 -- Open new buffers in new tabs. Helpful for quickfix stuff
-opt.switchbuf = "useopen,usetab,newtab"
+o.switchbuf = "useopen,usetab,newtab"
 
-opt.smoothscroll = true -- Shows a continuation `>>>` when wrapping line is cut off
+o.smoothscroll = true -- Shows a continuation `>>>` when wrapping line is cut off
 
-opt.backup = false
-opt.writebackup = false
+o.backup = false
+o.writebackup = false
 
 g.mapleader = " "
 

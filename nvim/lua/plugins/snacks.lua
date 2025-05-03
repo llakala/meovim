@@ -135,7 +135,7 @@ local function open_or_create(picker, _, action)
   -- HACK: this should fix folds
   if vim.wo.foldmethod == "expr" then
     vim.schedule(function()
-      vim.opt.foldmethod = "expr"
+      vim.o.foldmethod = "expr"
     end)
   end
 

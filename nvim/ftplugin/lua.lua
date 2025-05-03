@@ -1,2 +1,2 @@
-opt.tabstop = 2
-opt.shiftwidth = 2
+o.tabstop = 2
+o.shiftwidth = 2
