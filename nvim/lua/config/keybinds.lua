@@ -47,8 +47,8 @@ vnoremap("y", "ygv") -- Bring back selection after copying
 -- Paste and format, then jump to where we were before the selection. Means we
 -- can paste something and it'll be properly indented! I'd like to have it place
 -- the cursor after, but that doesn't seem possible with the default marks.
-noremap("p", "P`[myv`]=`y")
-noremap("P", "p`[myv`]=`y")
+noremap("p", "P`[v`]=`[")
+noremap("P", "p`[v`]=`[")
 
 -- Have j and k navigate visual lines rather than logical ones
 nmap("j", "gj")
