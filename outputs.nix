@@ -56,17 +56,19 @@ in
           require("lsp")
         '';
 
-        devExcludedPlugins = lib.singleton ./nvim;
-
-        # Absolute path needed
-        devPluginPaths = lib.singleton "/home/emanresu/Documents/projects/meovim/nvim";
+        plugins.dev.config =
+        {
+          pure = ./nvim;
+          impure = "/home/emanresu/Documents/projects/meovim/nvim"; # Absolute path needed
+        };
 
         # customPlugins and customPackages are stored in their own flake
         # inputs, so they can be used in multiple places and only get
         # evaluated once. We grab them and turn them into a list via attrValues, combining with the list of non-custom plugins/packages
-        plugins =
+        plugins.start =
           import ./plugins.nix { inherit pkgs neovimPlugins; } ++
           builtins.attrValues self.neovimPlugins.${pkgs.system};
+
         extraBinPath =
           import ./packages.nix { inherit pkgs; } ++
           builtins.attrValues self.neovimPackages.${pkgs.system};
