@@ -63,8 +63,9 @@ in
       customNonLazyPlugins = builtins.attrValues self.customNonLazyPlugins.${pkgs.system};
       customLazyPlugins = builtins.attrValues self.customLazyPlugins.${pkgs.system};
       customPackages = builtins.attrValues self.customPackages.${pkgs.system};
-
-      mnw = inputs.mnw.lib.wrap pkgs
+    in
+    {
+      default = inputs.mnw.lib.wrap pkgs
       {
         appName = "nvim";
         neovim = pkgs.neovim-unwrapped;
@@ -97,10 +98,8 @@ in
           pure = ./nvim;
           impure = "/home/emanresu/Documents/projects/meovim/nvim"; # Absolute path needed
         };
-
       };
-
-    in { default = mnw; }
+    }
   );
 
   devShells = forAllSystems
