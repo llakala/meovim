@@ -18,10 +18,6 @@ cmp.setup({
   snippets = { preset = "luasnip" },
 
   completion = {
-    -- Make completions care about before and after the cursor, which I find is
-    -- more expected behavior
-    keyword = { range = "full" },
-
     list = {
       selection = {
         preselect = true,
