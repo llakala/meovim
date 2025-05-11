@@ -73,6 +73,12 @@ in
         initLua =
         /* lua */
         ''
+          -- Uncomment when you want to profile nvim startup. Be sure to have
+          -- the snacks.nvim repo cloned for this to work!
+
+          -- vim.opt.rtp:append("/home/emanresu/Documents/repos/snacks.nvim/")
+          -- require("snacks.profiler").startup()
+
           require("config")
           require("lz.n").load("lazy")
 
