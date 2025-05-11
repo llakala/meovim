@@ -1,5 +1,6 @@
 require("config.options")
 require("config.keybinds")
+require("config.helix")
 require("config.colorscheme")
 require("config.abbrev")
 require("config.commands")
