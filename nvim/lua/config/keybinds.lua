@@ -66,6 +66,9 @@ vnoremap(">", ">gv")
 nmap("#", "gcc")
 vmap("#", "gcgv")
 
+noremap("U", "<C-r>") -- Redo
+noremap("<A-u>", "U") -- In case you actually want this
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 -- From kickstart
 nnoremap("<Esc>", "<cmd>nohlsearch<CR>")
