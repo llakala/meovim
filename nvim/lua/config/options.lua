@@ -74,7 +74,7 @@ o.hlsearch = true -- Highlight search matches
 -- Statusline
 
 o.showmode = false -- Using lualine
-o.showcmd = false -- Shows when we press keypresses, which we don't need
+o.showcmd = true -- Shows when we press keypresses, which we don't need
 
 -- Only one statusline, for better separator between horizontal splits
 o.laststatus = 3
