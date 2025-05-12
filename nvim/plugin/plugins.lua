@@ -20,3 +20,8 @@ require("nvim-treesitter.configs").setup({
     enable = true,
   },
 })
+
+-- Auto start markdown preview, and change the preview when I change buffers.
+g.mkdp_auto_start = 1
+g.mkdp_auto_close = 0
+g.mkdp_combine_preview = 1
