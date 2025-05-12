@@ -12,6 +12,8 @@ o.backup = false
 o.writebackup = false
 o.undofile = true -- Persistent undo
 
+g.mapleader = " "
+
 o.mouse = "nva" -- Enable mouse (but not in command mode).
 o.clipboard = "unnamedplus"
 
@@ -88,8 +90,3 @@ o.formatoptions = "cqjro/"
 
 -- Auto-wrap comments (but not other stuff, thanks to the `t` changes above)
 o.textwidth = 80
-
--- Globals
-
-g.mapleader = " "
-g.loaded_matchit = 1 -- Lets us remap `%`
