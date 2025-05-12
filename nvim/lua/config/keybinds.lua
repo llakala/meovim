@@ -49,10 +49,6 @@ end
 noremap("p", "P`[v`]=`[")
 noremap("P", "p`[v`]=`[")
 
--- Don't deselect when indenting/unindenting multiple lines
-vnoremap("<", "<gv")
-vnoremap(">", ">gv")
-
 -- Comment/uncomment lines, Neovim 0.10 feature
 nmap("#", "gcc")
 vmap("#", "gcgv")
