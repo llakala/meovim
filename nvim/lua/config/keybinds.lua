@@ -49,9 +49,6 @@ end
 noremap("p", "P`[v`]=`[")
 noremap("P", "p`[v`]=`[")
 
-noremap("<", "<<")
-noremap(">", ">>")
-
 -- Don't deselect when indenting/unindenting multiple lines
 vnoremap("<", "<gv")
 vnoremap(">", ">gv")
