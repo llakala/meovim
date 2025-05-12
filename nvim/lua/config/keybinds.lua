@@ -44,6 +44,8 @@ end
 -- Paste and format, then jump to where we were before the selection. Means we
 -- can paste something and it'll be properly indented! I'd like to have it place
 -- the cursor after, but that doesn't seem possible with the default marks.
+-- Referenced from:
+-- https://github.com/ku1ik/vim-pasta#why-is-it-better-than-nnoremap-p-pv-
 noremap("p", "P`[v`]=`[")
 noremap("P", "p`[v`]=`[")
 
