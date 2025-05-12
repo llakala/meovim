@@ -61,6 +61,8 @@ let
     colorful-menu-nvim
 
     nvim-web-devicons # For bufferline
+
+    cutlass-nvim
     hlargs-nvim
   ];
 
