@@ -49,12 +49,6 @@ end
 noremap("p", "P`[v`]=`[")
 noremap("P", "p`[v`]=`[")
 
--- Have j and k navigate visual lines rather than logical ones
-nmap("j", "gj")
-nmap("k", "gk")
-vmap("j", "gj")
-vmap("k", "gk")
-
 noremap("<", "<<")
 noremap(">", ">>")
 
