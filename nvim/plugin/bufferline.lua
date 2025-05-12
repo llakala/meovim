@@ -86,7 +86,7 @@ bfl.setup({
 nnoremap("th", ":tabprev<CR>")
 nnoremap("tl", ":tabnext<CR>")
 
-nnoremap("tf", ":tabnew New Tab<CR>") -- Create fresh tab
+nnoremap("tn", ":tabnew New Tab<CR>") -- Create new tab
 nnoremap("td", ":tabclose<CR>")
 nnoremap("t!", ":quit!<CR>")
 
