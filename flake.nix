@@ -31,18 +31,19 @@
       supportedSystems
       (system: function nixpkgs.legacyPackages.${system});
 
+    # Custom functions that I store in their own repo, so I can use them across
+    # projects. I use my own custom wrapper around
+    # `lib.packagesFromDirectoryRecursive` from here, to automatically get any
+    # packages stored in our folders.
     llakaLib = inputs.llakaLib.pureLib; # Don't need any impure functions
   in
   {
     # When I need something and it isn't packaged already somewhere, I package it
     # myself. I have these accessible as flake inputs, so I can test them in the
-    # REPL. I use my own custom wrapper around
-    # `lib.packagesFromDirectoryRecursive` to automatically get any package stored
-    # in these folders.
+    # REPL.
 
-
-    # Plugins to be loaded at start. We comment this out for now, because
-    # `packagesFromDirectoryRecursive` will error if the folder is empty.
+    # We comment this out for now, because `packagesFromDirectoryRecursive` will
+    # error if the folder is empty.
     neovimStartPlugins = forAllSystems
     (
       pkgs:
@@ -55,7 +56,6 @@
       # }
     );
 
-    # Plugins packaged myself that get loaded lazily.
     neovimOptPlugins = forAllSystems
     (
       pkgs: llakaLib.collectDirectoryPackages
@@ -65,7 +65,6 @@
       }
     );
 
-    # Custom binaries to add to $PATH
     neovimBinaries = forAllSystems
     (
       pkgs: llakaLib.collectDirectoryPackages
@@ -78,7 +77,7 @@
     packages = forAllSystems
     (
       pkgs: let
-        # Packages and plugins that I grab from elsewhere. Stored in their own
+        # Binaries and plugins that I grab from elsewhere. Stored in their own
         # files so I'm not editing monolithic files to add stuff
         startPlugins = import ./startPlugins.nix { inherit pkgs neovimPlugins; };
         optPlugins = import ./optPlugins.nix { inherit pkgs neovimPlugins; };
