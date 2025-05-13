@@ -43,7 +43,7 @@
 
     # Plugins to be loaded at start. We comment this out for now, because
     # `packagesFromDirectoryRecursive` will error if the folder is empty.
-    neovimNonLazyPlugins = forAllSystems
+    neovimStartPlugins = forAllSystems
     (
       pkgs:
       {}
@@ -51,27 +51,27 @@
       # llakaLib.collectDirectoryPackages
       # {
       #   inherit pkgs;
-      #   directory = ./other/nonLazyPlugins;
+      #   directory = ./other/startPlugins;
       # }
     );
 
     # Plugins packaged myself that get loaded lazily.
-    neovimLazyPlugins = forAllSystems
+    neovimOptPlugins = forAllSystems
     (
       pkgs: llakaLib.collectDirectoryPackages
       {
         inherit pkgs;
-        directory = ./other/lazyPlugins;
+        directory = ./other/optPlugins;
       }
     );
 
     # Custom binaries to add to $PATH
-    neovimPackages = forAllSystems
+    neovimBinaries = forAllSystems
     (
       pkgs: llakaLib.collectDirectoryPackages
       {
         inherit pkgs;
-        directory = ./other/packages;
+        directory = ./other/binaries;
       }
     );
 
@@ -80,15 +80,15 @@
       pkgs: let
         # Packages and plugins that I grab from elsewhere. Stored in their own
         # files so I'm not editing monolithic files to add stuff
-        nonLazyPlugins = import ./nonLazyPlugins.nix { inherit pkgs neovimPlugins; };
-        lazyPlugins = import ./lazyPlugins.nix { inherit pkgs neovimPlugins; };
-        packages = import ./packages.nix { inherit pkgs; };
+        startPlugins = import ./startPlugins.nix { inherit pkgs neovimPlugins; };
+        optPlugins = import ./optPlugins.nix { inherit pkgs neovimPlugins; };
+        binaries = import ./binaries.nix { inherit pkgs; };
 
         # Custom derivations that I wrote myself. Need to be turned into a list,
         # since flake inputs are expected to be attrsets.
-        customNonLazyPlugins = builtins.attrValues self.neovimNonLazyPlugins.${pkgs.system};
-        customLazyPlugins = builtins.attrValues self.neovimLazyPlugins.${pkgs.system};
-        customPackages = builtins.attrValues self.neovimPackages.${pkgs.system};
+        customStartPlugins = builtins.attrValues self.neovimStartPlugins.${pkgs.system};
+        customOptPlugins = builtins.attrValues self.neovimOptPlugins.${pkgs.system};
+        customPackages = builtins.attrValues self.neovimBinaries.${pkgs.system};
       in
       {
         default = inputs.mnw.lib.wrap pkgs
@@ -114,15 +114,15 @@
           '';
 
           plugins.start =
-            nonLazyPlugins
-            ++ customNonLazyPlugins;
+            startPlugins
+            ++ customStartPlugins;
 
           plugins.opt =
-            lazyPlugins
-            ++ customLazyPlugins;
+            optPlugins
+            ++ customOptPlugins;
 
           extraBinPath =
-            packages ++
+            binaries ++
             customPackages;
 
           plugins.dev.config =
