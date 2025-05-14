@@ -6,7 +6,7 @@ require("ibl").setup({
 })
 
 require("nvim-surround").setup({
-  move_cursor = false,
+  move_cursor = "sticky",
   keymaps = {
     normal = "s",
     delete = "ds",
