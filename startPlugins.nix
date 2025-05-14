@@ -28,6 +28,7 @@ let
     helpview-nvim
     render-markdown-nvim
     markdown-preview-nvim
+    stay-centered-nvim
     rainbow-delimiters-nvim
 
     # Completions

@@ -30,6 +30,8 @@ require("nvim-treesitter.configs").setup({
   },
 })
 
+require("stay-centered").setup()
+
 require("hlargs").setup()
 
 -- Auto start markdown preview, and change the preview when I change buffers.
