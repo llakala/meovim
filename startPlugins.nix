@@ -17,6 +17,7 @@ let
     auto-session
     snacks-nvim
     ts-comments-nvim
+    nvim-surround
     conform-nvim
     tiny-inline-diagnostic-nvim
 
