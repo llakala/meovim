@@ -61,6 +61,7 @@ let
     colorful-menu-nvim
 
     nvim-web-devicons # For bufferline
+    hlargs-nvim
   ];
 
 in pkgsPlugins ++ extraPlugins
