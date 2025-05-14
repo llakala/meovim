@@ -4,14 +4,6 @@ require("mini.trailspace").setup({
 
 vim.api.nvim_set_hl(0, "MiniTrailspace", { bg = "#e55c7a" }) -- Git's "red reverse"
 
-require("mini.surround").setup({
-  mappings = {
-    add = "ms", -- Add surrounding in Normal and Visual modes
-    delete = "md", -- Delete surrounding
-    replace = "mr", -- Replace surrounding
-  },
-})
-
 local isc = require("mini.indentscope")
 isc.setup({
   options = {
@@ -29,5 +21,3 @@ isc.setup({
   },
   symbol = "│",
 })
-
-vim.keymap.set("n", "ms", [[v:lua MiniSurround.add('visual')<CR>]], { silent = true })

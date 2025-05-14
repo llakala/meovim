@@ -5,6 +5,15 @@ require("ibl").setup({
   scope = { enabled = false },
 })
 
+require("nvim-surround").setup({
+  move_cursor = false,
+  keymaps = {
+    normal = "s",
+    delete = "ds",
+    change = "cs",
+  },
+})
+
 -- No, that's not a typo, the string has setup in it
 require("rainbow-delimiters.setup").setup({
   highlight = {
