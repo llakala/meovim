@@ -40,6 +40,7 @@ o.cursorline = true
 o.cursorlineopt = "both" -- Highlights the line number of the cursorline
 
 o.number = true
+o.relativenumber = true
 o.signcolumn = "yes"
 
 -- Shows a continuation `>>>` when wrapping line is cut off
