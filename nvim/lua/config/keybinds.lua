@@ -54,6 +54,10 @@ vmap("#", "gcgv")
 noremap("U", "<C-r>") -- Redo
 noremap("<A-u>", "U") -- In case you actually want this
 
+-- Needs to be `noremap` to work in operator-pending mode.
+noremap("H", "^")
+noremap("L", "g_")
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 -- From kickstart
 nnoremap("<Esc>", "<cmd>nohlsearch<CR>")
