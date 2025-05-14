@@ -25,6 +25,7 @@ cmp.setup({
         auto_insert = false,
       },
     },
+
     ghost_text = {
       enabled = true,
     },
@@ -78,6 +79,7 @@ cmp.setup({
       end
       return items
     end,
+
     -- Removing buffer completion from the defaults
     default = {
       "lsp",
@@ -85,6 +87,7 @@ cmp.setup({
       "snippets",
       "lazydev",
     },
+
     -- Loading lazydev through blink leads to better signature help and overall
     -- a better experience
     providers = {
@@ -101,6 +104,7 @@ cmp.setup({
   -- lsp_signature, my previous solution
   signature = {
     enabled = true,
+
     window = {
       show_documentation = true,
     },
@@ -108,7 +112,12 @@ cmp.setup({
 
   cmdline = {
     enabled = true,
+
     completion = {
+      list = {
+        preselect = true,
+      },
+
       menu = {
         auto_show = true,
       },
@@ -118,6 +127,7 @@ cmp.setup({
   -- Prioritizes exact matches higher
   fuzzy = {
     implementation = "prefer_rust_with_warning",
+
     sorts = {
       "exact",
       -- defaults
