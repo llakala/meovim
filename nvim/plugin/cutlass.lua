@@ -1,3 +1,3 @@
 require("cutlass").setup({
-  cut_key = "x", -- Use `dl` and `cl` for individual letters
+  cut_key = "q", -- Not using macros enough right now to need this
 })
