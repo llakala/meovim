@@ -56,13 +56,17 @@
       # }
     );
 
+    # See above!
     neovimOptPlugins = forAllSystems
     (
-      pkgs: llakaLib.collectDirectoryPackages
-      {
-        inherit pkgs;
-        directory = ./other/optPlugins;
-      }
+      pkgs:
+      {}
+
+      # llakaLib.collectDirectoryPackages
+      # {
+      #   inherit pkgs;
+      #   directory = ./other/optPlugins;
+      # }
     );
 
     neovimBinaries = forAllSystems
