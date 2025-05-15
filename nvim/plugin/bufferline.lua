@@ -87,7 +87,7 @@ nnoremap("th", ":tabprev<CR>")
 nnoremap("tl", ":tabnext<CR>")
 
 nnoremap("tn", ":tabnew New Tab<CR>") -- Create new tab
-nnoremap("td", ":tabclose<CR>")
+nnoremap("td", ":quit<CR>")
 nnoremap("t!", ":quit!<CR>")
 
 -- Go to specific tab number
