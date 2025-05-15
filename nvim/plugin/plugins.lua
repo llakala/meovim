@@ -7,12 +7,31 @@ require("ibl").setup({
 
 require("nvim-surround").setup({
   move_cursor = "sticky",
+
+  -- We disable all the default keymaps, instead choosing to access
+  -- nvim-surround through `surround-ui` (or, actually, my fork that makes
+  -- surround-ui not use hardcoded keymaps)
   keymaps = {
-    normal = "s",
-    delete = "ds",
-    change = "cs",
+    insert = false,
+    insert_line = false,
+
+    normal = false,
+
+    normal_cur = false,
+    normal_line = false,
+    normal_cur_line = false,
+
+    visual = false,
+    visual_line = false,
+
+    delete = false,
+
+    change = false,
+    change_line = false,
   },
 })
+
+require("surround-ui").setup({ root_key = "s" })
 
 -- No, that's not a typo, the string has setup in it
 require("rainbow-delimiters.setup").setup({
