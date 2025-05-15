@@ -115,7 +115,9 @@ cmp.setup({
 
     completion = {
       list = {
-        preselect = true,
+        selection = {
+          preselect = true,
+        },
       },
 
       menu = {
