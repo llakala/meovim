@@ -47,13 +47,12 @@
     neovimStartPlugins = forAllSystems
     (
       pkgs:
-      {}
 
-      # llakaLib.collectDirectoryPackages
-      # {
-      #   inherit pkgs;
-      #   directory = ./other/startPlugins;
-      # }
+      llakaLib.collectDirectoryPackages
+      {
+        inherit pkgs;
+        directory = ./other/startPlugins;
+      }
     );
 
     # See above!
