@@ -44,7 +44,6 @@ let
 
     # From mini.nvim
     mini-trailspace
-    mini-surround
     mini-indentscope
 
     # Dependencies
