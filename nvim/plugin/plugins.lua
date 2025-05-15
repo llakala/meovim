@@ -7,10 +7,20 @@ require("ibl").setup({
 
 require("nvim-surround").setup({
   move_cursor = "sticky",
+
+  -- I'd like to have these use `ds` to be more vim-appropriate, but they seem
+  -- to break which-key when I do them in that order. Gross!
   keymaps = {
-    normal = "s",
-    delete = "ds",
-    change = "cs",
+    normal = "ss",
+
+    normal_cur = "<A-o>",
+    normal_line = "<A-o>",
+    normal_cur_line = "<A-o>",
+
+    delete = "sd",
+
+    change = "sc",
+    change_line = "sC",
   },
 })
 
