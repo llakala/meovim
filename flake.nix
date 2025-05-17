@@ -26,7 +26,7 @@
   let
     lib = nixpkgs.lib;
 
-    supportedSystems = [ "x86_64-linux" ];
+    supportedSystems = [ "x86_64-linux" "aarch64-darwin" ];
     forAllSystems = function: lib.genAttrs
       supportedSystems
       (system: function nixpkgs.legacyPackages.${system});
