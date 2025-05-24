@@ -26,13 +26,14 @@ local format_function = function(item, picker)
 end
 
 nnoremap("<leader>r", vim.lsp.buf.rename)
-noremap("<leader>h", vim.lsp.buf.hover) -- h for help/hover
+nnoremap("<leader>h", vim.lsp.buf.hover) -- h for help/hover
 
 -- Mode independent - will show code actions on selection if
 -- in visual mode
-noremap("<leader>a", vim.lsp.buf.code_action)
+nnoremap("<leader>a", vim.lsp.buf.code_action)
+vnoremap("<leader>a", vim.lsp.buf.code_action)
 
-noremap("<leader>d", function()
+nnoremap("<leader>d", function()
   vim.diagnostic.open_float() -- d for diagnostics
 end)
 

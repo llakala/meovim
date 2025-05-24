@@ -3,7 +3,6 @@ require("cutlass").setup({
   cut_key = nil,
 })
 
--- Do this ourselvews, using noremap instead of nnoremap
--- Means that it works in the operator pending mode, and we can have numbers as
--- motions
-noremap("q", "d")
+-- Doing this myself, since I trust myself to set it up correctly
+nnoremap("q", "d", "Delete and yank")
+onoremap("q", "d", "Delete and yank")

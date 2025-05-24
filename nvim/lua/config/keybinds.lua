@@ -1,62 +1,65 @@
 -- Create a map with noremap set to false
 -- Need to also set remap to true for some binds to work
-local function mkRemap(mode, key, map)
-  vim.keymap.set(mode, key, map, { remap = true, noremap = false, silent = true })
+local function mkRemap(mode, key, map, desc)
+  desc = desc or ""
+  mode = mode or "n"
+  vim.keymap.set(mode, key, map, { remap = true, noremap = false, silent = true, desc = desc })
 end
 
 -- Create a map with noremap set to true
-local function mkNoremap(mode, key, map)
-  vim.keymap.set(mode, key, map, { noremap = true, silent = true })
+local function mkNoremap(mode, key, map, desc)
+  desc = desc or ""
+  mode = mode or "n"
+  vim.keymap.set(mode, key, map, { noremap = true, silent = true, desc = desc })
 end
 
-function map(key, map)
-  mkRemap("", key, map)
+function nmap(key, map, desc)
+  mkRemap("n", key, map, desc)
 end
 
-function noremap(key, map)
-  mkNoremap("", key, map)
+function vmap(key, map, desc)
+  mkRemap("v", key, map, desc)
 end
 
-function nmap(key, map)
-  mkRemap("n", key, map)
+function imap(key, map, desc)
+  mkRemap("i", key, map, desc)
 end
 
-function vmap(key, map)
-  mkRemap("v", key, map)
+function omap(key, map, desc)
+  mkRemap("o", key, map, desc)
 end
 
-function imap(key, map)
-  mkRemap("i", key, map)
+function nnoremap(key, map, desc)
+  mkNoremap("n", key, map, desc)
 end
 
-function nnoremap(key, map)
-  mkNoremap("n", key, map)
+function vnoremap(key, map, desc)
+  mkNoremap("v", key, map, desc)
 end
 
-function vnoremap(key, map)
-  mkNoremap("v", key, map)
+function inoremap(key, map, desc)
+  mkNoremap("i", key, map, desc)
 end
 
-function inoremap(key, map)
-  mkNoremap("i", key, map)
+function onoremap(key, map, desc)
+  mkNoremap("o", key, map, desc)
 end
 
 -- Paste and format, Means we can paste something and it'll be properly
 -- indented! Referenced from:
 -- https://github.com/ku1ik/vim-pasta#why-is-it-better-than-nnoremap-p-pv-
-noremap("p", "p`[v`]=")
-noremap("P", "P`[v`]=")
+nnoremap("p", "p`[v`]=")
+nnoremap("P", "P`[v`]=")
 
 -- Comment/uncomment lines, Neovim 0.10 feature
 nmap("#", "gcc")
 vmap("#", "gcgv")
 
-noremap("U", "<C-r>") -- Redo
-noremap("<A-u>", "U") -- In case you actually want this
+nnoremap("U", "<C-r>") -- Redo
+nnoremap("<A-u>", "U") -- In case you actually want this
 
--- Needs to be `noremap` to work in operator-pending mode.
-noremap("H", "^")
-noremap("L", "g_")
+nnoremap("H", "^")
+nnoremap("L", "g_")
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 -- From kickstart
