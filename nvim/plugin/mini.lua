@@ -21,3 +21,20 @@ isc.setup({
   },
   symbol = "│",
 })
+
+-- Having separate `gc` and `gcc` binds breaks which-key. We remove the default
+-- `gcc` bind, but keep the `gc` one, so we can do something like `gcip` and it
+-- works. For commenting lines, we use `#` via `mini.comment`
+vim.keymap.del("n", "gcc")
+
+require("mini.comment").setup({
+  mappings = {
+    comment = "",
+    comment_line = "#",
+    comment_visual = "#",
+
+    -- "delete in comment" feels cleaner to me than "delete global comment".
+    -- Also matches my `dip` and `dii` intuition.
+    textobject = "ic",
+  },
+})

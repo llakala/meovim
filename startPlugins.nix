@@ -45,6 +45,7 @@ let
     # From mini.nvim
     mini-trailspace
     mini-indentscope
+    mini-comment
 
     # Dependencies
     nvim-yarp # For wilder

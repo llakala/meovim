@@ -51,10 +51,6 @@ end
 nnoremap("p", "p`[v`]=")
 nnoremap("P", "P`[v`]=")
 
--- Comment/uncomment lines, Neovim 0.10 feature
-nmap("#", "gcc")
-vmap("#", "gcgv")
-
 nnoremap("U", "<C-r>") -- Redo
 nnoremap("<A-u>", "U") -- In case you actually want this
 
