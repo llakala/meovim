@@ -40,11 +40,11 @@
     },
     "mnw": {
       "locked": {
-        "lastModified": 1746926137,
-        "narHash": "sha256-I3FQYMN/k4dUZJNULHS6ba1A3OClEkJbZYr1+7q6mpo=",
+        "lastModified": 1747615842,
+        "narHash": "sha256-pAh9ndf+GdoCfsWaNATFDjgiax9fOYdWzguYV1H/W0E=",
         "owner": "Gerg-L",
         "repo": "mnw",
-        "rev": "cd1904d9ea0132c06dee86b8759ba8e5bd2e9d9d",
+        "rev": "b62120999410eb4a4e27359a3e1c0a22fcc0baff",
         "type": "github"
       },
       "original": {
@@ -64,11 +64,11 @@
         "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "lastModified": 1747319432,
-        "narHash": "sha256-6rflYdX3zxO3ej96/dKDPiRbhGwo38lKoktUZBLgiec=",
+        "lastModified": 1747924174,
+        "narHash": "sha256-Ng5G+QJ6DBTkvVMjML71HSkDW694jQ6o3s/JRQjPFv4=",
         "owner": "NixNeovim",
         "repo": "NixNeovimPlugins",
-        "rev": "e80fa66285513cd544a5edde9eb3bfa861450d9d",
+        "rev": "3d39323ea3bd9b9a8074eb7f4761f467ef0ff900",
         "type": "github"
       },
       "original": {
@@ -101,11 +101,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1747179050,
-        "narHash": "sha256-qhFMmDkeJX9KJwr5H32f1r7Prs7XbQWtO0h3V0a0rFY=",
+        "lastModified": 1747744144,
+        "narHash": "sha256-W7lqHp0qZiENCDwUZ5EX/lNhxjMdNapFnbErcbnP11Q=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "adaa24fbf46737f3f1b5497bf64bae750f82942e",
+        "rev": "2795c506fe8fb7b03c36ccb51f75b6df0ab2553f",
         "type": "github"
       },
       "original": {
