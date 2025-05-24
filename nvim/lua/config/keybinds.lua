@@ -59,7 +59,10 @@ nnoremap("U", "<C-r>") -- Redo
 nnoremap("<A-u>", "U") -- In case you actually want this
 
 nnoremap("H", "^")
+vnoremap("H", "^")
+
 nnoremap("L", "g_")
+vnoremap("L", "g_")
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 -- From kickstart
