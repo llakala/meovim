@@ -18,7 +18,7 @@ function nmap(key, map, desc)
 end
 
 function vmap(key, map, desc)
-  mkRemap("v", key, map, desc)
+  mkRemap("x", key, map, desc)
 end
 
 function imap(key, map, desc)
@@ -34,7 +34,7 @@ function nnoremap(key, map, desc)
 end
 
 function vnoremap(key, map, desc)
-  mkNoremap("v", key, map, desc)
+  mkNoremap("x", key, map, desc)
 end
 
 function inoremap(key, map, desc)
