@@ -57,8 +57,10 @@ nnoremap("<A-u>", "U") -- In case you actually want this
 nnoremap("H", "^")
 vnoremap("H", "^")
 
-nnoremap("L", "g_")
-vnoremap("L", "g_")
+-- If I'm going to the end of the line, I want the real end - if there's
+-- trailing whitespace there, it sohuld be fixed anyways.
+nnoremap("L", "$")
+vnoremap("L", "$")
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 -- From kickstart
