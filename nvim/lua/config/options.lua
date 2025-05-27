@@ -57,6 +57,10 @@ o.expandtab = true -- spaces as tab
 o.tabstop = 2 -- 2 spaces for tabs
 o.shiftwidth = 0 -- Reuse value of tabstop
 
+-- If you need it, do `zi`
+o.foldenable = false
+o.foldmethod = "indent"
+
 -- Round to the nearest indentation level when using `<` and `>`
 o.shiftround = true
 
