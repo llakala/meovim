@@ -3,7 +3,8 @@
 let
   pkgsPlugins = with pkgs.vimPlugins;
   [
-    which-key-nvim
+    render-markdown-nvim
+    mini-ai
   ];
 in
 pkgsPlugins
