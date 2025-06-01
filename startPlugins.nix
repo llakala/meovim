@@ -21,6 +21,7 @@ let
     nvim-surround
     conform-nvim
     tiny-inline-diagnostic-nvim
+    vimtex
 
     # Pretty
     nvim-highlight-colors
