@@ -6,6 +6,7 @@ require("conform").setup({
     java = { "google-java-format" },
     nix = { "nixfmt" },
     lua = { "stylua" },
+    tex = { "tex-fmt" },
   },
 
   -- For gleam
@@ -17,6 +18,9 @@ require("conform").setup({
     ["google-java-format"] = {
       command = "google-java-format",
       args = { "--aosp", "-" },
+    },
+    ["tex-fmt"] = {
+      prepend_args = { "--nowrap", "--tabsize", "4" },
     },
   },
 

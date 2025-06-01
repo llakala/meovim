@@ -14,6 +14,7 @@ let
     # Formatters
     google-java-format
     stylua
+    tex-fmt # Couldn't get latexindent working
 
     # Plugin dependencies
     texliveFull
