@@ -1,5 +1,5 @@
 -- Only add these binds when in a tex buffer
-g.vimtex_view_general_viewer = "zathura"
+g.vimtex_view_method = "zathura"
 g.maplocalleader = " "
 
 g.vimtex_mappings_disable = {
