@@ -6,6 +6,7 @@ let
     # Basic essentials
     nvim-treesitter.withAllGrammars
     lz-n
+    which-key-nvim
 
     # I'm using native lsps, but having this enabled means the lsps just work,
     # since they'll listen to whatever lspconfig puts as the defaults
