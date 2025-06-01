@@ -17,7 +17,9 @@ let
     tex-fmt # Couldn't get latexindent working
 
     # Plugin dependencies
-    texliveFull
+    texliveBasic
+    texlivePackages.latexmk
+    texlivePackages.biber
     yazi
   ];
 
