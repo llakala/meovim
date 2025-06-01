@@ -2,17 +2,22 @@
 let
   packages = with pkgs;
   [
+    # Language servers
     nixd
     jdt-language-server
-    yazi
     lua-language-server
     fish-lsp
-    google-java-format
-    stylua
     gleam
-    python3Packages.pylatexenc
     typescript-language-server
     marksman
+
+    # Formatters
+    google-java-format
+    stylua
+
+    # Plugin dependencies
+    texliveFull
+    yazi
   ];
 
 in packages
