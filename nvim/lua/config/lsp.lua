@@ -26,7 +26,6 @@ local format_function = function(item, picker)
 end
 
 nnoremap("<leader>r", vim.lsp.buf.rename, "Rename symbol")
-nnoremap("<leader>h", vim.lsp.buf.hover, "Hover") -- h for help/hover
 
 -- Mode independent - will show code actions on selection if
 -- in visual mode
