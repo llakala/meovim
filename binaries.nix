@@ -12,6 +12,7 @@ let
     gleam
     python3Packages.pylatexenc
     typescript-language-server
+    marksman
   ];
 
 in packages
