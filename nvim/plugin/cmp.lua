@@ -86,6 +86,7 @@ cmp.setup({
       "path",
       "snippets",
       "lazydev",
+      "omni", -- For vimtex
     },
 
     -- Loading lazydev through blink leads to better signature help and overall
