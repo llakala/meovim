@@ -4,6 +4,6 @@ require("cutlass").setup({
 })
 
 -- Doing this myself, since I trust myself to set it up correctly
-nnoremap("q", "d", "Delete and yank")
-onoremap("q", "d", "Delete and yank")
-vnoremap("q", "d", "Delete and yank")
+nnoremap("q", "d", { desc = "Delete and yank" })
+onoremap("q", "d", { desc = "Delete and yank" })
+vnoremap("q", "d", { desc = "Delete and yank" })

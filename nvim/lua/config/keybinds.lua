@@ -1,23 +1,29 @@
 -- Create a map with noremap set to true
-local function mkNoremap(mode, key, map, desc)
-  desc = desc or ""
-  vim.keymap.set(mode, key, map, { noremap = true, silent = true, desc = desc })
+local function mkNoremap(mode, key, map, opts)
+  opts = opts or {}
+
+  -- Merge the passed opts with the base ones. Using non-recursive tbl_extend.
+  -- If you need recursion, change it!
+  base_opts = { noremap = true, silent = true }
+  opts = vim.tbl_extend("force", base_opts, opts)
+
+  vim.keymap.set(mode, key, map, opts)
 end
 
-function nnoremap(key, map, desc)
-  mkNoremap("n", key, map, desc)
+function nnoremap(key, map, opts)
+  mkNoremap("n", key, map, opts)
 end
 
-function vnoremap(key, map, desc)
-  mkNoremap("x", key, map, desc)
+function vnoremap(key, map, opts)
+  mkNoremap("x", key, map, opts)
 end
 
-function inoremap(key, map, desc)
-  mkNoremap("i", key, map, desc)
+function inoremap(key, map, opts)
+  mkNoremap("i", key, map, opts)
 end
 
-function onoremap(key, map, desc)
-  mkNoremap("o", key, map, desc)
+function onoremap(key, map, opts)
+  mkNoremap("o", key, map, opts)
 end
 
 -- Paste and format, Means we can paste something and it'll be properly

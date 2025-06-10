@@ -25,16 +25,16 @@ local format_function = function(item, picker)
   return ret
 end
 
-nnoremap("<leader>r", vim.lsp.buf.rename, "Rename symbol")
+nnoremap("<leader>r", vim.lsp.buf.rename, { desc = "Rename symbol" })
 
 -- Mode independent - will show code actions on selection if
 -- in visual mode
-nnoremap("<leader>a", vim.lsp.buf.code_action, "Code action")
-vnoremap("<leader>a", vim.lsp.buf.code_action, "Code action")
+nnoremap("<leader>a", vim.lsp.buf.code_action, { desc = "Code action" })
+vnoremap("<leader>a", vim.lsp.buf.code_action, { desc = "Code action" })
 
 nnoremap("<leader>d", function()
   vim.diagnostic.open_float() -- d for diagnostics
-end, "Diagnostic")
+end, { desc = "Diagnostic" })
 
 -- i for implementation
 nnoremap("<leader>i", function()
@@ -42,7 +42,7 @@ nnoremap("<leader>i", function()
     auto_confirm = false,
     win = snacks_new_tab,
   })
-end, "View implementation")
+end, { desc = "View implementation" })
 
 -- u for usage
 nnoremap("<leader>u", function()
@@ -50,7 +50,7 @@ nnoremap("<leader>u", function()
     auto_confirm = false,
     win = snacks_new_tab,
   })
-end, "View usage(s)")
+end, { desc = "View usage(s)" })
 
 -- w for workspace. Shows workspace diagnostics, so you can see errors in other
 -- files. Great for Gleam dev, since the Gleam LSP gets stuck if one file has errors.
@@ -62,4 +62,4 @@ nnoremap("<leader>w", function()
 
     win = snacks_new_tab,
   })
-end, "Workspace diagnostics")
+end, { desc = "Workspace diagnostics" })
