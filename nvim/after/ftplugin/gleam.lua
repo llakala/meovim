@@ -6,4 +6,6 @@ o.cindent = false
 o.smartindent = true
 
 -- Provides multiple comment strings, sorted longest-shortest for precedence
+-- Note that this doesn't work unless you put it in `after/ftplugin`, not normal
+-- `ftplugin`. Not sure why!
 o.comments = ":////,:///,://"
