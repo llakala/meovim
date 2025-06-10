@@ -1,32 +1,7 @@
--- Create a map with noremap set to false
--- Need to also set remap to true for some binds to work
-local function mkRemap(mode, key, map, desc)
-  desc = desc or ""
-  mode = mode or "n"
-  vim.keymap.set(mode, key, map, { remap = true, noremap = false, silent = true, desc = desc })
-end
-
 -- Create a map with noremap set to true
 local function mkNoremap(mode, key, map, desc)
   desc = desc or ""
-  mode = mode or "n"
   vim.keymap.set(mode, key, map, { noremap = true, silent = true, desc = desc })
-end
-
-function nmap(key, map, desc)
-  mkRemap("n", key, map, desc)
-end
-
-function vmap(key, map, desc)
-  mkRemap("x", key, map, desc)
-end
-
-function imap(key, map, desc)
-  mkRemap("i", key, map, desc)
-end
-
-function omap(key, map, desc)
-  mkRemap("o", key, map, desc)
 end
 
 function nnoremap(key, map, desc)
