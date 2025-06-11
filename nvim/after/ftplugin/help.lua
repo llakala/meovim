@@ -8,3 +8,7 @@ vim.api.nvim_set_hl(0, "@markup.link.vimdoc", { fg = colors.blue })
 local o = vim.opt_local
 o.wrap = false
 vim.b.miniindentscope_disable = true
+
+-- Put help page in new tab when opened. Better than cabbrev, since this
+-- always triggers, even when copy/pasting something into cmdline!
+vim.cmd("silent wincmd T")
