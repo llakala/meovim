@@ -9,6 +9,8 @@ let
     fish-lsp
     gleam
     typescript-language-server
+    basedpyright
+    ruff
     marksman
 
     # Formatters

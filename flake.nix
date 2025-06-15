@@ -70,11 +70,13 @@
 
     neovimBinaries = forAllSystems
     (
-      pkgs: llakaLib.collectDirectoryPackages
-      {
-        inherit pkgs;
-        directory = ./other/binaries;
-      }
+      pkgs:
+      {}
+      # llakaLib.collectDirectoryPackages
+      # {
+      #   inherit pkgs;
+      #   directory = ./other/binaries;
+      # }
     );
 
     packages = forAllSystems
@@ -112,7 +114,7 @@
 
             -- Add to this whenever you add a new server to the `lsp` folder!
             -- Ridiculous that nvim can't load them for you as far as I can tell
-            vim.lsp.enable({ "fish_lsp", "gleam", "lua_ls", "nixd", "pylsp", "ts_ls", "marksman" })
+            vim.lsp.enable({ "fish_lsp", "gleam", "lua_ls", "nixd", "basedpyright", "ts_ls", "marksman" })
           '';
 
           plugins.start =

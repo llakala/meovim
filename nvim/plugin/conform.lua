@@ -7,6 +7,12 @@ require("conform").setup({
     nix = { "nixfmt" },
     lua = { "stylua" },
     tex = { "tex-fmt" },
+
+    python = {
+      "ruff_fix",
+      "ruff_organize_imports",
+      "ruff_format",
+    },
   },
 
   -- For gleam
