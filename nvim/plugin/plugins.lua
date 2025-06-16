@@ -54,8 +54,9 @@ require("stay-centered").setup()
 
 require("hlargs").setup()
 
--- Auto start markdown preview, and change the preview when I change buffers.
-g.mkdp_auto_start = 1
+-- Don't autostart markdown preview, However, once it is open, if we change
+-- buffers, open the markdown file in the same file.
+g.mkdp_auto_start = 0
 g.mkdp_auto_close = 0
 g.mkdp_combine_preview = 1
 
