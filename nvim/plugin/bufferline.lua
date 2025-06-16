@@ -81,3 +81,16 @@ bfl.setup({
     end,
   },
 })
+
+-- Tab management
+nnoremap("th", ":tabprev<CR>")
+nnoremap("tl", ":tabnext<CR>")
+
+nnoremap("tn", ":tabnew New Tab<CR>") -- Create new tab
+nnoremap("td", ":quit<CR>")
+nnoremap("t!", ":quit!<CR>")
+
+-- Go to specific tab number
+for i = 1, 9 do
+  nnoremap("t" .. i, i .. "gt")
+end
