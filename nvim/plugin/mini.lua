@@ -22,9 +22,6 @@ isc.setup({
   symbol = "│",
 })
 
--- Having separate `gc` and `gcc` binds breaks which-key. We remove the default
--- `gcc` bind, but keep the `gc` one, so we can do something like `gcip` and it
--- works. For commenting lines, we use `#` via `mini.comment`
 vim.keymap.del("n", "gcc")
 
 require("mini.comment").setup({
@@ -33,8 +30,19 @@ require("mini.comment").setup({
     comment_line = "#",
     comment_visual = "#",
 
-    -- "delete in comment" feels cleaner to me than "delete global comment".
-    -- Also matches my `dip` and `dii` intuition.
-    textobject = "ic",
+    -- "delete around comment" feels cleaner to me than "delete global comment".
+    -- We use around because it doesn't keep the beginning of the comment - we
+    -- need to investigate a custom textobject for this.
+    textobject = "ac",
   },
+})
+
+vim.keymap.del("o", "gc")
+
+-- Don't populate which-key
+require("which-key").add({
+  { "ai", mode = "o", hidden = true },
+  { "ii", mode = "o", hidden = true },
+
+  { "ac", mode = "o", hidden = true },
 })

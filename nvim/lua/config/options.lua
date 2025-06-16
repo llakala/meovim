@@ -20,8 +20,7 @@ o.clipboard = "unnamedplus"
 -- Some people swear by it, but I want closing tabs to actually close them
 o.hidden = false
 
--- Timeout isn't intuitive. We want it for `a` in visual mode, but that's a
--- PR for another day.
+-- Timeout isn't intuitive.
 o.timeout = false
 
 -- When jumping around, don't center the line, so the screen position doesn't
