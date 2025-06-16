@@ -42,6 +42,8 @@
     # myself. I have these accessible as flake inputs, so I can test them in the
     # REPL.
 
+    # We comment this out for now, because `packagesFromDirectoryRecursive` will
+    # error if the folder is empty.
     neovimStartPlugins = forAllSystems
     (
       pkgs:
@@ -53,8 +55,7 @@
       }
     );
 
-    # We comment this out for now, because `packagesFromDirectoryRecursive` will
-    # error if the folder is empty.
+    # See above!
     neovimOptPlugins = forAllSystems
     (
       pkgs:

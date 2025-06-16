@@ -20,9 +20,9 @@ o.clipboard = "unnamedplus"
 -- Some people swear by it, but I want closing tabs to actually close them
 o.hidden = false
 
--- I don't like this, but it's the only way to make which-key work with mini.ai
-o.timeout = true
-o.timeoutlen = 500
+-- Timeout isn't intuitive. We want it for `a` in visual mode, but that's a
+-- PR for another day.
+o.timeout = false
 
 -- When jumping around, don't center the line, so the screen position doesn't
 -- change.
