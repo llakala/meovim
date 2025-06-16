@@ -46,3 +46,13 @@ vnoremap("L", "$")
 -- Clear highlights on search when pressing <Esc> in normal mode
 -- From kickstart
 nnoremap("<Esc>", "<cmd>nohlsearch<CR>")
+
+-- Tab management
+nnoremap("th", ":tabprev<CR>", { desc = "Next tab" })
+nnoremap("tl", ":tabnext<CR>", { desc = "Previous tab" })
+
+nnoremap("tj", ":-tabmove<CR>", { desc = "Move tab left" })
+nnoremap("tk", ":+tabmove<CR>", { desc = "Move tab right" })
+
+nnoremap("td", ":quit<CR>", { desc = "Delete tab" })
+nnoremap("tD", ":quit!<CR>", { desc = "Delete tab without saving" })
