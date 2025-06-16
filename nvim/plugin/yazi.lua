@@ -62,7 +62,9 @@ end)
 -- file). Great for if you want to search for a file/text, or just know exactly
 -- where the file you want is. Uses the other `.yazi()` constructor that takes an
 -- input path, so we can emulate the logic of `:Yazi cwd`.
-nnoremap("tp", function()
+--
+-- `w` is for workspace, by the way! It's easier to reach than `p`.
+nnoremap("tw", function()
   local cfg = { open_file_function = openNewTab }
   local cwd = vim.fn.getcwd()
 
