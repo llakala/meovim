@@ -18,6 +18,3 @@ vim.cmd([[colorscheme tokyonight]])
 
 -- Colorize hex codes
 require("nvim-highlight-colors").setup({})
-
--- The default visual color is barely readable
-vim.api.nvim_set_hl(0, "Visual", { bg = "#465172" })

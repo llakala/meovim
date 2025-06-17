@@ -19,3 +19,9 @@ require("nvim-surround").setup({
     insert_line = false,
   },
 })
+
+-- This inherits from Visual by default, which is not very readable on my
+-- colorscheme. We don't change Visual itself, because this color isn't very
+-- good for comments. There's probably a way to make comments handle that
+-- better, idk.
+vim.api.nvim_set_hl(0, "NvimSurroundHighlight", { bg = "#465172" })
