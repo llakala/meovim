@@ -2,8 +2,8 @@ require("nvim-surround").setup({
   move_cursor = "sticky",
 
   keymaps = {
-    normal = "sa",
-    normal_cur_line = "sA",
+    normal = "ss",
+    normal_cur_line = "sS",
     normal_cur = false,
     normal_line = false,
 
