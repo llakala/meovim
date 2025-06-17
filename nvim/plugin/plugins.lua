@@ -1,5 +1,3 @@
-require("gitsigns").setup()
-
 -- Indent blankline
 require("ibl").setup({
   scope = { enabled = false },

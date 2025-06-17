@@ -22,10 +22,10 @@ let
     conform-nvim
     tiny-inline-diagnostic-nvim
     vimtex
+    fugitive
 
     # Pretty
     nvim-highlight-colors
-    gitsigns-nvim
     indent-blankline-nvim # Same as `indent-blankline-nvim-lua`
     helpview-nvim
     markdown-preview-nvim
