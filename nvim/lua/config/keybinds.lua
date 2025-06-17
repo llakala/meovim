@@ -26,6 +26,18 @@ function onoremap(key, map, opts)
   mkNoremap("o", key, map, opts)
 end
 
+function bufmap(lhs, rhs, desc)
+  desc = desc or ""
+
+  -- Hardcoded to use normal mode for now - can add alternates when necessary
+  vim.keymap.set("n", lhs, rhs, {
+    buffer = true,
+    noremap = false,
+    silent = true,
+    desc = desc,
+  })
+end
+
 -- Paste and format, Means we can paste something and it'll be properly
 -- indented! Referenced from:
 -- https://github.com/ku1ik/vim-pasta#why-is-it-better-than-nnoremap-p-pv-

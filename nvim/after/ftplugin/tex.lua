@@ -96,14 +96,6 @@ wk.add({
     group = "+star",
   },
 })
-local bufmap = function(lhs, rhs, desc)
-  vim.keymap.set("n", lhs, rhs, {
-    buffer = true,
-    noremap = false,
-    silent = true,
-    desc = desc,
-  })
-end
 
 bufmap("<leader>tf", "<plug>(vimtex-cmd-toggle-frac)", "Fraction")
 bufmap("<leader>tsc", "<plug>(vimtex-cmd-toggle-star)", "Star (command)")
