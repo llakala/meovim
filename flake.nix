@@ -41,16 +41,20 @@
     # When I need something and it isn't packaged already somewhere, I package it
     # myself. I have these accessible as flake inputs, so I can test them in the
     # REPL.
+    #
+    # Note that these are disabled when I don't have anything custom right now!
 
     neovimStartPlugins = forAllSystems
     (
       pkgs:
 
-      llakaLib.collectDirectoryPackages
-      {
-        inherit pkgs;
-        directory = ./other/startPlugins;
-      }
+      {}
+
+      # llakaLib.collectDirectoryPackages
+      # {
+      #   inherit pkgs;
+      #   directory = ./other/optPlugins;
+      # }
     );
 
     # We comment this out for now, because `packagesFromDirectoryRecursive` will
