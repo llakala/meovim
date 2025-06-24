@@ -51,7 +51,7 @@ nnoremap("H", "^")
 vnoremap("H", "^")
 
 -- If I'm going to the end of the line, I want the real end - if there's
--- trailing whitespace there, it sohuld be fixed anyways.
+-- trailing whitespace there, it should be fixed anyways.
 nnoremap("L", "$")
 vnoremap("L", "$")
 
