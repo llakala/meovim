@@ -68,3 +68,11 @@ nnoremap("tk", ":+tabmove<CR>", { desc = "Move tab right" })
 
 nnoremap("td", ":quit<CR>", { desc = "Delete tab" })
 nnoremap("tD", ":quit!<CR>", { desc = "Delete tab without saving" })
+
+local ERROR = vim.diagnostic.severity.ERROR
+nnoremap("[e", function()
+  vim.diagnostic.jump({ count = -1, severity = ERROR })
+end, { desc = "Previous error" })
+nnoremap("]e", function()
+  vim.diagnostic.jump({ count = 1, severity = ERROR })
+end, { desc = "Next error" })
