@@ -3,70 +3,59 @@
 let
   pkgsPlugins = with pkgs.vimPlugins;
   [
-    # Basic essentials
-    nvim-treesitter.withAllGrammars
-    lz-n
-    which-key-nvim
-
-    # I'm using native lsps, but having this enabled means the lsps just work,
-    # since they'll listen to whatever lspconfig puts as the defaults
-    nvim-lspconfig
-
-    # Features
-    nvim-autopairs
-    yazi-nvim
+    # Essentials
     auto-session
-    snacks-nvim
-    ts-comments-nvim
-    nvim-surround
-    conform-nvim
-    tiny-inline-diagnostic-nvim
-    vimtex
-    fugitive
-
-    # Pretty
-    nvim-highlight-colors
-    indent-blankline-nvim # Same as `indent-blankline-nvim-lua`
-    helpview-nvim
-    markdown-preview-nvim
-    stay-centered-nvim
-    rainbow-delimiters-nvim
-
-    # Completions
-    blink-cmp
-
-    # Snippets
-    luasnip
-
-    # Overhauls
     bufferline-nvim
+    conform-nvim
+    indent-blankline-nvim # Same as `indent-blankline-nvim-lua`
     lualine-nvim
     lualine-lsp-progress
+    lz-n # Lazy loading, without package management
+    nvim-autopairs
+    nvim-lspconfig
+    nvim-surround
+    nvim-treesitter.withAllGrammars
+    rainbow-delimiters-nvim
+    yazi-nvim
 
-    # From mini.nvim
-    mini-trailspace
-    mini-indentscope
+    # Neat features
+    colorful-menu-nvim # Show completion types in color
+    fugitive
+    luasnip
     mini-comment
+    mini-indentscope
+    mini-trailspace
+    nvim-highlight-colors # Highlight hex codes
+    stay-centered-nvim # Always keep current line at center of screen
+    snacks-nvim
+    ts-comments-nvim # Lets me have multiple comment strings for `gcc` action
+    tiny-inline-diagnostic-nvim # Better `virtual_lines` from nvim 0.11
+    which-key-nvim
+
+    # Colorschemes
+    onedarkpro-nvim
+    tokyonight-nvim
+
+    # Filetype-specific
+    helpview-nvim
+    lazydev-nvim
+    markdown-preview-nvim
+    nvim-jdtls
+    vimtex
 
     # Dependencies
-    nvim-yarp # For wilder
-
-    # Other
-    nvim-jdtls
-    lazydev-nvim
+    nvim-web-devicons # For bufferline
   ];
 
   # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md
   extraPlugins = with neovimPlugins.packages.${pkgs.system};
   [
-    onedarkpro-nvim
-    tokyonight-nvim
-    colorful-menu-nvim
+    # Not up to date in nixpkgs
+    blink-cmp
 
-    nvim-web-devicons # For bufferline
-
-    cutlass-nvim
-    hlargs-nvim
+    # Not in nixpkgs yet
+    cutlass-nvim # Seperate cut and delete binds
+    hlargs-nvim # Highlight function arguments (in supported languages)
   ];
 
 in pkgsPlugins ++ extraPlugins
