@@ -5,6 +5,7 @@ let
   [
     # Essentials
     auto-session
+    blink-cmp
     bufferline-nvim
     conform-nvim
     indent-blankline-nvim # Same as `indent-blankline-nvim-lua`
@@ -50,9 +51,6 @@ let
   # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md
   extraPlugins = with neovimPlugins.packages.${pkgs.system};
   [
-    # Not up to date in nixpkgs
-    blink-cmp
-
     # Not in nixpkgs yet
     cutlass-nvim # Seperate cut and delete binds
     hlargs-nvim # Highlight function arguments (in supported languages)
