@@ -22,6 +22,8 @@ isc.setup({
   symbol = "│",
 })
 
+require("mini.move").setup()
+
 vim.keymap.del("n", "gcc")
 
 require("mini.comment").setup({

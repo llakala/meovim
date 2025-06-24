@@ -23,15 +23,18 @@ let
     colorful-menu-nvim # Show completion types in color
     fugitive
     luasnip
-    mini-comment
-    mini-indentscope
-    mini-trailspace
     nvim-highlight-colors # Highlight hex codes
     stay-centered-nvim # Always keep current line at center of screen
     snacks-nvim
     ts-comments-nvim # Lets me have multiple comment strings for `gcc` action
     tiny-inline-diagnostic-nvim # Better `virtual_lines` from nvim 0.11
     which-key-nvim
+
+    # mini-nvim stuff
+    mini-comment
+    mini-indentscope
+    mini-move
+    mini-trailspace
 
     # Colorschemes
     onedarkpro-nvim
