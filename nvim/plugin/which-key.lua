@@ -23,7 +23,6 @@ wk.setup({
 
 local mappings = {
   preset = true,
-  { "gq", desc = "Format" },
 
   -- Don't let these populate operator mode
   { "%", mode = "o", hidden = true },

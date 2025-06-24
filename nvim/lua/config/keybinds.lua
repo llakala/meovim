@@ -76,3 +76,8 @@ end, { desc = "Previous error" })
 nnoremap("]e", function()
   vim.diagnostic.jump({ count = 1, severity = ERROR })
 end, { desc = "Next error" })
+
+-- Supposedly `gq` is a keybind according to `:h v_gq`, but it doesn't seem to
+-- exist anecdotally. I should really be using `gw`, since it preserves your
+-- cursor location, but intuition is a son of a bitch.
+vnoremap("gq", "gw", { desc = "Format" })
