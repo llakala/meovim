@@ -8,7 +8,6 @@ let
     blink-cmp
     bufferline-nvim
     conform-nvim
-    indent-blankline-nvim # Same as `indent-blankline-nvim-lua`
     lualine-nvim
     lualine-lsp-progress
     lz-n # Lazy loading, without package management
