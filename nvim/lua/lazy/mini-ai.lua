@@ -30,32 +30,43 @@ local function select_multiline_comment(ai_type)
 end
 
 local function select_eol_comment(ai_type, line, commentstr)
-  local line_num = vim.fn.line(".")
+  -- These represents the beginning and the end of the commentstring. We'll
+  -- choose one of them to use depending on the `ai_type`. commentstr is
+  -- pre-escaped, so we don't need to bother with escaping it
+  local start_index, end_index = line:find(commentstr)
 
-  -- Whether to include the beginning commentstring in the match or not
-  local get_start_col = nil
-  local offset = -1
-  if ai_type == "a" then
-    get_start_col = vim.fn.match
-    offset = 0
-  else
-    get_start_col = vim.fn.matchend
-    offset = 1
+  -- This represents the commentstr not being found in the line. Not sure how
+  -- the end index could be nil if the start index wasn't, but better safe than
+  -- sorry
+  if start_index == nil or end_index == nil then
+    return nil
   end
+
+  -- Remove 1 from the start, and add 1 to the end, so the edges of the
+  -- commentstring get included in the selection for whichever one we use.
+  start_index = start_index - 1
+  end_index = end_index + 1
+
+  -- This is only for EOL comments, since mini.comment handles the other ones.
+  -- Therefore, we can assume the comment will only be on one line, and can
+  -- reuse the current line number. And no, there's no support for doc comments
+  -- like /* */ - mini.comment doesn't support them, and I can only handle so
+  -- much regex.
+  local line_num = vim.fn.line(".")
 
   local from = {
     line = line_num,
 
-    col = get_start_col(line, commentstr) + offset,
+    -- We include the comment in the selection if it was `ac`, but leave it out
+    -- if it was `ic`
+    col = ai_type == "a" and start_index or end_index,
   }
 
   local to = {
     line = line_num,
 
-    -- Actually not inclusive problems - for some reason, this returns 1 more
-    -- than the last index. Maybe for calculating string length? Anyways,
-    -- subtract 1.
-    col = vim.fn.col("$") - 1,
+    -- Till the end of the line
+    col = line:len(),
   }
 
   return { from = from, to = to }
@@ -70,17 +81,14 @@ return {
         c = function(ai_type)
           local line = vim.api.nvim_get_current_line()
 
-          -- Get the commentstring up until %s (including the space).
-          local commentstr = vim.bo.commentstring:match("^(.*)%%s")
-
-          -- Escape for use in regex. Did you know `-` has a meaning there? How
-          -- awful!
-          local escaped_commentstr = vim.pesc(commentstr)
+          -- Get the commentstring up until %s (including the space). Then,
+          -- escape it for use in lua regex
+          local commentstr = vim.pesc(vim.bo.commentstring:match("^(.*)%%s"))
 
           -- If the line has a comment that's only following whitespace, we can
-          -- defer to mini.comment. We only have custom logic for EOL comments, since
-          -- mini.comment doesn't implement logic for them
-          if line:match("^%s*" .. escaped_commentstr) then
+          -- defer to mini.comment. We only have custom logic for EOL comments,
+          -- since mini.comment doesn't implement logic for them
+          if line:match("^%s*" .. commentstr) then
             select_multiline_comment(ai_type)
             return
           end
