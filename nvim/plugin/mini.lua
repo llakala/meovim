@@ -7,8 +7,8 @@ vim.api.nvim_set_hl(0, "MiniTrailspace", { bg = "#e55c7a" }) -- Git's "red rever
 local isc = require("mini.indentscope")
 isc.setup({
   options = {
-    -- Change where the line is based on the horizontal position within the line
-    indent_at_cursor = true,
+    -- Don't care about the cursor's position within the line
+    indent_at_cursor = false,
 
     -- Show the indent scope if the next line begins one, to make it
     -- a header more associated with its scope
