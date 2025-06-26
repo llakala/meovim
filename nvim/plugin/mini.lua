@@ -22,6 +22,12 @@ isc.setup({
   symbol = "│",
 })
 
+-- Don't populate which-key
+require("which-key").add({
+  { "ai", mode = "o", hidden = true },
+  { "ii", mode = "o", hidden = true },
+})
+
 require("mini.move").setup()
 
 vim.keymap.del("n", "gcc")
@@ -32,19 +38,11 @@ require("mini.comment").setup({
     comment_line = "#",
     comment_visual = "#",
 
-    -- "delete around comment" feels cleaner to me than "delete global comment".
-    -- We use around because it doesn't keep the beginning of the comment - we
-    -- need to investigate a custom textobject for this.
-    textobject = "ac",
+    -- We've homerolled a cooler comment textobject that gives separate behavior
+    -- with `ic` vs `ac`, and alsp handles EOL comments! Check it out here:
+    -- https://github.com/llakala/meovim/blob/main/nvim/lua/lazy/mini-ai.lua
+    textobject = "",
   },
 })
 
 vim.keymap.del("o", "gc")
-
--- Don't populate which-key
-require("which-key").add({
-  { "ai", mode = "o", hidden = true },
-  { "ii", mode = "o", hidden = true },
-
-  { "ac", mode = "o", hidden = true },
-})
