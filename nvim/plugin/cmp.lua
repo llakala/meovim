@@ -117,7 +117,10 @@ cmp.setup({
     completion = {
       list = {
         selection = {
-          preselect = true,
+          -- In cmdline, you should press tab to select something, and then
+          -- enter. Better than having it autoselect the first one, and no way
+          -- to just press enter with what you've got
+          preselect = false,
         },
       },
 
