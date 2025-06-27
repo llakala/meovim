@@ -21,6 +21,7 @@ let
     # Neat features
     colorful-menu-nvim # Show completion types in color
     fugitive
+    vim-rhubarb # Make `:GBrowse` from fugitive work with Github
     luasnip
     nvim-highlight-colors # Highlight hex codes
     stay-centered-nvim # Always keep current line at center of screen
