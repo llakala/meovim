@@ -88,9 +88,9 @@ o.laststatus = 3
 -- Formatting
 
 -- Continue line comments in all languages. Without adding `ro`, it only seemed
--- to work in some languages. Also remove `t`, so our textwidth stuff doesn't
--- apply to it
-o.formatoptions = "cqjro/"
+-- to work in some languages. Keep `t`, so text width also applies to something
+-- like markdown
+o.formatoptions = "tcqjro/"
 
 -- Auto-wrap comments (but not other stuff, thanks to the `t` changes above)
 o.textwidth = 80
