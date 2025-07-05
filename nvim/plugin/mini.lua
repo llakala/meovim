@@ -10,9 +10,9 @@ isc.setup({
     -- Don't care about the cursor's position within the line
     indent_at_cursor = false,
 
-    -- Show the indent scope if the next line begins one, to make it
-    -- a header more associated with its scope
-    try_as_border = true,
+    -- This is nice in theory, but I find that it causes issues where I'm on a
+    -- border when I don't want to be.
+    try_as_border = false,
   },
 
   draw = {
