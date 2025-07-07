@@ -44,7 +44,7 @@ let
     lazydev-nvim
     markdown-preview-nvim
     nvim-jdtls
-    vimtex
+    # vimtex
 
     # Dependencies
     nvim-web-devicons # For bufferline
