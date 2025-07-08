@@ -76,8 +76,12 @@ return {
   "mini.ai",
 
   after = function()
+    local MiniExtra = require("mini.extra")
+
     require("mini.ai").setup({
       custom_textobjects = {
+        g = MiniExtra.gen_ai_spec.buffer(),
+
         c = function(ai_type)
           local line = vim.api.nvim_get_current_line()
 

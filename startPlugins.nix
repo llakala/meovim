@@ -34,6 +34,7 @@ let
 
     # mini-nvim stuff
     mini-comment
+    mini-extra # More textobjects for mini-ai
     mini-indentscope
     mini-move
     mini-trailspace
