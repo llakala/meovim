@@ -6,7 +6,6 @@ let
     jdt-language-server
     lua-language-server
     fish-lsp
-    gleam
     typescript-language-server
     basedpyright
     ruff
