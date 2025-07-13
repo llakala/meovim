@@ -1,11 +1,9 @@
 {
-  inputs =
-  {
+  inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     mnw.url = "github:Gerg-L/mnw";
 
-    llakaLib =
-    {
+    llakaLib = {
       url = "github:llakala/llakaLib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -14,8 +12,7 @@
     # pass in your own flake-utils to prevent duplication
     flake-utils.url = "github:numtide/flake-utils";
 
-    neovimPlugins =
-    {
+    neovimPlugins = {
       url = "github:NixNeovim/NixNeovimPlugins";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
@@ -36,20 +33,15 @@
     # `lib.packagesFromDirectoryRecursive` from here, to automatically get any
     # packages stored in our folders.
     llakaLib = inputs.llakaLib.pureLib; # Don't need any impure functions
-  in
-  {
+  in {
     # When I need something and it isn't packaged already somewhere, I package it
     # myself. I have these accessible as flake inputs, so I can test them in the
     # REPL.
     #
     # Note that these are disabled when I don't have anything custom right now!
 
-    neovimStartPlugins = forAllSystems
-    (
-      pkgs:
-
-      llakaLib.collectDirectoryPackages
-      {
+    neovimStartPlugins = forAllSystems (pkgs:
+      llakaLib.collectDirectoryPackages {
         inherit pkgs;
         directory = ./other/optPlugins;
       }
@@ -57,9 +49,7 @@
 
     # We comment this out for now, because `packagesFromDirectoryRecursive` will
     # error if the folder is empty.
-    neovimOptPlugins = forAllSystems
-    (
-      pkgs:
+    neovimOptPlugins = forAllSystems (pkgs:
       {}
 
       # llakaLib.collectDirectoryPackages
@@ -69,9 +59,7 @@
       # }
     );
 
-    neovimBinaries = forAllSystems
-    (
-      pkgs:
+    neovimBinaries = forAllSystems (pkgs:
       {}
       # llakaLib.collectDirectoryPackages
       # {
@@ -80,75 +68,62 @@
       # }
     );
 
-    packages = forAllSystems
-    (
-      pkgs: let
-        # Binaries and plugins that I grab from elsewhere. Stored in their own
-        # files so I'm not editing monolithic files to add stuff
-        startPlugins = import ./startPlugins.nix { inherit pkgs neovimPlugins; };
-        optPlugins = import ./optPlugins.nix { inherit pkgs neovimPlugins; };
-        binaries = import ./binaries.nix { inherit pkgs; };
+    packages = forAllSystems (pkgs: let
+      # Binaries and plugins that I grab from elsewhere. Stored in their own
+      # files so I'm not editing monolithic files to add stuff
+      startPlugins = import ./startPlugins.nix { inherit pkgs neovimPlugins; };
+      optPlugins = import ./optPlugins.nix { inherit pkgs neovimPlugins; };
+      binaries = import ./binaries.nix { inherit pkgs; };
 
-        # Custom derivations that I wrote myself. Need to be turned into a list,
-        # since flake inputs are expected to be attrsets.
-        customStartPlugins = builtins.attrValues self.neovimStartPlugins.${pkgs.system};
-        customOptPlugins = builtins.attrValues self.neovimOptPlugins.${pkgs.system};
-        customPackages = builtins.attrValues self.neovimBinaries.${pkgs.system};
-      in
-      {
-        default = inputs.mnw.lib.wrap pkgs
-        {
-          appName = "nvim";
-          neovim = pkgs.neovim-unwrapped;
+      # Custom derivations that I wrote myself. Need to be turned into a list,
+      # since flake inputs are expected to be attrsets.
+      customStartPlugins = builtins.attrValues self.neovimStartPlugins.${pkgs.system};
+      customOptPlugins = builtins.attrValues self.neovimOptPlugins.${pkgs.system};
+      customPackages = builtins.attrValues self.neovimBinaries.${pkgs.system};
+    in {
+      default = inputs.mnw.lib.wrap pkgs {
+        appName = "nvim";
+        neovim = pkgs.neovim-unwrapped;
 
-          initLua =
-          /* lua */
-          ''
-            -- Uncomment when you want to profile nvim startup. Be sure to have
-            -- the snacks.nvim repo cloned for this to work!
+        initLua = /* lua */ ''
+          -- Uncomment when you want to profile nvim startup. Be sure to have
+          -- the snacks.nvim repo cloned for this to work!
 
-            -- vim.opt.rtp:append("/home/emanresu/Documents/repos/snacks.nvim/")
-            -- require("snacks.profiler").startup()
+          -- vim.opt.rtp:append("/home/emanresu/Documents/repos/snacks.nvim/")
+          -- require("snacks.profiler").startup()
 
-            require("config")
-            require("lz.n").load("lazy")
+          require("config")
+          require("lz.n").load("lazy")
 
-            -- Add to this whenever you add a new server to the `lsp` folder!
-            -- Ridiculous that nvim can't load them for you as far as I can tell
-            vim.lsp.enable({ "fish_lsp", "gleam", "lua_ls", "nixd", "basedpyright", "ts_ls", "marksman" })
-          '';
+          -- Add to this whenever you add a new server to the `lsp` folder!
+          -- Ridiculous that nvim can't load them for you as far as I can tell
+          vim.lsp.enable({ "fish_lsp", "gleam", "lua_ls", "nixd", "basedpyright", "ts_ls", "marksman" })
+        '';
 
-          plugins.start =
-            startPlugins
-            ++ customStartPlugins;
+        plugins.start =
+          startPlugins
+          ++ customStartPlugins;
 
-          plugins.opt =
-            optPlugins
-            ++ customOptPlugins;
+        plugins.opt =
+          optPlugins
+          ++ customOptPlugins;
 
-          extraBinPath =
-            binaries ++
-            customPackages;
+        extraBinPath =
+          binaries ++
+          customPackages;
 
-          plugins.dev.config =
-          {
-            pure = ./nvim;
-            impure = "/Users/ellakramer/Documents/projects/meovim/nvim"; # Absolute path needed
-          };
+        plugins.dev.config = {
+          pure = ./nvim;
+          impure = "/Users/ellakramer/Documents/projects/meovim/nvim"; # Absolute path needed
         };
-      }
-    );
+      };
+    });
 
-    devShells = forAllSystems
-    (
-      pkgs:
-      {
-        default = pkgs.mkShellNoCC
-        {
+    devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShellNoCC {
           packages = lib.singleton self.packages.${pkgs.system}.default.devMode;
         };
-      }
-    );
+    });
 
   };
 }

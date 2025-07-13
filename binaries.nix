@@ -1,7 +1,6 @@
 { pkgs }:
 let
-  packages = with pkgs;
-  [
+  packages = with pkgs; [
     # Language servers
     nixd
     jdt-language-server

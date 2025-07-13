@@ -1,8 +1,7 @@
 { pkgs, neovimPlugins }:
 
 let
-  pkgsPlugins = with pkgs.vimPlugins;
-  [
+  pkgsPlugins = with pkgs.vimPlugins; [
     # Essentials
     auto-session
     blink-cmp
@@ -55,8 +54,7 @@ let
   ];
 
   # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md
-  extraPlugins = with neovimPlugins.packages.${pkgs.system};
-  [
+  extraPlugins = with neovimPlugins.packages.${pkgs.system}; [
     # Not in nixpkgs yet
     cutlass-nvim # Seperate cut and delete binds
     hlargs-nvim # Highlight function arguments (in supported languages)
