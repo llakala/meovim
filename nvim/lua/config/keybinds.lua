@@ -47,14 +47,6 @@ nnoremap("P", "P`[v`]=")
 nnoremap("U", "<C-r>") -- Redo
 nnoremap("<A-u>", "U") -- In case you actually want this
 
-nnoremap("H", "^")
-vnoremap("H", "^")
-
--- If I'm going to the end of the line, I want the real end - if there's
--- trailing whitespace there, it should be fixed anyways.
-nnoremap("L", "$")
-vnoremap("L", "$")
-
 -- Clear highlights on search when pressing <Esc> in normal mode
 -- From kickstart
 nnoremap("<Esc>", "<cmd>nohlsearch<CR>")
