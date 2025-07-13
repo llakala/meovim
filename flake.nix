@@ -48,13 +48,11 @@
     (
       pkgs:
 
-      {}
-
-      # llakaLib.collectDirectoryPackages
-      # {
-      #   inherit pkgs;
-      #   directory = ./other/optPlugins;
-      # }
+      llakaLib.collectDirectoryPackages
+      {
+        inherit pkgs;
+        directory = ./other/optPlugins;
+      }
     );
 
     # We comment this out for now, because `packagesFromDirectoryRecursive` will
@@ -135,7 +133,7 @@
           plugins.dev.config =
           {
             pure = ./nvim;
-            impure = "/home/emanresu/Documents/projects/meovim/nvim"; # Absolute path needed
+            impure = "/Users/ellakramer/Documents/projects/meovim/nvim"; # Absolute path needed
           };
         };
       }
