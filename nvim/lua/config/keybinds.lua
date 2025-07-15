@@ -42,6 +42,10 @@ function bufmap(lhs, rhs, desc)
   })
 end
 
+-- i<Esc> won't move the cursor at all, while a<Esc> will move the cursor
+-- one to the right. I prefer this, as I use i more than a. Helix-style!
+inoremap("<Esc>", "<Esc>l")
+
 -- Paste and format, Means we can paste something and it'll be properly
 -- indented! Referenced from:
 -- https://github.com/ku1ik/vim-pasta#why-is-it-better-than-nnoremap-p-pv-
