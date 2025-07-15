@@ -78,6 +78,9 @@ return {
   after = function()
     require("mini.ai").setup({
       custom_textobjects = {
+        -- mini.ai makes this an alias for any type of bracket, which I'll
+        -- realistically never use - I like using a specific bracket type
+        b = false,
 
         c = function(ai_type)
           local line = vim.api.nvim_get_current_line()
