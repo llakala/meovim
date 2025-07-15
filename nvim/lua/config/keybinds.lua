@@ -63,6 +63,15 @@ vnoremap("H", "^")
 nnoremap("L", "$")
 vnoremap("L", "$")
 
+-- These are the same as their forward counterparts, and typos shouldn't be
+-- rewarded!
+onoremap("i)", "<Nop>")
+onoremap("a)", "<Nop>")
+onoremap("i]", "<Nop>")
+onoremap("a]", "<Nop>")
+onoremap("i}", "<Nop>")
+onoremap("a}", "<Nop>")
+
 -- Tab management
 nnoremap("th", ":tabprev<CR>", { desc = "Next tab" })
 nnoremap("tl", ":tabnext<CR>", { desc = "Previous tab" })
