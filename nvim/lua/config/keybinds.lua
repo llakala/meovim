@@ -26,6 +26,10 @@ function onoremap(key, map, opts)
   mkNoremap("o", key, map, opts)
 end
 
+function anoremap(key, map, opts)
+  mkNoremap({ "n", "x", "o" }, key, map, opts)
+end
+
 function bufmap(lhs, rhs, desc)
   desc = desc or ""
 

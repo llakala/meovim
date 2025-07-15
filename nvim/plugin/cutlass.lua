@@ -4,10 +4,6 @@ require("cutlass").setup({
   cut_key = nil,
 })
 
-nnoremap("<A-d>", "d", { desc = "Delete and yank" })
-onoremap("<A-d>", "d", { desc = "Delete and yank" })
-vnoremap("<A-d>", "d", { desc = "Delete and yank" })
-
-nnoremap("<A-S-d>", "D", { desc = "Delete until end of line" })
-onoremap("<A-S-d>", "D", { desc = "Delete until end of line" })
-vnoremap("<A-S-d>", "D", { desc = "Delete until end of line" })
+-- anoremap maps for normal, visual, and operator mode
+anoremap("<A-d>", "d", { desc = "Delete and yank" })
+anoremap("<A-S-d>", "D", { desc = "Delete until end of line" })
