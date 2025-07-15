@@ -4,9 +4,10 @@ require("mini.jump").setup({
   },
 })
 
--- Press escape to stop jumping and clear highlights
+-- Press escape to stop jumping and clear highlights + cmdline
 local jump_stop = function()
   vim.cmd.nohlsearch()
+  vim.cmd.echo()
 
   if not MiniJump.state.jumping then
     return "<Esc>"
