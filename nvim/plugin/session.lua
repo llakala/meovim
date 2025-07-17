@@ -1,4 +1,5 @@
 local session = require("auto-session")
+local Lib = require("auto-session.lib")
 
 -- Credit for git repo functions goes to:
 -- https://github.com/mrcndz/dotfiles/blob/e1e24413961ee30db12d3a4fed88774d9b6f7406/nvim/lua/utils.lua
@@ -28,6 +29,18 @@ local passed_nothing_or_dir = arg_count == 0 or (arg_count == 1 and vim.fn.isdir
 session.setup({
   -- Only create a new session if you're at the root of a git repo
   auto_create = at_repo_root,
+
+  -- Still save the session if a help file fails to load. Some help files are
+  -- from plugins that are loaded lazily, so if we reopen nvim, the helpfile
+  -- won't be found. If we get that error, ignore it!
+  restore_error_handler = function(error_msg)
+    if error_msg and error_msg:find("E661") then
+      return true
+    end
+
+    Lib.logger.error("Error restoring session, disabling auto save. Error message: \n" .. error_msg)
+    return false
+  end,
 
   -- If you're in a subdirectory of a git repo, and neovim wasn't called with a
   -- specific file to be opened, activate the session for the repo's root.

@@ -39,9 +39,16 @@
     # REPL.
     #
     # Note that these are disabled when I don't have anything custom right now!
-
     neovimStartPlugins = forAllSystems (pkgs:
       llakaLib.collectDirectoryPackages {
+        inherit pkgs;
+        directory = ./other/startPlugins;
+      }
+    );
+
+    neovimOptPlugins = forAllSystems (pkgs:
+      llakaLib.collectDirectoryPackages
+      {
         inherit pkgs;
         directory = ./other/optPlugins;
       }
@@ -49,16 +56,6 @@
 
     # We comment this out for now, because `packagesFromDirectoryRecursive` will
     # error if the folder is empty.
-    neovimOptPlugins = forAllSystems (pkgs:
-      {}
-
-      # llakaLib.collectDirectoryPackages
-      # {
-      #   inherit pkgs;
-      #   directory = ./other/optPlugins;
-      # }
-    );
-
     neovimBinaries = forAllSystems (pkgs:
       {}
       # llakaLib.collectDirectoryPackages
