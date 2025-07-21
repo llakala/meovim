@@ -34,7 +34,6 @@ let
     mini-comment
     mini-extra # More textobjects for mini-ai
     mini-indentscope
-    mini-jump
     mini-move
     mini-trailspace
 

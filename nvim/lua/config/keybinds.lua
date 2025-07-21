@@ -63,6 +63,13 @@ vnoremap("H", "^")
 nnoremap("L", "$")
 vnoremap("L", "$")
 
+vim.keymap.set("n", "<Esc>", function()
+  vim.cmd.nohlsearch()
+  vim.cmd.echo()
+  -- TODO: also clear highlights from fFtT-highlights
+  -- See https://github.com/samiulsami/fFtT-highlights.nvim/issues/2
+end, { silent = true, expr = true, desc = "Clear highlights and cmdline" })
+
 -- These are the same as their forward counterparts, and typos shouldn't be
 -- rewarded!
 onoremap("i)", "<Nop>")
