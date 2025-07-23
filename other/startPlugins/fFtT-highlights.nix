@@ -7,7 +7,7 @@ vimUtils.buildVimPlugin {
   src = fetchFromGitHub {
     owner = "samiulsami";
     repo = "fFtT-highlights.nvim";
-    rev = "b50968a3a30b7eb3de883e16a0c42e756f10f2db";
-    hash = "sha256-oal6mYFXyriyf7NLjJz6L09uiDDceUI4drfP9IJNYS4=";
+    rev = "03dd7d8c9a9c8bc45d35ca47493c9cd97073feb7";
+    hash = "sha256-Xf+xuLI17ip88D8R5fC2V/cKFulos1+bzjAXKbBDrbw=";
   };
 }

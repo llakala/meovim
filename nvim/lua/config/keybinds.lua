@@ -60,13 +60,6 @@ nnoremap("<A-u>", "U") -- In case you actually want this
 nnoremap("!", "^")
 vnoremap("!", "^")
 
-vim.keymap.set("n", "<Esc>", function()
-  vim.cmd.nohlsearch()
-  vim.cmd.echo()
-  -- TODO: also clear highlights from fFtT-highlights
-  -- See https://github.com/samiulsami/fFtT-highlights.nvim/issues/2
-end, { silent = true, expr = true, desc = "Clear highlights and cmdline" })
-
 -- Tab management
 nnoremap("th", ":tabprev<CR>", { desc = "Next tab" })
 nnoremap("tl", ":tabnext<CR>", { desc = "Previous tab" })
