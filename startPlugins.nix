@@ -35,7 +35,6 @@ let
     mini-extra # More textobjects for mini-ai
     mini-indentscope
     mini-move
-    mini-trailspace
 
     # Colorschemes
     onedarkpro-nvim
