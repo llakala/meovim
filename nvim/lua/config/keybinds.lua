@@ -67,15 +67,6 @@ vim.keymap.set("n", "<Esc>", function()
   -- See https://github.com/samiulsami/fFtT-highlights.nvim/issues/2
 end, { silent = true, expr = true, desc = "Clear highlights and cmdline" })
 
--- These are the same as their forward counterparts, and typos shouldn't be
--- rewarded!
-onoremap("i)", "<Nop>")
-onoremap("a)", "<Nop>")
-onoremap("i]", "<Nop>")
-onoremap("a]", "<Nop>")
-onoremap("i}", "<Nop>")
-onoremap("a}", "<Nop>")
-
 -- Tab management
 nnoremap("th", ":tabprev<CR>", { desc = "Next tab" })
 nnoremap("tl", ":tabnext<CR>", { desc = "Previous tab" })
