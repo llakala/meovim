@@ -1,17 +1,25 @@
 require("fFtT-highlights"):setup({
   smart_motions = true,
+  reset_key = "<Esc>",
   match_highlight = {
     -- If I go past a match, still show it, as long as it's in the closest 5.
     -- Means if I accidentally skip the match I wanted, it stays highlighted!
     persist_matches = 5,
   },
+
+  -- There are two types of resets: `f<Esc>`, where we clear the gray text, and
+  -- `fi<Esc>`, where we clear the orange highlights. This ONLY adds `nohlsearch`
+  -- and `echo` to the FIRST kind.
+  on_reset = function()
+    vim.cmd.nohlsearch()
+    vim.cmd.echo()
+  end,
 })
 
--- The `on_reset` logic is supposed to handle this,
--- but it seems to only work when you're in the MIDDLE of doing `f` or `t`.
--- `f<Esc>` runs these commands properly, but `fi<Esc>` doesn't. The second one
--- is what I really need for clearing search and cmdline, so this stays for now.
+-- This is the SECOND kind of reset: `fi<Esc>`. You'll notice that this doesn't actually
+-- use any mechanisms from the plugin. However, it still clears the orange
+-- highlights!
 vim.keymap.set("n", "<Esc>", function()
   vim.cmd.nohlsearch()
   vim.cmd.echo()
-end, { silent = true, expr = true, desc = "Clear highlights and cmdline" })
+end, { silent = true, desc = "Clear highlights and cmdline" })
