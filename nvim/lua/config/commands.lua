@@ -21,8 +21,7 @@ vim.api.nvim_create_user_command("Allman", function()
   Why? I don't know!
   `,"^\s*"` is simple - it just repeats the whitespace of the previous
   line. This makes sure we're tabbed over the right amount. I'm sure
-  there's a smart way to do this where you ask cindent for help, but
-  I'm happy with this.
+  there's a smart way to do this, but I'm happy with it for now
   Another concat, then we grab submatch(2), which is our bracket -
   whether it was {, (, or [.
   Finally, we end with options - `g`, to replace globally, and `e`,

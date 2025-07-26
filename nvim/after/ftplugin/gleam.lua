@@ -1,8 +1,9 @@
 o.shiftwidth = 2
 o.tabstop = 2
 
--- cindent is making lines without semicolons tab over on the next line
-o.cindent = false
+-- Without this, I wouldn't get any auto-indentation as I type, since there
+-- isn't an existing gleam indentexpr. Gleam's indentation is enough like C,
+-- though, so this is good enough!
 o.smartindent = true
 
 -- Provides multiple comment strings, sorted longest-shortest for precedence

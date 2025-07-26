@@ -65,9 +65,9 @@ o.shiftround = true
 
 o.breakindent = true -- Continue indented wrapped line at same level
 
+-- we don't turn on smartindent or cindent, and instead rely on filetype
+-- indentation
 o.autoindent = true
-o.cindent = true -- Smarter than smartindent
-o.smartindent = false
 
 o.wrap = false
 

@@ -1,7 +1,3 @@
--- We don't need indenting for git commits, and it makes commas indent the next line
-o.cindent = false
-o.autoindent = false
-
 -- `vim-rhubarb` gives me `:Gbrowse` to open a file in Github, which is
 -- wonderful. But it also comes with some completion options that don't seem to
 -- work with `blink-cmp`. So, for now, disable completion in these buffers. If I
