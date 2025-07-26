@@ -72,44 +72,38 @@ local function select_eol_comment(ai_type, line, commentstr)
   return { from = from, to = to }
 end
 
-return {
-  "mini.ai",
+require("mini.ai").setup({
+  custom_textobjects = {
+    -- mini.ai makes this an alias for any type of bracket, which I'll
+    -- realistically never use - I like using a specific bracket type
+    b = false,
 
-  after = function()
-    require("mini.ai").setup({
-      custom_textobjects = {
-        -- mini.ai makes this an alias for any type of bracket, which I'll
-        -- realistically never use - I like using a specific bracket type
-        b = false,
+    c = function(ai_type)
+      local line = vim.api.nvim_get_current_line()
 
-        c = function(ai_type)
-          local line = vim.api.nvim_get_current_line()
+      -- Get the commentstring up until %s (including the space). Then,
+      -- escape it for use in lua regex
+      local commentstr = vim.pesc(vim.bo.commentstring:match("^(.*)%%s"))
 
-          -- Get the commentstring up until %s (including the space). Then,
-          -- escape it for use in lua regex
-          local commentstr = vim.pesc(vim.bo.commentstring:match("^(.*)%%s"))
+      -- If the line has a comment that's only following whitespace, we can
+      -- defer to mini.comment. We only have custom logic for EOL comments,
+      -- since mini.comment doesn't implement logic for them
+      if line:match("^%s*" .. commentstr) then
+        select_multiline_comment(ai_type)
+        return
+      end
 
-          -- If the line has a comment that's only following whitespace, we can
-          -- defer to mini.comment. We only have custom logic for EOL comments,
-          -- since mini.comment doesn't implement logic for them
-          if line:match("^%s*" .. commentstr) then
-            select_multiline_comment(ai_type)
-            return
-          end
+      return select_eol_comment(ai_type, line, commentstr)
+    end,
+  },
+})
 
-          return select_eol_comment(ai_type, line, commentstr)
-        end,
-      },
-    })
+-- Don't populate which-key. We won't see these when timeout is off anyways,
+-- but it's good to behave.
+require("which-key").add({
+  { "in", mode = "o", hidden = true },
+  { "il", mode = "o", hidden = true },
 
-    -- Don't populate which-key. We won't see these when timeout is off anyways,
-    -- but it's good to behave.
-    require("which-key").add({
-      { "in", mode = "o", hidden = true },
-      { "il", mode = "o", hidden = true },
-
-      { "an", mode = "o", hidden = true },
-      { "al", mode = "o", hidden = true },
-    })
-  end,
-}
+  { "an", mode = "o", hidden = true },
+  { "al", mode = "o", hidden = true },
+})

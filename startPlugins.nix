@@ -31,6 +31,7 @@ let
     which-key-nvim
 
     # mini-nvim stuff
+    mini-ai
     mini-comment
     mini-extra # More textobjects for mini-ai
     mini-indentscope

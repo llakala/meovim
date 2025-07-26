@@ -6,7 +6,7 @@ require("mini.comment").setup({
 
     -- We've homerolled a cooler comment textobject that gives separate behavior
     -- with `ic` vs `ac`, and alsp handles EOL comments! Check it out here:
-    -- https://github.com/llakala/meovim/blob/main/nvim/lua/lazy/mini-ai.lua
+    -- https://github.com/llakala/meovim/blob/main/nvim/plugin/mini/ai.lua
     textobject = "",
   },
 })
