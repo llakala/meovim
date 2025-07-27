@@ -15,6 +15,4 @@ require("nvim-treesitter.configs").setup({
   },
 })
 
-require("stay-centered").setup()
-
 require("hlargs").setup()
