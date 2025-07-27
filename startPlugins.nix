@@ -12,7 +12,6 @@ let
     nvim-autopairs
     nvim-lspconfig
     nvim-surround
-    nvim-treesitter.withAllGrammars
     rainbow-delimiters-nvim
     yazi-nvim
 
@@ -51,6 +50,43 @@ let
     nvim-web-devicons # For bufferline
   ];
 
+  # To see all valid values, search this:
+  # https://search.nixos.org/packages?channel=unstable&sort=alpha_asc&type=packages&query=vimPlugins.nvim-treesitter-parsers
+  # Some languages like Lua aren't included bc nvim already includes them
+  treeSitterGrammars = pkgs.vimPlugins.nvim-treesitter.withPlugins (p: with p; [
+    # The languages I work in everyday
+    comment # highlight todos and fixmes
+    fish
+    gitcommit
+    luadoc # --- type annotations
+    gleam
+    nix
+
+    # Languages I use less often
+    bash
+    gitignore
+    git_rebase
+    java
+    latex
+    python
+
+    # Structured languages
+    css
+    csv
+    diff # .patch files
+    html
+    json
+    toml
+    yaml
+
+    # Languages I don't use much, but are common
+    cpp
+    javascript
+    rust
+    tsx
+    typescript
+  ]);
+
   # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md
   extraPlugins = with neovimPlugins.packages.${pkgs.system}; [
     # Not in nixpkgs yet
@@ -58,4 +94,4 @@ let
     hlargs-nvim # Highlight function arguments (in supported languages)
   ];
 
-in pkgsPlugins ++ extraPlugins
+in pkgsPlugins ++ extraPlugins ++ [ treeSitterGrammars ]
