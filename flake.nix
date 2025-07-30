@@ -111,7 +111,7 @@
 
         plugins.dev.config = {
           pure = ./nvim;
-          impure = "/Users/ellakramer/Documents/projects/meovim/nvim"; # Absolute path needed
+          impure = "/home/emanresu/Documents/projects/meovim/nvim"; # Absolute path needed
         };
       };
     });
