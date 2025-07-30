@@ -31,30 +31,3 @@ vim.api.nvim_create_user_command("Allman", function()
 end, {})
 
 cabbrev("alm", "Allman")
-
--- Highlight current buffer's ansi escape codes
-vim.api.nvim_create_user_command("TermHl", function()
-  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-
-  -- Open a new tab, so when we reopen neovim, it will still have the old one
-  vim.cmd("tabnew")
-  local b = vim.api.nvim_create_buf(false, true)
-
-  vim.api.nvim_set_option_value("buftype", "nofile", { buf = b })
-  vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = b })
-  vim.api.nvim_set_option_value("swapfile", false, { buf = b })
-
-  local chan = vim.api.nvim_open_term(b, {})
-  vim.api.nvim_chan_send(chan, table.concat(lines, "\n"))
-  vim.api.nvim_win_set_buf(0, b)
-end, { desc = "Highlights ANSI termcodes in curbuf" })
-
--- Referenced from: https://www.reddit.com/r/neovim/comments/zhweuc/comment/izo9br1
-vim.api.nvim_create_user_command("Redir", function(ctx)
-  local exec = vim.api.nvim_exec2(":" .. ctx.args, {})
-  local lines = vim.split(exec.output or "", "\n", { plain = true })
-
-  vim.cmd("tabnew")
-  vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
-  vim.opt_local.modified = false
-end, { nargs = "+", complete = "command" })
