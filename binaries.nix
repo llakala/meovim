@@ -20,7 +20,7 @@ let
   packages = with pkgs; [
     # Language servers
     nixd
-    jdt-language-server
+    (jdt-language-server.override { jdk = pkgs.jdk_headless; }) # decreases closure
     lua-language-server
     fish-lsp
     gleam
@@ -30,7 +30,7 @@ let
     marksman
 
     # Formatters
-    google-java-format
+    (google-java-format.override { jre = pkgs.jre_headless; })
     stylua
     tex-fmt # Couldn't get latexindent working
 
