@@ -32,7 +32,6 @@ let
     mini-comment
     mini-extra # More textobjects for mini-ai
     mini-indentscope
-    mini-move
 
     # Colorschemes
     onedarkpro-nvim
