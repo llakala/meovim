@@ -1,11 +1,48 @@
+local left_delete = "^(.)().-(.)()$"
+local right_delete = "^(. ?)().-( ?.)()$"
+
 require("nvim-surround").setup({
   move_cursor = "sticky",
 
+  -- The defaults use ( for whitespace, and ) for no whitespace. Silly!
+  -- See https://github.com/kylechui/nvim-surround/issues/384
+  surrounds = {
+    ["("] = {
+      add = { "(", ")" },
+      delete = left_delete,
+    },
+    [")"] = {
+      add = { "( ", " )" },
+      delete = right_delete,
+    },
+
+    ["["] = {
+      add = { "[", "]" },
+      delete = left_delete,
+    },
+    ["]"] = {
+      add = { "[ ", " ]" },
+      delete = right_delete,
+    },
+
+    ["{"] = {
+      add = { "{", "}" },
+      delete = left_delete,
+    },
+    ["}"] = {
+      add = { "{ ", " }" },
+      delete = right_delete,
+    },
+  },
+
   keymaps = {
+    insert = false,
+    insert_line = false,
+
     normal = "s",
+    normal_cur = "ss",
+    normal_line = "S",
     normal_cur_line = false,
-    normal_cur = false,
-    normal_line = false,
 
     delete = "ds",
 
@@ -13,10 +50,7 @@ require("nvim-surround").setup({
     change_line = false,
 
     visual = "s",
-    visual_line = false,
-
-    insert = false,
-    insert_line = false,
+    visual_line = "S",
   },
 })
 
