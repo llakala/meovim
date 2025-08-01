@@ -97,13 +97,3 @@ require("mini.ai").setup({
     end,
   },
 })
-
--- Don't populate which-key. We won't see these when timeout is off anyways,
--- but it's good to behave.
-require("which-key").add({
-  { "in", mode = "o", hidden = true },
-  { "il", mode = "o", hidden = true },
-
-  { "an", mode = "o", hidden = true },
-  { "al", mode = "o", hidden = true },
-})

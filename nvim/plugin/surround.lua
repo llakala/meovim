@@ -2,14 +2,14 @@ require("nvim-surround").setup({
   move_cursor = "sticky",
 
   keymaps = {
-    normal = "ss",
-    normal_cur_line = "sS",
+    normal = "s",
+    normal_cur_line = false,
     normal_cur = false,
     normal_line = false,
 
-    delete = "sd",
+    delete = "ds",
 
-    change = "sc",
+    change = "cs",
     change_line = false,
 
     visual = "s",

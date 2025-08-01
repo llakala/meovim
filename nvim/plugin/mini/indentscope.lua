@@ -15,9 +15,3 @@ isc.setup({
   },
   symbol = "│",
 })
-
--- Don't populate which-key
-require("which-key").add({
-  { "ai", mode = "o", hidden = true },
-  { "ii", mode = "o", hidden = true },
-})

@@ -26,7 +26,6 @@ let
     telescope-ui-select-nvim
     ts-comments-nvim # Lets me have multiple comment strings for `gcc` action
     tiny-inline-diagnostic-nvim # Better `virtual_lines` from nvim 0.11
-    which-key-nvim
 
     # mini-nvim stuff
     mini-ai
