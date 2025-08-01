@@ -11,6 +11,7 @@ require("tokyonight").setup({
   on_highlights = function(hl, colors)
     hl["@variable"] = { fg = colors.red }
     hl.ColorColumn = { bg = colors.bg_highlight }
+    hl.WinSeparator = { fg = "#868eb6" }
   end,
 })
 
