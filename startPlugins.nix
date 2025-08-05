@@ -22,6 +22,7 @@ let
     vim-rhubarb # Make `:GBrowse` from fugitive work with Github
     luasnip
     nvim-highlight-colors # Highlight hex codes
+    stay-centered-nvim # Always keep current line at center of screen
     snacks-nvim
     telescope-nvim
     telescope-ui-select-nvim
