@@ -46,16 +46,17 @@
       }
     );
 
-    neovimOptPlugins = forAllSystems (pkgs:
-      llakaLib.collectDirectoryPackages
-      {
-        inherit pkgs;
-        directory = ./other/optPlugins;
-      }
-    );
-
     # We comment this out for now, because `packagesFromDirectoryRecursive` will
     # error if the folder is empty.
+    neovimOptPlugins = forAllSystems (pkgs:
+      {}
+      # llakaLib.collectDirectoryPackages
+      # {
+      #   inherit pkgs;
+      #   directory = ./other/optPlugins;
+      # }
+    );
+
     neovimBinaries = forAllSystems (pkgs:
       {}
       # llakaLib.collectDirectoryPackages
