@@ -3,6 +3,7 @@
 let
   pkgsPlugins = with pkgs.vimPlugins; [
     # Essentials
+    auto-session
     blink-cmp
     bufferline-nvim
     conform-nvim
