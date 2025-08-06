@@ -46,10 +46,6 @@ local open_files_in_tabs = {
   mappings = {
     n = {
       ["<CR>"] = use_tab_func,
-
-      -- By default, tab goes back, and shift-tab goes forward. Gross!
-      ["<Tab>"] = actions.toggle_selection + actions.move_selection_next,
-      ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_previous,
     },
 
     i = {
