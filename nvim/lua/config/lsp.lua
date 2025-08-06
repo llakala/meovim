@@ -7,13 +7,11 @@ vim.diagnostic.config({
   },
 })
 
-nnoremap("<leader>r", vim.lsp.buf.rename, { desc = "Rename symbol" })
+-- Replace mode is stupid, and nobody sane would ever use it. If neovim can
+-- change K, I can change R.
+vim.keymap.del("n", "grn")
+nnoremap("R", vim.lsp.buf.rename, { desc = "Rename symbol" })
 
--- Mode independent - will show code actions on selection if
--- in visual mode
-nnoremap("<leader>a", vim.lsp.buf.code_action, { desc = "Code action" })
-vnoremap("<leader>a", vim.lsp.buf.code_action, { desc = "Code action" })
-
-nnoremap("<leader>d", function()
-  vim.diagnostic.open_float() -- d for diagnostics
-end, { desc = "Diagnostic" })
+-- This is just ascii stuff by default - useless to me!
+vim.keymap.del({ "n", "x" }, "gra")
+vim.keymap.set({ "n", "x" }, "ga", vim.lsp.buf.code_action, { desc = "Code action" })

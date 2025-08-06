@@ -58,6 +58,10 @@ local open_files_in_tabs = {
   },
 }
 
+local jump_to_tab = {
+  jump_type = "tab",
+}
+
 require("telescope").setup({
   extensions = {
     ["ui-select"] = {
@@ -65,28 +69,25 @@ require("telescope").setup({
     },
   },
   pickers = {
-    buffers = open_files_in_tabs,
-    lsp_definitions = open_files_in_tabs,
-    lsp_references = open_files_in_tabs,
     diagnostics = open_files_in_tabs,
+    lsp_references = open_files_in_tabs,
+
+    lsp_definitions = jump_to_tab,
+    lsp_type_definitions = jump_to_tab,
   },
 })
 
 require("telescope").load_extension("ui-select")
 
--- i for implementation
-nnoremap("<leader>i", function()
-  builtins.lsp_definitions()
-end, { desc = "View implementation" })
+-- Replace default LSP bindings with telescope equivalents
+-- We don't mess with rename and code actions, bc telescope has no equivalent
+-- for them
+nnoremap("grr", builtins.lsp_references, { desc = "View usage(s)" })
+nnoremap("gri", builtins.lsp_definitions, { desc = "View implementation" })
+nnoremap("grt", builtins.lsp_type_definitions, { desc = "View implementation" })
+nnoremap("gO", builtins.lsp_document_symbols, { desc = "View implementation" })
 
--- u for usage
-nnoremap("<leader>u", function()
-  builtins.lsp_references()
-end, { desc = "View usage(s)" })
-
--- w for workspace. Shows workspace diagnostics, so you can see errors in other
--- files. Great for Gleam dev, since the Gleam LSP gets stuck if one file has errors.
--- Note that this doesn't work for all LSPs!
-nnoremap("<leader>w", function()
-  builtins.diagnostics()
-end, { desc = "Workspace diagnostics" })
+-- Shows workspace diagnostics, so you can see errors in other files. Great for
+-- Gleam dev, since the Gleam LSP gets stuck if one file has errors. Note that
+-- this doesn't work for all LSPs!
+nnoremap("grd", builtins.diagnostics, { desc = "Workspace diagnostics" })
