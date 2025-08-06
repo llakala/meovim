@@ -41,7 +41,6 @@ let
 
     # Filetype-specific
     helpview-nvim
-    lazydev-nvim
     markdown-preview-nvim
     nvim-jdtls
     vimtex

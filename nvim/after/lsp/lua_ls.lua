@@ -6,6 +6,12 @@ return {
         arrayIndex = "Disable",
       },
 
+      workspace = {
+        ignoreDir = {
+          ".direnv",
+        },
+      },
+
       diagnostics = {
         -- Neovim and Yazi globals
         globals = { "vim", "require", "ya", "cx", "Command" },
