@@ -2,16 +2,47 @@ vim.env.FZF_DEFAULT_OPTS = nil
 local actions = require("fzf-lua").actions
 
 require("fzf-lua").setup({
-  -- Set up basic vim bindings. The equivalent of this SHOULD be set as an env
-  -- variable, but this one works, and that one doesn't. who knows!
+  -- Set up basic vim bindings.
   keymap = {
     fzf = {
-      true,
-      ["start"] = "unbind(down,up)+hide-input",
-      ["j"] = "down",
-      ["k"] = "up",
-      ["i"] = "show-input+unbind(i,j,k)",
-      ["esc"] = 'transform:if [[ "$FZF_INPUT_STATE" = enabled ]]; then echo "hide-input+rebind(i,j,k)"; else echo abort; fi',
+      true, -- Inherit from default fzf keybinds
+      jump = "accept",
+
+      -- Normal mode keybinds
+      j = "down",
+      k = "up",
+      o = "accept",
+      s = "jump",
+
+      -- We want to start out in insert mode, but we just created all the normal
+      -- mode binds. So we toggle all of them off at startup. The only custom
+      -- bind that ISN'T toggled is escape.
+      --
+      -- We also trigger this event elsewhere, where it serves as a "mode
+      -- toggle". This lets us avoid listing all our keymaps whenever we want to
+      -- change modes.
+      start = "toggle-bind(j,k,o,s,i)",
+
+      -- If we're in insert mode, then pressing esc should take us to normal
+      -- mode. If we're NOT in insert mode, we must already be in normal mode,
+      -- and esc should quit fzf.
+      esc = 'transform:[[ "$FZF_INPUT_STATE" = enabled ]] && echo "hide-input+trigger(start)" || echo abort',
+
+      -- From normal mode, enter insert mode. This key will only do anything if
+      -- we've entered normal mode and enabled it. So, we trigger start AGAIN,
+      -- disabling all the normal mode keymaps (including this one).
+      i = "show-input+trigger(start)",
+    },
+  },
+
+  -- Automatically create an fzf colorscheme based on our nvim colorscheme
+  fzf_colors = true,
+
+  winopts = {
+    row = 0.50,
+    preview = {
+      layout = "vertical",
+      vertical = "up:45%",
     },
   },
 
