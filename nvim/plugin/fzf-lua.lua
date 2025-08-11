@@ -1,4 +1,5 @@
 vim.env.FZF_DEFAULT_OPTS = nil
+local actions = require("fzf-lua").actions
 
 require("fzf-lua").setup({
   -- Set up basic vim bindings. The equivalent of this SHOULD be set as an env
@@ -13,12 +14,18 @@ require("fzf-lua").setup({
       ["esc"] = 'transform:if [[ "$FZF_INPUT_STATE" = enabled ]]; then echo "hide-input+rebind(i,j,k)"; else echo abort; fi',
     },
   },
+
   actions = {
     files = {
       true,
       -- Open files in a new tab, rather than replacing current file
-      ["enter"] = FzfLua.actions.file_tabedit,
+      ["enter"] = actions.file_tabedit,
     },
+  },
+
+  lsp = {
+    -- When we're jumping and there's only 1 result, still open a new tab
+    jump1_action = actions.file_tabedit,
   },
 })
 
