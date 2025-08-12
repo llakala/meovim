@@ -34,6 +34,23 @@ require("fzf-lua").setup({
     },
   },
 
+  -- Buffer picker starts in normal mode
+  buffers = {
+    keymap = {
+      fzf = {
+        -- I want an event I can call, so I don't have to keep listing the
+        -- normal binds, and can just call the event. However, since I don't
+        -- start in insert mode, I can't use `start` this time. Instead, we use
+        -- click-header - if I'm clicking in fzf, I'm doing something wrong.
+        ["click-header"] = "toggle-bind(j,k,o,s,i)",
+
+        start = "hide-input",
+        i = "show-input+trigger(click-header)",
+        esc = 'transform:[[ "$FZF_INPUT_STATE" = enabled ]] && echo "hide-input+trigger(click-header)" || echo abort',
+      },
+    },
+  },
+
   -- Automatically create an fzf colorscheme based on our nvim colorscheme
   fzf_colors = true,
 
@@ -59,3 +76,19 @@ nnoremap("gO", FzfLua.lsp_document_symbols, { desc = "View implementation" })
 -- Gleam dev, since the Gleam LSP gets stuck if one file has errors. Note that
 -- this doesn't work for all LSPs!
 nnoremap("grd", FzfLua.diagnostics_workspace, { desc = "Workspace diagnostics" })
+
+nnoremap("<leader>b", FzfLua.buffers, { desc = "Swap buffer" })
+nnoremap("<leader>B", function()
+  FzfLua.buffers({
+    show_unlisted = true,
+    filter = function(b)
+      local ft = vim.fn.getbufvar(b, "&filetype")
+      local bad_filetypes = { "blink-cmp-menu", "blink-cmp-documentation" }
+
+      return not vim.list_contains(bad_filetypes, ft)
+    end,
+  })
+end, { desc = "Swap buffer, including hidden buffers" })
+
+nnoremap("<leader>f", FzfLua.files, { desc = "Add new file in project" })
+nnoremap("<leader>s", FzfLua.live_grep, { desc = "Change buffer" })
