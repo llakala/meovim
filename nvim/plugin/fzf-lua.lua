@@ -11,7 +11,7 @@ require("fzf-lua").setup({
       j = "down",
       k = "up",
       o = "accept",
-      s = "jump",
+      f = "jump",
 
       -- We want to start out in insert mode, but we just created all the normal
       -- mode binds. So we toggle all of them off at startup. The only custom
@@ -20,7 +20,7 @@ require("fzf-lua").setup({
       -- We also trigger this event elsewhere, where it serves as a "mode
       -- toggle". This lets us avoid listing all our keymaps whenever we want to
       -- change modes.
-      start = "toggle-bind(j,k,o,s,i)",
+      start = "toggle-bind(j,k,o,f,i)",
 
       -- If we're in insert mode, then pressing esc should take us to normal
       -- mode. If we're NOT in insert mode, we must already be in normal mode,
@@ -42,7 +42,7 @@ require("fzf-lua").setup({
         -- normal binds, and can just call the event. However, since I don't
         -- start in insert mode, I can't use `start` this time. Instead, we use
         -- click-header - if I'm clicking in fzf, I'm doing something wrong.
-        ["click-header"] = "toggle-bind(j,k,o,s,i)",
+        ["click-header"] = "toggle-bind(j,k,o,f,i)",
 
         start = "hide-input",
         i = "show-input+trigger(click-header)",
