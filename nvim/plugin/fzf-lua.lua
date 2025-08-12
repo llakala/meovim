@@ -1,5 +1,4 @@
 vim.env.FZF_DEFAULT_OPTS = nil
-local actions = require("fzf-lua").actions
 
 require("fzf-lua").setup({
   -- Set up basic vim bindings.
@@ -44,19 +43,6 @@ require("fzf-lua").setup({
       layout = "vertical",
       vertical = "up:45%",
     },
-  },
-
-  actions = {
-    files = {
-      true,
-      -- Open files in a new tab, rather than replacing current file
-      ["enter"] = actions.file_tabedit,
-    },
-  },
-
-  lsp = {
-    -- When we're jumping and there's only 1 result, still open a new tab
-    jump1_action = actions.file_tabedit,
   },
 })
 

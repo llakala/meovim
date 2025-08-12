@@ -27,9 +27,6 @@ o.timeout = false
 -- change.
 o.jumpoptions = "stack,view"
 
--- Open new buffers in new tabs. Helpful for quickfix stuff
-o.switchbuf = "useopen,usetab,newtab"
-
 -- UI
 
 o.winborder = "rounded"

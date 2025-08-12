@@ -1,4 +1,4 @@
--- See the comment in ./help.lua - opens all git stuff in new tabs
+-- Put buffer by itself, rather than using a split
 vim.cmd([[
-  autocmd BufEnter <buffer> silent wincmd T
+  only
 ]])

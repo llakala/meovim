@@ -60,15 +60,10 @@ nnoremap("<A-u>", "U") -- In case you actually want this
 nnoremap("!", "^")
 vnoremap("!", "^")
 
--- Tab management
-nnoremap("th", ":tabprev<CR>", { desc = "Next tab" })
-nnoremap("tl", ":tabnext<CR>", { desc = "Previous tab" })
+-- Window management
 
-nnoremap("tj", ":-tabmove<CR>", { desc = "Move tab left" })
-nnoremap("tk", ":+tabmove<CR>", { desc = "Move tab right" })
-
-nnoremap("td", ":quit<CR>", { desc = "Delete tab" })
-nnoremap("tD", ":quit!<CR>", { desc = "Delete tab without saving" })
+nnoremap("<leader><leader>", "<C-^>")
+nnoremap("<A-w>", "<C-w>") -- I have <C-w> to close a tab in Kitty. Should get rid of that!
 
 local ERROR = vim.diagnostic.severity.ERROR
 nnoremap("[e", function()

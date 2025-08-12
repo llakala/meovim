@@ -64,7 +64,6 @@ session.setup({
   },
 })
 
--- We save most things to session, but don't save buffers and localoptions.
--- Buffers keep growing forever and lag the session - tabs are forever. And
--- localoptions are typically done for testing and shouldn't stay around.
-vim.o.sessionoptions = "blank,curdir,help,tabpages,winsize,winpos,terminal"
+-- We save most things to session, but skip localoptions - they're typically
+-- done for testing, and shouldn't stay around.
+vim.o.sessionoptions = "blank,buffers,curdir,help,tabpages,winsize,winpos,terminal"

@@ -5,7 +5,6 @@ let
     # Essentials
     auto-session
     blink-cmp
-    bufferline-nvim
     conform-nvim
     fzf-lua
     lualine-nvim
@@ -45,7 +44,7 @@ let
     vimtex
 
     # Dependencies
-    nvim-web-devicons # For bufferline
+    nvim-web-devicons
   ];
 
   # To see all valid values, search this:

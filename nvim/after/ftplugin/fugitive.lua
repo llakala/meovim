@@ -1,6 +1,6 @@
 vim.cmd([[
-  " See the comment in ./help.lua - opens all fugitive stuff in new tabs
-  autocmd BufEnter <buffer> silent wincmd T
+  " Put buffer by itself, rather than using a split
+  only
 
   " Remove the default d binds, so we can map `d` to inline diff
   nunmap <buffer> dp
