@@ -17,6 +17,8 @@ g.mapleader = " "
 o.mouse = "nva" -- Enable mouse (but not in command mode).
 o.clipboard = "unnamedplus"
 
+vim.opt.matchpairs:append("<:>") -- % goes between <>
+
 -- Some people swear by it, but I want closing tabs to actually close them
 o.hidden = false
 
