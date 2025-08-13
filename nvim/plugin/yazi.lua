@@ -4,11 +4,13 @@ Yazi.setup({
   open_for_directories = true,
 })
 
--- Open new file from current dir
-nnoremap("<leader>y", Yazi.yazi)
+-- Often needed to add/delete a file, so it gets to be under `z`, which is easy
+-- to reach
+nnoremap("<leader>z", Yazi.yazi, { desc = "Open Yazi from current file" })
 
--- Open new file from project cwd
-nnoremap("<leader>z", function()
+-- Most of the time, you don't want this, and instead should be working through
+-- fzf-lua - so we map it to `y` which is difficult to reach.
+nnoremap("<leader>y", function()
   local cwd = vim.fn.getcwd()
   Yazi.yazi({}, cwd)
-end)
+end, { desc = "Open Yazi from project root" })
