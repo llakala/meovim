@@ -46,21 +46,12 @@ end
 -- one to the right. I prefer this, as I use i more than a. Helix-style!
 inoremap("<Esc>", "<Esc>l")
 
--- Paste and format, Means we can paste something and it'll be properly
--- indented! Referenced from:
--- https://github.com/ku1ik/vim-pasta#why-is-it-better-than-nnoremap-p-pv-
-nnoremap("p", "p`[v`]=")
-nnoremap("P", "P`[v`]=")
-
-nnoremap("U", "<C-r>") -- Redo
-nnoremap("<A-u>", "U") -- In case you actually want this
+nnoremap("U", "<C-r>", { desc = "Redo" })
 
 -- Barely used, and easier to reach than ^. we keep H and L open, because
 -- they're useful!
 nnoremap("!", "^")
 vnoremap("!", "^")
-
--- Window management
 
 nnoremap("<leader><leader>", "<C-^>")
 nnoremap("<A-w>", "<C-w>") -- I have <C-w> to close a tab in Kitty. Should get rid of that!
@@ -73,7 +64,7 @@ nnoremap("]e", function()
   vim.diagnostic.jump({ count = 1, severity = ERROR })
 end, { desc = "Next error" })
 
--- Supposedly `gq` is a keybind according to `:h v_gq`, but it doesn't seem to
--- exist anecdotally. I should really be using `gw`, since it preserves your
--- cursor location, but intuition is a son of a bitch.
+-- Supposedly `gq` is a keybind in visual mode according to `:h v_gq`, but it
+-- doesn't seem to exist anecdotally. I should really be using `gw`, since it
+-- preserves your cursor location, but intuition is a son of a bitch.
 vnoremap("gq", "gw", { desc = "Format" })
