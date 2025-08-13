@@ -83,7 +83,7 @@ nnoremap("<leader>B", function()
     show_unlisted = true,
     filter = function(b)
       local ft = vim.fn.getbufvar(b, "&filetype")
-      local bad_filetypes = { "blink-cmp-menu", "blink-cmp-documentation" }
+      local bad_filetypes = { "blink-cmp-menu", "blink-cmp-documentation", "blink-cmp-signature" }
 
       return not vim.list_contains(bad_filetypes, ft)
     end,
