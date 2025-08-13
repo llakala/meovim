@@ -91,4 +91,18 @@ nnoremap("<leader>B", function()
 end, { desc = "Swap buffer, including hidden buffers" })
 
 nnoremap("<leader>f", FzfLua.files, { desc = "Add new file in project" })
+nnoremap(
+  "<leader>l", -- l for local! doesn't hurt that it's easy to reach
+  function()
+    FzfLua.files({
+      -- Add the current folder to the query, but make it raw text, so the user
+      -- can backspace it if they want
+      fzf_opts = {
+        ["--query"] = vim.fn.expand("%:h") .. "/",
+      },
+    })
+  end,
+  { desc = "Add new file in current folder" }
+)
+
 nnoremap("<leader>s", FzfLua.live_grep, { desc = "Change buffer" })
