@@ -41,8 +41,8 @@ require("nvim-surround").setup({
 
     normal = "s",
     normal_cur = "ss",
-    normal_line = "S",
-    normal_cur_line = false,
+    normal_line = "gs",
+    normal_cur_line = "gss",
 
     delete = "ds",
 
