@@ -77,6 +77,8 @@ nnoremap("gO", FzfLua.lsp_document_symbols, { desc = "View implementation" })
 -- this doesn't work for all LSPs!
 nnoremap("grd", FzfLua.diagnostics_workspace, { desc = "Workspace diagnostics" })
 
+-- TODO: merge these into one command, that filters out all hidden buffers
+-- EXCEPT helpfiles
 nnoremap("<leader>b", FzfLua.buffers, { desc = "Swap buffer" })
 nnoremap("<leader>B", function()
   FzfLua.buffers({
@@ -105,4 +107,4 @@ nnoremap(
   { desc = "Add new file in current folder" }
 )
 
-nnoremap("<leader>s", FzfLua.live_grep, { desc = "Change buffer" })
+nnoremap("<leader>s", FzfLua.live_grep, { desc = "Search text in project" })
