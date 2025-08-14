@@ -96,13 +96,26 @@ nnoremap("<leader>f", FzfLua.files, { desc = "Add new file in project" })
 nnoremap(
   "<leader>l", -- l for local! doesn't hurt that it's easy to reach
   function()
-    FzfLua.files({
-      -- Add the current folder to the query, but make it raw text, so the user
-      -- can backspace it if they want
-      fzf_opts = {
-        ["--query"] = vim.fn.expand("%:h") .. "/",
-      },
-    })
+    -- %:h gives us the folderpath of the current file. The filepath will look
+    -- like `foo/bar` if it's within the nvim cwd, and like `/bar/baz` if it's
+    -- from root. We make a boolean to allow separate logic dependent on this
+    local current_dir = vim.fn.expand("%:h") .. "/"
+    local is_within_project = current_dir:sub(1, 1) ~= "/"
+    local opts = {}
+
+    -- If it's within the project, we can set the query directly through fzf.
+    -- This allows us to backspace the query directly. If it's a root path,
+    -- doing it through fzf would be too slow, so we set the cwd through
+    -- fzf-lua. No more backspacing, but at least we get decent speed.
+    if is_within_project then
+      opts.fzf_opts = {
+        ["--query"] = current_dir,
+      }
+    else
+      opts.cwd = current_dir
+    end
+
+    FzfLua.files(opts)
   end,
   { desc = "Add new file in current folder" }
 )
