@@ -42,7 +42,7 @@ vim.api.nvim_create_user_command("Deallman", function()
   group, containing the bracket that was previously on the next line. With that,
   we're done!
   --]]
-  vim.cmd([[:%s&\v\=\n\s*([\[\{\(])&= \1]])
+  vim.cmd([[:%s:\v\=\n\s*([\[\{\(]):= \1:ge]])
 
   --[[
   This is a more complicated regex expression than the previous one. It turns something like this:
