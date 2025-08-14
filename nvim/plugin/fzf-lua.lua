@@ -77,17 +77,21 @@ nnoremap("gO", FzfLua.lsp_document_symbols, { desc = "View implementation" })
 -- this doesn't work for all LSPs!
 nnoremap("grd", FzfLua.diagnostics_workspace, { desc = "Workspace diagnostics" })
 
--- TODO: merge these into one command, that filters out all hidden buffers
--- EXCEPT helpfiles
-nnoremap("<leader>b", FzfLua.buffers, { desc = "Swap buffer" })
-nnoremap("<leader>B", function()
+-- Show normal buffers and helpfiles!
+nnoremap("<leader>b", function()
   FzfLua.buffers({
     show_unlisted = true,
-    filter = function(b)
-      local ft = vim.fn.getbufvar(b, "&filetype")
-      local bad_filetypes = { "blink-cmp-menu", "blink-cmp-documentation", "blink-cmp-signature" }
 
-      return not vim.list_contains(bad_filetypes, ft)
+    -- Most buffers that aren't listed are bad, but helpfiles are an exception
+    filter = function(bufnr)
+      local ft = vim.bo[bufnr].filetype
+      local buflisted = vim.bo[bufnr].buflisted
+
+      if ft == "help" then
+        return true
+      else
+        return buflisted
+      end
     end,
   })
 end, { desc = "Swap buffer, including hidden buffers" })
