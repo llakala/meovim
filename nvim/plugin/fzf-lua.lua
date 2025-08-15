@@ -7,30 +7,17 @@ require("fzf-lua").setup({
       true, -- Inherit from default fzf keybinds
       jump = "accept",
 
-      -- Normal mode keybinds
-      j = "down",
-      k = "up",
-      o = "accept",
-      f = "jump",
-
-      -- We want to start out in insert mode, but we just created all the normal
-      -- mode binds. So we toggle all of them off at startup. The only custom
-      -- bind that ISN'T toggled is escape.
-      --
-      -- We also trigger this event elsewhere, where it serves as a "mode
-      -- toggle". This lets us avoid listing all our keymaps whenever we want to
-      -- change modes.
-      start = "toggle-bind(j,k,o,f,i)",
-
-      -- If we're in insert mode, then pressing esc should take us to normal
-      -- mode. If we're NOT in insert mode, we must already be in normal mode,
-      -- and esc should quit fzf.
-      esc = 'transform:[[ "$FZF_INPUT_STATE" = enabled ]] && echo "hide-input+trigger(start)" || echo abort',
-
-      -- From normal mode, enter insert mode. This key will only do anything if
-      -- we've entered normal mode and enabled it. So, we trigger start AGAIN,
-      -- disabling all the normal mode keymaps (including this one).
-      i = "show-input+trigger(start)",
+      -- Normal (ish) mode keybinds. The true normal mode is used in `buffers`
+      ["alt-j"] = "down",
+      ["alt-k"] = "up",
+      ["alt-l"] = "accept",
+      ["alt-f"] = "jump",
+    },
+    builtin = {
+      true,
+      ["<C-j>"] = "preview-page-down",
+      ["<C-k>"] = "preview-page-up",
+      ["<C-Space>"] = "toggle-preview",
     },
   },
 
@@ -38,15 +25,31 @@ require("fzf-lua").setup({
   buffers = {
     keymap = {
       fzf = {
-        -- I want an event I can call, so I don't have to keep listing the
-        -- normal binds, and can just call the event. However, since I don't
-        -- start in insert mode, I can't use `start` this time. Instead, we use
-        -- click-header - if I'm clicking in fzf, I'm doing something wrong.
-        ["click-header"] = "toggle-bind(j,k,o,f,i)",
+        j = "down",
+        k = "up",
+        l = "accept",
+        f = "jump",
 
-        start = "hide-input",
-        i = "show-input+trigger(click-header)",
+        -- Normal mode is on by default - calling this event will toggle it.
+        -- Ideally, we would have some `toggle-input` event, but as we lack
+        -- that, we use click-header (if I'm clicking in fzf, I'm doing
+        -- something wrong). This lets us toggle modes without having to write
+        -- out the keys in every single bind
+        ["click-header"] = "toggle-bind(j,k,l,f,i)",
+
+        -- If we're in insert mode, then pressing esc should take us to normal
+        -- mode. If we're NOT in insert mode, we must already be in normal mode,
+        -- and esc should quit fzf.
         esc = 'transform:[[ "$FZF_INPUT_STATE" = enabled ]] && echo "hide-input+trigger(click-header)" || echo abort',
+
+        -- We have a true normal mode, let's use it!
+        start = "hide-input+unbind(alt-j,alt-k,alt-l,alt-f)",
+
+        -- From normal mode, enter insert mode. After doing this, we want to
+        -- immediately unmap it so we can actually type `i`. So we trigger
+        -- `click-header` and disable all the normal mode keymaps (including
+        -- this one).
+        i = "show-input+trigger(click-header)",
       },
     },
   },
