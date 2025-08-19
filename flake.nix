@@ -3,11 +3,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     mnw.url = "github:Gerg-L/mnw";
 
-    llakaLib = {
-      url = "github:llakala/llakaLib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Not actually using this, but we need to pin the version for neovimPlugins
     # pass in your own flake-utils to prevent duplication
     flake-utils.url = "github:numtide/flake-utils";
@@ -28,43 +23,39 @@
       supportedSystems
       (system: function nixpkgs.legacyPackages.${system});
 
-    # Custom functions that I store in their own repo, so I can use them across
-    # projects. I use my own custom wrapper around
-    # `lib.packagesFromDirectoryRecursive` from here, to automatically get any
-    # packages stored in our folders.
-    llakaLib = inputs.llakaLib.pureLib; # Don't need any impure functions
+    # Simple callPackage wrapper for easy self-reference
+    mkPackageSet = { pkgs, extras ? {}, filepaths }: let
+      callPackage = lib.callPackageWith (pkgs // extras // { localPackages = packages; });
+      packages = builtins.mapAttrs
+        (_: path: callPackage path {})
+        filepaths;
+    in packages;
+
   in {
     # When I need something and it isn't packaged already somewhere, I package it
     # myself. I have these accessible as flake inputs, so I can test them in the
     # REPL.
     #
     # Note that these are disabled when I don't have anything custom right now!
-    neovimStartPlugins = forAllSystems (pkgs:
-      llakaLib.collectDirectoryPackages {
-        inherit pkgs;
-        directory = ./other/startPlugins;
-      }
-    );
+    neovimStartPlugins = forAllSystems (pkgs: mkPackageSet {
+      inherit pkgs;
+      filepaths = {
+        vim-nix = ./other/startPlugins/vim-nix.nix;
+        fFtT-highlights-nvim = ./other/startPlugins/fFtT-highlights-nvim.nix;
+        lazydev-nvim = ./other/startPlugins/lazydev-nvim.nix;
+      };
+    });
 
-    # We comment this out for now, because `packagesFromDirectoryRecursive` will
-    # error if the folder is empty.
-    neovimOptPlugins = forAllSystems (pkgs:
-      {}
-      # llakaLib.collectDirectoryPackages
-      # {
-      #   inherit pkgs;
-      #   directory = ./other/optPlugins;
-      # }
-    );
+    neovimOptPlugins = forAllSystems (pkgs: mkPackageSet {
+      inherit pkgs;
+      filepaths = {};
+    });
 
-    neovimBinaries = forAllSystems (pkgs:
-      {}
-      # llakaLib.collectDirectoryPackages
-      # {
-      #   inherit pkgs;
-      #   directory = ./other/binaries;
-      # }
-    );
+    neovimBinaries = forAllSystems (pkgs: mkPackageSet {
+      inherit pkgs;
+      filepaths = {};
+    });
+
 
     packages = forAllSystems (pkgs: let
       # Binaries and plugins that I grab from elsewhere. Stored in their own
