@@ -8,15 +8,15 @@ require("fzf-lua").setup({
       jump = "accept",
 
       -- Normal (ish) mode keybinds. The true normal mode is used in `buffers`
-      ["alt-j"] = "down",
-      ["alt-k"] = "up",
-      ["alt-l"] = "accept",
-      ["alt-f"] = "jump",
+      ["ctrl-j"] = "down",
+      ["ctrl-k"] = "up",
+      ["ctrl-l"] = "accept",
+      ["ctrl-f"] = "jump",
     },
     builtin = {
       true,
-      ["<C-j>"] = "preview-page-down",
-      ["<C-k>"] = "preview-page-up",
+      ["<A-j>"] = "preview-down",
+      ["<A-k>"] = "preview-up",
       ["<C-Space>"] = "toggle-preview",
     },
   },
