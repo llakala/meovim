@@ -1,16 +1,30 @@
-local lsp_progress = {
-  "lsp_progress",
-  display_components = {
-    "lsp_client_name",
-    "spinner",
-  },
-  colors = { use = true },
-}
 require("lualine").setup({
   sections = {
-    lualine_b = { "branch", "diagnostics" },
-    lualine_c = { "filename" },
-    lualine_x = { lsp_progress },
+    lualine_b = { "branch" },
+
+    lualine_c = {
+      {
+        "filename",
+        path = 1,
+
+        -- Don't show the full filepath if the file is in the nix store, since
+        -- it'll be way too long
+        fmt = function(filename)
+          if filename:match("^/nix/store") then
+            return vim.fn.expand("%:t")
+          end
+          return filename
+        end,
+      },
+    },
+
+    lualine_x = {
+      {
+        "lsp_status",
+        icon = "",
+        color = { fg = "Gray" },
+      },
+    },
     lualine_y = { "filetype" },
     lualine_z = { "location" },
   },
