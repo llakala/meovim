@@ -1,6 +1,5 @@
 vim.cmd([[
-  " Put buffer by itself, rather than using a split
-  only
+  resize 12
 
   " Remove the default d binds, so we can map `d` to inline diff
   nunmap <buffer> dp
@@ -14,6 +13,3 @@ vim.cmd([[
 
 -- d for diff
 bufmap("d", "<plug>fugitive:=")
-
--- Always open in new tab
-bufmap("o", "<plug>fugitive:O")
