@@ -76,13 +76,17 @@ o.ignorecase = true
 o.smartcase = true
 o.hlsearch = true -- Highlight search matches
 
--- Statusline
+-- Statusline / window stuff
 
 o.showmode = false -- Using lualine
 o.showcmd = true -- Shows when we press keypresses, which we don't need
 
 -- Only one statusline, for better separator between horizontal splits
 o.laststatus = 3
+
+-- Keep my eyes in the right place!
+o.splitbelow = true
+o.splitright = true
 
 -- Formatting
 
