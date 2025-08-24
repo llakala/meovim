@@ -50,7 +50,7 @@ require("nvim-surround").setup({
     change_line = false,
 
     visual = "s",
-    visual_line = "S",
+    visual_line = "gs",
   },
 })
 
