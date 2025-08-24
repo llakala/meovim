@@ -1,4 +1,9 @@
 require("lualine").setup({
+  extensions = {
+    "fzf",
+    "fugitive",
+  },
+
   sections = {
     lualine_b = { "branch" },
 
