@@ -1,4 +1,6 @@
 vim.env.FZF_DEFAULT_OPTS = nil
+local utils = require("fzf-lua.utils")
+local path = require("fzf-lua.path")
 
 require("fzf-lua").setup({
   previewers = {
@@ -29,8 +31,50 @@ require("fzf-lua").setup({
     },
   },
 
-  -- Buffer picker starts in normal mode
   buffers = {
+    fzf_opts = {
+      ["--header-lines"] = false,
+    },
+
+    -- TODO: find a way to start on the second item
+
+    -- Custom action to create a scratch buffer if we close the current buffer
+    actions = {
+      ["ctrl-x"] = {
+        fn = function(selected, opts)
+          for _, sel in ipairs(selected) do
+            local entry = path.entry_to_file(sel, opts)
+            local bufnr = entry.bufnr
+
+            local is_dirty = utils.buffer_is_dirty(bufnr, true, false)
+            local save_dialog = function()
+              return utils.save_dialog(bufnr)
+            end
+
+            if bufnr and (not is_dirty or vim.api.nvim_buf_call(bufnr, save_dialog)) then
+              -- The current buffer is actually the picker - so the alt buffer lets
+              -- us see the file we're currently editing
+              local current_buf = vim.fn.bufnr("#")
+
+              if bufnr == current_buf then
+                -- Current buffer is going to be deleted, so we'll need to
+                -- replace it with the scratch buf in all windows
+                local windows = vim.fn.win_findbuf(current_buf)
+
+                local new_buf = vim.api.nvim_create_buf(false, true)
+                for _, win in ipairs(windows) do
+                  vim.api.nvim_win_set_buf(win, new_buf)
+                end
+              end
+
+              vim.api.nvim_buf_delete(bufnr, { force = true })
+            end
+          end
+        end,
+      },
+    },
+
+    -- Start in normal mode
     keymap = {
       fzf = {
         j = "down",
