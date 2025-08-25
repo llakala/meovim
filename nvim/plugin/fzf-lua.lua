@@ -1,6 +1,14 @@
 vim.env.FZF_DEFAULT_OPTS = nil
 
 require("fzf-lua").setup({
+  previewers = {
+    builtin = {
+      -- This breaks tex files, due to an error with `standalone.cls`! I hate
+      -- snacks more and more, folke loves abandonware
+      snacks_image = { enabled = false },
+    },
+  },
+
   -- Set up basic vim bindings.
   keymap = {
     fzf = {
