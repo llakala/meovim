@@ -6,3 +6,10 @@ g.vimtex_mappings_disable = {
   x = { "tsf", "tsc", "tse", "tsd", "tsD" },
   n = { "tsf", "tsc", "tse", "tsd", "tsD" },
 }
+
+g.vimtex_compiler_latexmk = {
+  aux_dir = ".build",
+
+  -- aux_dir is compilation artifacts, this is for the pdf and `synctex.gz` files
+  out_dir = ".build",
+}
