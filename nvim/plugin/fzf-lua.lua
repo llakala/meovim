@@ -41,34 +41,53 @@ require("fzf-lua").setup({
     -- Custom action to create a scratch buffer if we close the current buffer
     actions = {
       ["ctrl-x"] = {
+        reload = true,
         fn = function(selected, opts)
           for _, sel in ipairs(selected) do
             local entry = path.entry_to_file(sel, opts)
             local bufnr = entry.bufnr
 
             local is_dirty = utils.buffer_is_dirty(bufnr, true, false)
-            local save_dialog = function()
-              return utils.save_dialog(bufnr)
+
+            -- If file isn't loaded. Not sure why this is needed, but it's from
+            -- the original!
+            if not bufnr then
+              goto continue
             end
 
-            if bufnr and (not is_dirty or vim.api.nvim_buf_call(bufnr, save_dialog)) then
-              -- The current buffer is actually the picker - so the alt buffer lets
-              -- us see the file we're currently editing
-              local current_buf = vim.fn.bufnr("#")
+            -- If the current file has unsaved changes, prompt the user to save
+            if is_dirty then
+              local save_dialog = function()
+                return utils.save_dialog(bufnr)
+              end
+              if not vim.api.nvim_buf_call(bufnr, save_dialog) then
+                goto continue
+              end
+            end
 
-              if bufnr == current_buf then
-                -- Current buffer is going to be deleted, so we'll need to
-                -- replace it with the scratch buf in all windows
-                local windows = vim.fn.win_findbuf(current_buf)
+            -- The current buffer is actually the picker - so the alt buffer lets
+            -- us see the file we're currently editing
+            local current_buf = vim.fn.bufnr("#")
 
-                local new_buf = vim.api.nvim_create_buf(false, true)
-                for _, win in ipairs(windows) do
-                  vim.api.nvim_win_set_buf(win, new_buf)
-                end
+            if bufnr == current_buf then
+              -- To prevent accidentally closing the current buf, we require a
+              -- confirmation. response being 1 means yes
+              local response = vim.fn.confirm("Close current buffer?", "&Yes\n&No")
+              if response ~= 1 then
+                goto continue
               end
 
-              vim.api.nvim_buf_delete(bufnr, { force = true })
+              -- replace current buf with scratch buf in all windows
+              local windows = vim.fn.win_findbuf(current_buf)
+
+              local new_buf = vim.api.nvim_create_buf(false, true)
+              for _, win in ipairs(windows) do
+                vim.api.nvim_win_set_buf(win, new_buf)
+              end
             end
+
+            vim.api.nvim_buf_delete(bufnr, { force = true })
+            ::continue::
           end
         end,
       },
@@ -102,6 +121,7 @@ require("fzf-lua").setup({
         -- `click-header` and disable all the normal mode keymaps (including
         -- this one).
         i = "show-input+trigger(click-header)",
+        u = "down",
       },
     },
   },
