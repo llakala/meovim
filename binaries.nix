@@ -28,6 +28,7 @@ let
     basedpyright
     ruff
     marksman
+    tinymist
 
     # Formatters
     (google-java-format.override { jre = pkgs.jre_headless; })
