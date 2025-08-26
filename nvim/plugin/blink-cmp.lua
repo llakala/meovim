@@ -94,6 +94,13 @@ cmp.setup({
     -- Loading lazydev through blink leads to better signature help and overall
     -- a better experience
     providers = {
+
+      snippets = {
+        opts = {
+          show_autosnippets = false,
+        },
+      },
+
       lazydev = {
         name = "LazyDev",
         module = "lazydev.integrations.blink",
