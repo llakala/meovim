@@ -96,6 +96,9 @@ require("fzf-lua").setup({
     -- Start in normal mode
     keymap = {
       fzf = {
+        -- Buffer picker shouldn't start on the current buffer
+        load = "pos(2)",
+
         j = "down",
         k = "up",
         l = "accept",
