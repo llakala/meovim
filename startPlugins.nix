@@ -67,6 +67,7 @@ let
     java
     latex
     python
+    typst
 
     # Structured languages
     css
