@@ -41,6 +41,7 @@ let
     helpview-nvim
     markdown-preview-nvim
     nvim-jdtls
+    typst-preview-nvim
     vimtex
 
     # Dependencies
