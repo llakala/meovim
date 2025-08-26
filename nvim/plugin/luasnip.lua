@@ -22,4 +22,4 @@ vim.cmd([[
   smap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
 ]])
 
--- require("luasnip.loaders.from_lua").load({ paths = { "~/Documents/projects/snippets" } })
+require("luasnip.loaders.from_lua").load({ paths = { "~/Documents/projects/snippets" } })
