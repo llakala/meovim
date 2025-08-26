@@ -12,3 +12,11 @@ vim.api.nvim_create_autocmd("VimLeave", {
     os.execute("pkill zathura")
   end,
 })
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+  callback = function()
+    vim.cmd([[write! ]])
+  end,
+  buffer = vim.api.nvim_get_current_buf(),
+  desc = "Autosave on leaving insert mode",
+})
