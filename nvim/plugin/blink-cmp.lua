@@ -85,8 +85,10 @@ cmp.setup({
       "lsp",
       "path",
       "snippets",
-      "lazydev",
       "omni", -- For vimtex
+    },
+    per_filetype = {
+      lua = { inherit_defaults = true, "lazydev" },
     },
 
     -- Loading lazydev through blink leads to better signature help and overall
