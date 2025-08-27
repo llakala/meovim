@@ -9,10 +9,22 @@ local colorful_menu = require("colorful-menu")
 
 cmp.setup({
   keymap = {
-    preset = "enter",
+    -- Want to make something that I can fully control and understand!
+    preset = "none",
 
-    ["<Tab>"] = { "snippet_forward", "select_next", "fallback" },
-    ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
+    ["<C-space>"] = { "show", "hide" },
+    ["<C-s>"] = { "show_signature", "hide_signature" },
+
+    ["<C-k>"] = { "select_prev", "fallback" },
+    ["<C-j>"] = { "select_next", "fallback" },
+
+    -- The idea is to do <C-l> when you're doing a lot of picking, and <CR> when
+    -- you're typing.
+    ["<C-l>"] = { "accept", "fallback" },
+    ["<CR>"] = { "accept", "fallback" },
+
+    ["<Tab>"] = { "snippet_forward", "fallback" },
+    ["<S-Tab>"] = { "snippet_backward", "fallback" },
   },
 
   snippets = { preset = "luasnip" },
