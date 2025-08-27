@@ -87,7 +87,7 @@
           -- Add to this whenever you add a new server to the `lsp` folder!
           -- Ridiculous that nvim can't load them for you as far as I can tell
           vim.lsp.enable({ "fish_lsp", "gleam", "lua_ls", "nixd",
-          "basedpyright", "ts_ls", "marksman", "tinymist" })
+          "basedpyright", "ts_ls", "marksman", "tinymist", "clangd" })
         '';
 
         plugins.start =

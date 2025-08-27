@@ -24,6 +24,7 @@ let
     lua-language-server
     fish-lsp
     gleam
+    clang-tools
     typescript-language-server
     basedpyright
     ruff
