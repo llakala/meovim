@@ -1,7 +1,7 @@
 local npairs = require("nvim-autopairs")
 local Rule = require("nvim-autopairs.rule")
 local cond = require("nvim-autopairs.conds")
-local ts_cond = require("nvim-autopairs.ts-conds")
+local ts_conds = require("nvim-autopairs.ts-conds")
 
 npairs.setup()
 -- print(vim.inspect(cond))
@@ -24,10 +24,34 @@ local function replacePunctuation(punct)
     :use_key(punct)
 end
 
+-- From wiki: https://github.com/windwp/nvim-autopairs/wiki/Custom-rules#insertion-with-surrounding-check
+local function surrounding_spaces(a1, ins, a2, lang)
+  return Rule(ins, ins, lang)
+    :with_pair(function(opts)
+      return a1 .. a2 == opts.line:sub(opts.col - #a1, opts.col + #a2 - 1)
+    end)
+    :with_move(cond.none())
+    :with_cr(cond.none())
+    :with_del(function(opts)
+      local col = vim.api.nvim_win_get_cursor(0)[2]
+      return a1 .. ins .. ins .. a2 == opts.line:sub(col - #a1 - #ins + 1, col + #ins + #a2) -- insert only works for #ins == 1 anyway
+    end)
+end
+
 -- For testing, just run `:e` after sourcing on a given file
 npairs.add_rules({
   Rule("/*", "*/", { "nix" }),
 
   replacePunctuation(","),
   replacePunctuation(";"),
+
+  -- From wiki: https://github.com/windwp/nvim-autopairs/wiki/Custom-rules#insertion-with-surrounding-check
+  -- Interestingly, adding the single quote one breaks the {} one. No clue why!
+  Rule("{", "},", "lua"):with_pair(ts_conds.is_ts_node({ "table_constructor" })),
+  Rule("(", "),", "lua"):with_pair(ts_conds.is_ts_node({ "table_constructor" })),
+  Rule('"', '",', "lua"):with_pair(ts_conds.is_ts_node({ "table_constructor" })),
+
+  surrounding_spaces("(", " ", ")"),
+  surrounding_spaces("{", " ", "}"),
+  surrounding_spaces("[", " ", "]"),
 })
