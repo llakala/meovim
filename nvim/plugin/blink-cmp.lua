@@ -27,8 +27,6 @@ cmp.setup({
     ["<S-Tab>"] = { "snippet_backward", "fallback" },
   },
 
-  snippets = { preset = "luasnip" },
-
   completion = {
     -- Autoselect the first element, but don't insert it. Instead, just preview
     -- the insert with ghost text.
@@ -77,6 +75,43 @@ cmp.setup({
     },
   },
 
+  cmdline = {
+    enabled = true,
+
+    completion = {
+      -- In cmdline, you should press tab to select something, and then
+      -- enter. Better than having it autoselect the first one, and no way
+      -- to just press enter with what you've got
+      list = {
+        selection = {
+          preselect = false,
+        },
+      },
+
+      menu = { auto_show = true },
+    },
+  },
+
+  snippets = { preset = "luasnip" },
+
+  signature = {
+    enabled = true,
+
+    window = { show_documentation = true },
+  },
+
+  -- Prioritizes exact matches higher
+  fuzzy = {
+    implementation = "prefer_rust_with_warning",
+
+    sorts = {
+      "exact",
+      -- defaults
+      "score",
+      "sort_text",
+    },
+  },
+
   sources = {
     -- Prioritizes snippets higher
     -- Thanks to https://github.com/wlh320/wlh-dotfiles/blob/aa9be6ffbe587452a42520626befc10ed5a614b8/config/nvim/init.lua#L349-L356
@@ -113,41 +148,6 @@ cmp.setup({
         module = "lazydev.integrations.blink",
         score_offset = 100,
       },
-    },
-  },
-
-  signature = {
-    enabled = true,
-
-    window = { show_documentation = true },
-  },
-
-  cmdline = {
-    enabled = true,
-
-    completion = {
-      -- In cmdline, you should press tab to select something, and then
-      -- enter. Better than having it autoselect the first one, and no way
-      -- to just press enter with what you've got
-      list = {
-        selection = {
-          preselect = false,
-        },
-      },
-
-      menu = { auto_show = true },
-    },
-  },
-
-  -- Prioritizes exact matches higher
-  fuzzy = {
-    implementation = "prefer_rust_with_warning",
-
-    sorts = {
-      "exact",
-      -- defaults
-      "score",
-      "sort_text",
     },
   },
 })
