@@ -18,6 +18,8 @@ cmp.setup({
   snippets = { preset = "luasnip" },
 
   completion = {
+    -- Autoselect the first element, but don't insert it. Instead, just preview
+    -- the insert with ghost text.
     list = {
       selection = {
         preselect = true,
@@ -25,10 +27,7 @@ cmp.setup({
         auto_insert = false,
       },
     },
-
-    ghost_text = {
-      enabled = true,
-    },
+    ghost_text = { enabled = true },
 
     documentation = {
       auto_show = true,
@@ -58,9 +57,8 @@ cmp.setup({
               return ctx.label
             end,
 
-            highlight = function(ctx)
-              return colorful_menu.blink_components_highlight(ctx)
-            end,
+            -- colorize each completion type
+            highlight = colorful_menu.blink_components_highlight,
           },
         },
       },
@@ -68,7 +66,7 @@ cmp.setup({
   },
 
   sources = {
-    -- Prioritizes snippets higher - not the actual snippets, but the LSP snippets.
+    -- Prioritizes snippets higher
     -- Thanks to https://github.com/wlh320/wlh-dotfiles/blob/aa9be6ffbe587452a42520626befc10ed5a614b8/config/nvim/init.lua#L349-L356
     -- for being a wonderful example of how to do something like this
     transform_items = function(_, items)
@@ -80,62 +78,52 @@ cmp.setup({
       return items
     end,
 
-    -- Removing buffer completion from the defaults
+    -- Removing buffer completion from the defaults, and adding omni for vimtex
     default = {
       "lsp",
       "path",
       "snippets",
-      "omni", -- For vimtex
+      "omni",
     },
     per_filetype = {
       lua = { inherit_defaults = true, "lazydev" },
     },
 
-    -- Loading lazydev through blink leads to better signature help and overall
-    -- a better experience
     providers = {
+      -- autosnippets are automatically expanded, so showing the completion
+      -- would be a waste of time
+      snippets = { opts = { show_autosnippets = false } },
 
-      snippets = {
-        opts = {
-          show_autosnippets = false,
-        },
-      },
-
+      -- Loading lazydev through blink leads to better completion in a few areas
+      -- like require statements
       lazydev = {
         name = "LazyDev",
         module = "lazydev.integrations.blink",
-        -- make lazydev completions top priority (see `:h blink.cmp`)
         score_offset = 100,
       },
     },
   },
 
-  -- Signature hints - this is super great, enough that I prefer it to
-  -- lsp_signature, my previous solution
   signature = {
     enabled = true,
 
-    window = {
-      show_documentation = true,
-    },
+    window = { show_documentation = true },
   },
 
   cmdline = {
     enabled = true,
 
     completion = {
+      -- In cmdline, you should press tab to select something, and then
+      -- enter. Better than having it autoselect the first one, and no way
+      -- to just press enter with what you've got
       list = {
         selection = {
-          -- In cmdline, you should press tab to select something, and then
-          -- enter. Better than having it autoselect the first one, and no way
-          -- to just press enter with what you've got
           preselect = false,
         },
       },
 
-      menu = {
-        auto_show = true,
-      },
+      menu = { auto_show = true },
     },
   },
 
