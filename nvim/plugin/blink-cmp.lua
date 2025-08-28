@@ -7,6 +7,18 @@ vim.lsp.config("*", {
 
 local colorful_menu = require("colorful-menu")
 
+-- Acts as enter for cmdline, even if a completion isn't currently on
+vim.keymap.set("c", "<C-l>", "<CR>")
+
+-- We use ctrl-j and ctrl-k instead, and if we don't unbind these, they'll
+-- trigger the default completions.
+vim.keymap.set("c", "<Tab>", "<Nop>")
+vim.keymap.set("c", "<S-Tab>", "<Nop>")
+
+-- Move through cmdline history
+vim.keymap.set("c", "<A-k>", "<Up>")
+vim.keymap.set("c", "<A-j>", "<Down>")
+
 cmp.setup({
   keymap = {
     -- Want to make something that I can fully control and understand!
@@ -77,14 +89,19 @@ cmp.setup({
 
   cmdline = {
     enabled = true,
+    keymap = {
+      preset = "none",
+      ["<C-j>"] = { "select_next", "fallback" },
+      ["<C-k>"] = { "select_prev", "fallback" },
+    },
 
     completion = {
-      -- In cmdline, you should press tab to select something, and then
-      -- enter. Better than having it autoselect the first one, and no way
-      -- to just press enter with what you've got
+      -- In cmdline, we want to manually select something - and once it's
+      -- selected, we can keep scrolling
       list = {
         selection = {
           preselect = false,
+          auto_insert = true,
         },
       },
 
