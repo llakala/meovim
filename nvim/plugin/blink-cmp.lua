@@ -19,13 +19,35 @@ vim.keymap.set("c", "<S-Tab>", "<Nop>")
 vim.keymap.set("c", "<A-k>", "<Up>")
 vim.keymap.set("c", "<A-j>", "<Down>")
 
+-- Removing buffer completion from the defaults, and adding omni for vimtex
+-- We define it in its own variable, since we need to unset/reset it for our
+-- Ctrl+s binding
+local default_providers = { "lazydev", "lsp", "path", "snippets", "omni" }
+
 cmp.setup({
   keymap = {
     -- Want to make something that I can fully control and understand!
     preset = "none",
 
     ["<C-space>"] = { "show", "hide" },
-    ["<C-s>"] = { "show_signature", "hide_signature" },
+
+    -- Toggle between only showing snippets, and showing all providers. We can't
+    -- just enable the `snippets` module, since that's only luasnip stuff. We
+    -- use a custom provider `lsp_snippets` that filters the lsp provider for
+    -- only snippets.
+    ["<C-s>"] = {
+      function(cmp)
+        local current_providers = cmp.get_context().providers
+
+        -- we need vim.inspect since `==` checks identity, not value. Yes, Lua
+        -- is pulling a Java on us.
+        if vim.inspect(default_providers) == vim.inspect(current_providers) then
+          cmp.show({ providers = { "snippets", "lazydev", "lsp_snippets" } })
+        else
+          cmp.show({ providers = default_providers })
+        end
+      end,
+    },
 
     ["<C-k>"] = { "select_prev", "fallback" },
     ["<C-j>"] = { "select_next", "fallback" },
@@ -130,33 +152,24 @@ cmp.setup({
   },
 
   sources = {
-    -- Prioritizes snippets higher
-    -- Thanks to https://github.com/wlh320/wlh-dotfiles/blob/aa9be6ffbe587452a42520626befc10ed5a614b8/config/nvim/init.lua#L349-L356
-    -- for being a wonderful example of how to do something like this
-    transform_items = function(_, items)
-      for _, item in ipairs(items) do
-        if item.kind == require("blink.cmp.types").CompletionItemKind.Snippet then
-          item.score_offset = item.score_offset + 10
-        end
-      end
-      return items
-    end,
-
-    -- Removing buffer completion from the defaults, and adding omni for vimtex
-    default = {
-      "lsp",
-      "path",
-      "snippets",
-      "omni",
-    },
-    per_filetype = {
-      lua = { inherit_defaults = true, "lazydev" },
-    },
+    default = default_providers,
 
     providers = {
       -- autosnippets are automatically expanded, so showing the completion
       -- would be a waste of time
       snippets = { opts = { show_autosnippets = false } },
+
+      -- Filtered version of `lsp` that only contains snippets. We do this so we
+      -- can only see snippets when pressing Ctrl+s
+      lsp_snippets = {
+        name = "LSP Snippets",
+        module = "blink.cmp.sources.lsp",
+        transform_items = function(_, items)
+          return vim.tbl_filter(function(item)
+            return item.kind == require("blink.cmp.types").CompletionItemKind.Snippet
+          end, items)
+        end,
+      },
 
       -- Loading lazydev through blink leads to better completion in a few areas
       -- like require statements
