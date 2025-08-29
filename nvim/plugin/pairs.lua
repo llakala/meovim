@@ -45,6 +45,34 @@ npairs.add_rules({
   replacePunctuation(","),
   replacePunctuation(";"),
 
+  -- Allow delimiters before a dollar sign within math
+  Rule("(", ")", { "typst" }):with_pair(cond.after_text("$")),
+  Rule('"', '"', { "typst" }):with_pair(cond.after_text("$")),
+
+  -- From:
+  -- https://github.com/davinjason09/dotfiles/blob/3fb4eefe88d4811cab432c013013a8752cd5f86e/home/dot_config/nvim/after/ftplugin/typst.lua#L12
+  Rule("$", "$", "typst")
+    :with_pair(cond.not_after_regex("[%w]"))
+    :with_pair(ts_conds.is_not_ts_node("math"))
+    :with_move(ts_conds.is_ts_node("math"))
+    :replace_map_cr(function()
+      return "<C-g>u<CR><ESC>O<Tab>"
+    end),
+
+  -- Only pair these when we're not in math mode
+  Rule("*", "*", "typst")
+    :with_pair(cond.not_before_regex("[%w]"))
+    :with_pair(cond.not_after_regex("[%w]"))
+    :with_pair(ts_conds.is_not_ts_node("math")),
+  Rule("_", "_", "typst")
+    :with_pair(cond.not_before_regex("[%w]"))
+    :with_pair(cond.not_after_regex("[%w]"))
+    :with_pair(ts_conds.is_not_ts_node("math")),
+  Rule("<", ">", "typst")
+    :with_pair(cond.not_before_regex("[%w]"))
+    :with_pair(cond.not_after_regex("[%w]"))
+    :with_pair(ts_conds.is_not_ts_node("math")),
+
   -- From wiki: https://github.com/windwp/nvim-autopairs/wiki/Custom-rules#insertion-with-surrounding-check
   -- Interestingly, adding the single quote one breaks the {} one. No clue why!
   Rule("{", "},", "lua"):with_pair(ts_conds.is_ts_node({ "table_constructor" })),
