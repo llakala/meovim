@@ -2,18 +2,6 @@ local ls = require("luasnip")
 
 ls.setup({
   enable_autosnippets = true,
-  snip_env = {
-    parse = ls.parser.parse_snippet,
-
-    autoparse = function(trig, body, opts)
-      trig = {
-        snippetType = "autosnippet",
-        trig = trig,
-      }
-
-      return ls.parser.parse_snippet(trig, body, opts)
-    end,
-  },
 })
 
 -- imap bindings are done in blink.cmp
