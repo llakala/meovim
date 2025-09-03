@@ -95,5 +95,10 @@ require("mini.ai").setup({
 
       return select_eol_comment(ai_type, line, commentstr)
     end,
+
+    -- From https://github.com/juselara1/nvim/blob/74551d65446aef071df202aa679a4419e4e8b522/lua/juselara/plugins/miniai.lua#L16C12-L16C32
+    -- We add this for all languages, since I still use codeblocks in languages
+    -- where they aren't a feature (like git commit descriptions)
+    ["C"] = { "```%S*%s()[^`]+()```" },
   },
 })
