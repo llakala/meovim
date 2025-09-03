@@ -19,7 +19,7 @@ let
 
   packages = with pkgs; [
     # Language servers
-    nixd
+    nil
     (jdt-language-server.override { jdk = pkgs.jdk_headless; }) # decreases closure
     lua-language-server
     fish-lsp
