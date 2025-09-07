@@ -18,6 +18,7 @@ let
 
     # Neat features
     colorful-menu-nvim # Show completion types in color
+    cutlass-nvim
     fugitive
     vim-rhubarb # Make `:GBrowse` from fugitive work with Github
     luasnip
@@ -86,10 +87,9 @@ let
     typescript
   ]);
 
+  # Plugins that aren't in nixpkgs yet
   # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md
   extraPlugins = with neovimPlugins.packages.${pkgs.system}; [
-    # Not in nixpkgs yet
-    cutlass-nvim # Seperate cut and delete binds
     hlargs-nvim # Highlight function arguments (in supported languages)
   ];
 
