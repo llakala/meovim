@@ -34,12 +34,6 @@ let
     # Formatters
     (google-java-format.override { jre = pkgs.jre_headless; })
     stylua
-    tex-fmt # Couldn't get latexindent working
-
-    # Plugin dependencies
-    texliveBasic
-    texlivePackages.latexmk
-    texlivePackages.biber
   ];
 
 in packages ++ [ customYazi ]

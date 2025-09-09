@@ -19,8 +19,10 @@ vim.keymap.set("c", "<S-Tab>", "<Nop>")
 vim.keymap.set("c", "<A-k>", "<Up>")
 vim.keymap.set("c", "<A-j>", "<Down>")
 
--- Removing buffer completion from the defaults, and adding omni for vimtex
--- We define it in its own variable, since we need to unset/reset it for our
+-- Removing buffer completion from the defaults, and adding omni for classical
+-- vim completions (like those from vimtex)
+--
+-- We define this in its own variable, since we need to unset/reset it for our
 -- Ctrl+s binding
 local default_providers = { "lazydev", "lsp", "path", "snippets", "omni" }
 

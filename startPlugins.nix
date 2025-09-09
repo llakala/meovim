@@ -43,7 +43,6 @@ let
     markdown-preview-nvim
     nvim-jdtls
     typst-preview-nvim
-    vimtex
 
     # Dependencies
     nvim-web-devicons
@@ -66,7 +65,6 @@ let
     gitignore
     git_rebase
     java
-    latex
     python
     typst
 

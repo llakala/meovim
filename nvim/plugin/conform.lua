@@ -6,7 +6,6 @@ require("conform").setup({
     java = { "google-java-format" },
     nix = { "nixfmt" },
     lua = { "stylua" },
-    tex = { "tex-fmt" },
 
     python = {
       "ruff_fix",
