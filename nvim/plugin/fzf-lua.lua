@@ -2,6 +2,56 @@ vim.env.FZF_DEFAULT_OPTS = nil
 local utils = require("fzf-lua.utils")
 local path = require("fzf-lua.path")
 
+-- Custom action to create a scratch buffer if we close the current buffer
+local function create_scratch_buffer(selected, opts)
+  for _, sel in ipairs(selected) do
+    local entry = path.entry_to_file(sel, opts)
+    local bufnr = entry.bufnr
+
+    local is_dirty = utils.buffer_is_dirty(bufnr, true, false)
+
+    -- If file isn't loaded. Not sure why this is needed, but it's from
+    -- the original!
+    if not bufnr then
+      goto continue
+    end
+
+    -- If the current file has unsaved changes, prompt the user to save
+    if is_dirty then
+      local save_dialog = function()
+        return utils.save_dialog(bufnr)
+      end
+      if not vim.api.nvim_buf_call(bufnr, save_dialog) then
+        goto continue
+      end
+    end
+
+    -- The current buffer is actually the picker - so the alt buffer lets
+    -- us see the file we're currently editing
+    local current_buf = vim.fn.bufnr("#")
+
+    if bufnr == current_buf then
+      -- To prevent accidentally closing the current buf, we require a
+      -- confirmation. response being 1 means yes
+      local response = vim.fn.confirm("Close current buffer?", "&Yes\n&No")
+      if response ~= 1 then
+        goto continue
+      end
+
+      -- replace current buf with scratch buf in all windows
+      local windows = vim.fn.win_findbuf(current_buf)
+
+      local new_buf = vim.api.nvim_create_buf(false, true)
+      for _, win in ipairs(windows) do
+        vim.api.nvim_win_set_buf(win, new_buf)
+      end
+    end
+
+    vim.api.nvim_buf_delete(bufnr, { force = true })
+    ::continue::
+  end
+end
+
 require("fzf-lua").setup({
   previewers = {
     builtin = {
@@ -38,58 +88,10 @@ require("fzf-lua").setup({
 
     -- TODO: find a way to start on the second item
 
-    -- Custom action to create a scratch buffer if we close the current buffer
     actions = {
       ["ctrl-x"] = {
         reload = true,
-        fn = function(selected, opts)
-          for _, sel in ipairs(selected) do
-            local entry = path.entry_to_file(sel, opts)
-            local bufnr = entry.bufnr
-
-            local is_dirty = utils.buffer_is_dirty(bufnr, true, false)
-
-            -- If file isn't loaded. Not sure why this is needed, but it's from
-            -- the original!
-            if not bufnr then
-              goto continue
-            end
-
-            -- If the current file has unsaved changes, prompt the user to save
-            if is_dirty then
-              local save_dialog = function()
-                return utils.save_dialog(bufnr)
-              end
-              if not vim.api.nvim_buf_call(bufnr, save_dialog) then
-                goto continue
-              end
-            end
-
-            -- The current buffer is actually the picker - so the alt buffer lets
-            -- us see the file we're currently editing
-            local current_buf = vim.fn.bufnr("#")
-
-            if bufnr == current_buf then
-              -- To prevent accidentally closing the current buf, we require a
-              -- confirmation. response being 1 means yes
-              local response = vim.fn.confirm("Close current buffer?", "&Yes\n&No")
-              if response ~= 1 then
-                goto continue
-              end
-
-              -- replace current buf with scratch buf in all windows
-              local windows = vim.fn.win_findbuf(current_buf)
-
-              local new_buf = vim.api.nvim_create_buf(false, true)
-              for _, win in ipairs(windows) do
-                vim.api.nvim_win_set_buf(win, new_buf)
-              end
-            end
-
-            vim.api.nvim_buf_delete(bufnr, { force = true })
-            ::continue::
-          end
-        end,
+        fn = create_scratch_buffer,
       },
     },
 
