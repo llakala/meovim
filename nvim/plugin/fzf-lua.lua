@@ -126,7 +126,6 @@ require("fzf-lua").setup({
         -- `click-header` and disable all the normal mode keymaps (including
         -- this one).
         i = "show-input+trigger(click-header)",
-        u = "down",
       },
     },
   },
