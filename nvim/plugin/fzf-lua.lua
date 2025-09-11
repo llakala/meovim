@@ -81,6 +81,14 @@ require("fzf-lua").setup({
     },
   },
 
+  -- Autoselect current document symbol in `:FzfLua lsp_document_symbols` (bound
+  -- to gO by default)
+  lsp = {
+    symbols = {
+      locate = true,
+    },
+  },
+
   buffers = {
     fzf_opts = {
       ["--header-lines"] = false,
