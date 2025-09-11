@@ -1,5 +1,8 @@
 require("fFtT-highlights"):setup({
-  smart_motions = true,
+  -- Require semicolon and comma to move between instances, rather than
+  -- repeating `f` to move again
+  smart_motions = false,
+
   reset_key = "<Esc>",
 
   match_highlight = {
