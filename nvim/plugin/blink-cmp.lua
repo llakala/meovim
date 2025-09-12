@@ -16,8 +16,8 @@ vim.keymap.set("c", "<Tab>", "<Nop>")
 vim.keymap.set("c", "<S-Tab>", "<Nop>")
 
 -- Move through cmdline history
-vim.keymap.set("c", "<A-k>", "<Up>")
-vim.keymap.set("c", "<A-j>", "<Down>")
+vim.keymap.set("c", "<C-p>", "<Up>")
+vim.keymap.set("c", "<C-n>", "<Down>")
 
 -- Removing buffer completion from the defaults, and adding omni for classical
 -- vim completions (like those from vimtex)
