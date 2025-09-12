@@ -21,6 +21,7 @@ let
     cutlass-nvim
     fugitive
     vim-rhubarb # Make `:GBrowse` from fugitive work with Github
+    hlargs-nvim # Highlight function arguments (in supported languages)
     luasnip
     nvim-highlight-colors # Highlight hex codes
     stay-centered-nvim # Always keep current line at center of screen
@@ -88,7 +89,6 @@ let
   # Plugins that aren't in nixpkgs yet
   # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md
   extraPlugins = with neovimPlugins.packages.${pkgs.system}; [
-    hlargs-nvim # Highlight function arguments (in supported languages)
   ];
 
 in pkgsPlugins ++ extraPlugins ++ [ treeSitterGrammars ]
