@@ -152,17 +152,16 @@ require("fzf-lua").setup({
 
 FzfLua.register_ui_select()
 
--- Replace default LSP bindings with telescope equivalents
--- We don't mess with rename and code actions - snacks handles that
-nnoremap("grr", FzfLua.lsp_references, { desc = "View usage(s)" })
-nnoremap("gri", FzfLua.lsp_definitions, { desc = "View implementation" })
-nnoremap("grt", FzfLua.lsp_typedefs, { desc = "View implementation" })
-nnoremap("gO", FzfLua.lsp_document_symbols, { desc = "View implementation" })
+-- Replace default LSP bindings with fzf-lua equivalents We don't mess with
+-- rename and code actions - just actions that use a picker
+nnoremap("grr", FzfLua.lsp_references)
+nnoremap("gri", FzfLua.lsp_definitions)
+nnoremap("grt", FzfLua.lsp_typedefs)
+nnoremap("gO", FzfLua.lsp_document_symbols)
 
--- Shows workspace diagnostics, so you can see errors in other files. Great for
--- Gleam dev, since the Gleam LSP gets stuck if one file has errors. Note that
--- this doesn't work for all LSPs!
-nnoremap("grd", FzfLua.diagnostics_workspace, { desc = "Workspace diagnostics" })
+-- Not a default bind, but good for some LSPs like gleam, where you want to see
+-- diagnostics in other files
+nnoremap("grd", FzfLua.diagnostics_workspace)
 
 -- Show normal buffers and helpfiles!
 nnoremap("<leader>b", function()
