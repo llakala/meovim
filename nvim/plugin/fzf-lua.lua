@@ -107,6 +107,20 @@ require("fzf-lua").setup({
         load = "pos(2)",
       },
     },
+
+    -- We want to show helpfiles, but they're unlisted - so we allow all
+    -- unlisted buffers, but filter them for only helpfiles
+    show_unlisted = true,
+    filter = function(bufnr)
+      local ft = vim.bo[bufnr].filetype
+      local is_listed = vim.bo[bufnr].buflisted
+
+      if ft == "help" then
+        return true
+      else
+        return is_listed
+      end
+    end,
   },
 
   -- Automatically create an fzf colorscheme based on our nvim colorscheme
@@ -134,26 +148,9 @@ nnoremap("gO", FzfLua.lsp_document_symbols)
 -- diagnostics in other files
 nnoremap("grd", FzfLua.diagnostics_workspace)
 
--- Show normal buffers and helpfiles!
-nnoremap("<leader>b", function()
-  FzfLua.buffers({
-    show_unlisted = true,
-
-    -- Most buffers that aren't listed are bad, but helpfiles are an exception
-    filter = function(bufnr)
-      local ft = vim.bo[bufnr].filetype
-      local buflisted = vim.bo[bufnr].buflisted
-
-      if ft == "help" then
-        return true
-      else
-        return buflisted
-      end
-    end,
-  })
-end, { desc = "Swap buffer, including hidden buffers" })
-
+nnoremap("<leader>b", FzfLua.buffers, { desc = "Swap buffer, including hidden buffers" })
 nnoremap("<leader>f", FzfLua.files, { desc = "Add new file in project" })
+
 nnoremap(
   "<leader>l", -- l for local! doesn't hurt that it's easy to reach
   function()
