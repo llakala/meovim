@@ -53,14 +53,15 @@ cmp.setup({
       end,
     },
 
-    ["<C-k>"] = { "select_prev", "fallback" },
     ["<C-j>"] = { "select_next", "fallback" },
+    ["<C-k>"] = { "select_prev", "fallback" },
 
-    -- The idea is to do <C-l> when you're doing a lot of picking, and <CR> when
-    -- you're typing.
+    -- Use <C-l> when picking, and <CR> when typing
     ["<C-l>"] = { "accept", "fallback" },
     ["<CR>"] = { "accept", "fallback" },
 
+    -- TODO: consider using something other than <Tab>, see
+    -- https://github.com/L3MON4D3/LuaSnip/issues/953
     ["<Tab>"] = { "snippet_forward", "fallback" },
     ["<S-Tab>"] = { "snippet_backward", "fallback" },
   },

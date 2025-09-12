@@ -34,11 +34,4 @@ ls.setup({
   enable_autosnippets = true,
 })
 
--- imap bindings are done in blink.cmp. TODO: use something other than <Tab>,
--- see https://github.com/L3MON4D3/LuaSnip/issues/953
-vim.cmd([[
-  smap <silent><expr> <Tab> luasnip#jumpable(1) ? '<Plug>luasnip-jump-next' : '<Tab>'
-  smap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
-]])
-
 require("luasnip.loaders.from_lua").load({ paths = { "~/Documents/projects/snippets" } })
