@@ -150,6 +150,7 @@ nnoremap("grd", FzfLua.diagnostics_workspace)
 
 nnoremap("<leader>b", FzfLua.buffers, { desc = "Swap buffer, including hidden buffers" })
 nnoremap("<leader>f", FzfLua.files, { desc = "Add new file in project" })
+nnoremap("<leader>s", FzfLua.live_grep, { desc = "Search text in project" })
 
 nnoremap(
   "<leader>l", -- l for local! doesn't hurt that it's easy to reach
@@ -177,5 +178,3 @@ nnoremap(
   end,
   { desc = "Add new file in current folder" }
 )
-
-nnoremap("<leader>s", FzfLua.live_grep, { desc = "Search text in project" })
