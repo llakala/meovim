@@ -1,23 +1,6 @@
 local session = require("auto-session")
 local Lib = require("auto-session.lib")
 
--- Credit for git repo functions goes to:
--- https://github.com/mrcndz/dotfiles/blob/e1e24413961ee30db12d3a4fed88774d9b6f7406/nvim/lua/utils.lua
-function in_git_repo()
-  local cmd = "git rev-parse --is-inside-work-tree"
-  return vim.fn.system(cmd) == "true\n"
-end
-
-function get_repo_root()
-  local cmd = "git rev-parse --show-toplevel"
-  local output = vim.fn.system(cmd)
-  return vim.fn.trim(output)
-end
-
-function at_repo_root()
-  return get_repo_root() == vim.uv.cwd()
-end
-
 -- Is true when Neovim is called with no arguments or a folder argument. Helps
 -- to ensure that sessions don't get improperly loaded when we should just be
 -- opening a specific file. Credit goes to:
@@ -28,7 +11,7 @@ local passed_nothing_or_dir = arg_count == 0 or (arg_count == 1 and vim.fn.isdir
 
 session.setup({
   -- Only create a new session if you're at the root of a git repo
-  auto_create = at_repo_root,
+  auto_create = Cwd.at_repo_root,
 
   -- Still save the session if a help file fails to load. Some help files are
   -- from plugins that are loaded lazily, so if we reopen nvim, the helpfile
@@ -44,20 +27,22 @@ session.setup({
 
   -- If you're in a subdirectory of a git repo, and neovim wasn't called with a
   -- specific file to be opened, activate the session for the repo's root.
+  -- We use custom functions from the Cwd namespace, that give us nice utils for
+  -- cwd nonsense
   no_restore_cmds = {
     function()
-      if in_git_repo() and not at_repo_root() and passed_nothing_or_dir then
+      if Cwd.in_git_repo() and not Cwd.at_repo_root() and passed_nothing_or_dir then
         -- Neovim cd, not shell cd. Means when we exit Neovim,
         -- auto-session will consider us to be in the right
         -- directory.
         vim.api.nvim_cmd({
           cmd = "cd",
-          args = { get_repo_root() },
+          args = { Cwd.get_repo_root() },
         }, {})
 
         vim.api.nvim_cmd({
           cmd = "SessionRestore",
-          args = { get_repo_root() },
+          args = { Cwd.get_repo_root() },
         }, {})
       end
     end,

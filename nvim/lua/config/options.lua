@@ -29,6 +29,19 @@ o.timeout = false
 -- change.
 o.jumpoptions = "stack,view"
 
+-- Project-specific marks through shada file, from:
+-- https://www.reddit.com/r/neovim/comments/1gv3uqk/comment/lxzi96y/
+--
+-- We use a custom function from the Cwd namespace that ignores subdirs of git
+-- repos, so `nvim myrepo` will give the same result as `nvim myrepo/foo/bar`
+local workspace_path = Cwd.get_project_cwd()
+local cache_dir = vim.fn.stdpath("data")
+local unique_id = vim.fn.fnamemodify(workspace_path, ":t") .. "_" .. vim.fn.sha256(workspace_path):sub(1, 8)
+local shadafile = cache_dir .. "/myshada/" .. unique_id .. ".shada"
+vim.o.exrc = true
+vim.o.secure = true
+vim.o.shadafile = shadafile
+
 -- UI
 
 o.winborder = "rounded"
