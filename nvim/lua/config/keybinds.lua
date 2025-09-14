@@ -48,11 +48,6 @@ inoremap("<Esc>", "<Esc>l")
 
 nnoremap("U", "<C-r>", { desc = "Redo" })
 
--- Barely used, and easier to reach than ^. we keep H and L open, because
--- they're useful!
-nnoremap("!", "^")
-vnoremap("!", "^")
-
 nnoremap("<leader><leader>", "<C-^>")
 nnoremap("<A-w>", "<C-w>") -- I have <C-w> to close a tab in Kitty. Should get rid of that!
 
