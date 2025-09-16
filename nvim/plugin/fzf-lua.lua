@@ -50,40 +50,29 @@ local function delete_buffer_action(selected, opts)
     local entry = path.entry_to_file(sel, opts)
     local bufnr = entry.bufnr
 
-    local is_dirty = utils.buffer_is_dirty(bufnr, true, false)
-
-    -- If file isn't loaded. Not sure why this is needed, but it's from
-    -- the original!
-    if not bufnr then
-      goto continue
-    end
-
     -- If the current file has unsaved changes, prompt the user to save
-    if is_dirty then
-      local save_dialog = function()
-        return utils.save_dialog(bufnr)
-      end
-      if not vim.api.nvim_buf_call(bufnr, save_dialog) then
-        goto continue
-      end
+    local is_dirty = utils.buffer_is_dirty(bufnr, true, false)
+    local save_dialog = function()
+      return utils.save_dialog(bufnr)
     end
 
-    if bufnr == current_buf then
-      local windows = vim.fn.win_findbuf(current_buf)
+    if bufnr and (not is_dirty or vim.api.nvim_buf_call(bufnr, save_dialog)) then
+      if bufnr == current_buf then
+        local windows = vim.fn.win_findbuf(current_buf)
 
-      -- Buffer we accessed most recently after the current buf. We can't use
-      -- alternate file here, because the REAL current buf is actually the
-      -- picker - so we need to go two files back. This is why we created a
-      -- sorted buflist in the first place.
-      local new_buf = sorted_buflist[2]
+        -- Buffer we accessed most recently after the current buf. We can't use
+        -- alternate file here, because the REAL current buf is actually the
+        -- picker - so we need to go two files back. This is why we created a
+        -- sorted buflist in the first place.
+        local new_buf = sorted_buflist[2]
 
-      for _, win in ipairs(windows) do
-        vim.api.nvim_win_set_buf(win, new_buf)
+        for _, win in ipairs(windows) do
+          vim.api.nvim_win_set_buf(win, new_buf)
+        end
       end
-    end
 
-    vim.api.nvim_buf_delete(bufnr, { force = true })
-    ::continue::
+      vim.api.nvim_buf_delete(bufnr, { force = true })
+    end
   end
 end
 
