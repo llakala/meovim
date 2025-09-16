@@ -128,6 +128,7 @@ require("fzf-lua").setup({
     keymap = {
       fzf = {
         -- Buffer picker shouldn't start on the current buffer
+        -- TODO: find a way to not trigger this when closing the current buffer
         load = "pos(2)",
       },
     },
