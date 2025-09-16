@@ -2,8 +2,50 @@ vim.env.FZF_DEFAULT_OPTS = nil
 local utils = require("fzf-lua.utils")
 local path = require("fzf-lua.path")
 
--- Custom action to create a scratch buffer if we close the current buffer
-local function create_scratch_buffer(selected, opts)
+-- Given some bufnr, return whether it should be included. We filter out most
+-- buffers that aren't listed, except help files
+local function filter_unlisted_buffers(bufnr)
+  local ft = vim.bo[bufnr].filetype
+  local is_listed = vim.bo[bufnr].buflisted
+
+  if ft == "help" then
+    return true
+  else
+    return is_listed
+  end
+end
+
+-- Return a list of the open bufnrs, sorted by how recently they were accessed
+local function get_sorted_buflist()
+  local info = vim.fn.getbufinfo()
+
+  -- Sort on how recently the buffer was used
+  info = vim.fn.sort(info, function(a, b)
+    return a.lastused <= b.lastused
+  end)
+
+  -- Don't include the buffer if it was hidden or unlisted (with an exception
+  -- for helpfiles, which can be unlisted)
+  info = vim.tbl_filter(function(current)
+    return filter_unlisted_buffers(current.bufnr) and current.hidden == 0
+  end, info)
+
+  -- Take the full info and turn it into just the bufnrs
+  local bufnrs = {}
+  for index, current in ipairs(info) do
+    bufnrs[index] = current.bufnr
+  end
+
+  return bufnrs
+end
+
+-- Custom action that allows deleting the current buffer. If you do, it swaps to
+-- the last buffer you used!
+local function delete_buffer_action(selected, opts)
+  -- List of buffers sorted by how frequently we accessed them.
+  local sorted_buflist = get_sorted_buflist()
+  local current_buf = sorted_buflist[1]
+
   for _, sel in ipairs(selected) do
     local entry = path.entry_to_file(sel, opts)
     local bufnr = entry.bufnr
@@ -26,15 +68,15 @@ local function create_scratch_buffer(selected, opts)
       end
     end
 
-    -- The current buffer is actually the picker - so the alt buffer lets
-    -- us see the file we're currently editing
-    local current_buf = vim.fn.bufnr("#")
-
     if bufnr == current_buf then
-      -- replace current buf with scratch buf in all windows
       local windows = vim.fn.win_findbuf(current_buf)
 
-      local new_buf = vim.api.nvim_create_buf(false, true)
+      -- Buffer we accessed most recently after the current buf. We can't use
+      -- alternate file here, because the REAL current buf is actually the
+      -- picker - so we need to go two files back. This is why we created a
+      -- sorted buflist in the first place.
+      local new_buf = sorted_buflist[2]
+
       for _, win in ipairs(windows) do
         vim.api.nvim_win_set_buf(win, new_buf)
       end
@@ -90,7 +132,7 @@ require("fzf-lua").setup({
     actions = {
       ["ctrl-x"] = {
         reload = true,
-        fn = create_scratch_buffer,
+        fn = delete_buffer_action,
       },
     },
 
@@ -104,16 +146,7 @@ require("fzf-lua").setup({
     -- We want to show helpfiles, but they're unlisted - so we allow all
     -- unlisted buffers, but filter them for only helpfiles
     show_unlisted = true,
-    filter = function(bufnr)
-      local ft = vim.bo[bufnr].filetype
-      local is_listed = vim.bo[bufnr].buflisted
-
-      if ft == "help" then
-        return true
-      else
-        return is_listed
-      end
-    end,
+    filter = filter_unlisted_buffers,
   },
 
   -- Automatically create an fzf colorscheme based on our nvim colorscheme
