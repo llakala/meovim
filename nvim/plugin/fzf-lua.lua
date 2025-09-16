@@ -31,13 +31,6 @@ local function create_scratch_buffer(selected, opts)
     local current_buf = vim.fn.bufnr("#")
 
     if bufnr == current_buf then
-      -- To prevent accidentally closing the current buf, we require a
-      -- confirmation. response being 1 means yes
-      local response = vim.fn.confirm("Close current buffer?", "&Yes\n&No")
-      if response ~= 1 then
-        goto continue
-      end
-
       -- replace current buf with scratch buf in all windows
       local windows = vim.fn.win_findbuf(current_buf)
 
