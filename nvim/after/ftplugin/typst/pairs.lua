@@ -32,7 +32,6 @@ local not_in_math = function(_)
 end
 
 require("nvim-autopairs").add_rules({
-
   -- From:
   -- https://github.com/davinjason09/dotfiles/blob/3fb4eefe88d4811cab432c013013a8752cd5f86e/home/dot_config/nvim/after/ftplugin/typst.lua#L12
   Rule("$", "$", "typst")
@@ -48,7 +47,6 @@ require("nvim-autopairs").add_rules({
     :with_pair(cond.not_before_regex("[%w]"))
     :with_pair(cond.not_after_regex("[%w]"))
     :with_pair(not_in_math),
-
   Rule("_", "_", "typst")
     :with_pair(cond.not_before_regex("[%w]"))
     :with_pair(cond.not_after_regex("[%w]"))
