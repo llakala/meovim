@@ -45,10 +45,6 @@ npairs.add_rules({
   replacePunctuation(","),
   replacePunctuation(";"),
 
-  -- Allow delimiters before a dollar sign within math
-  Rule("(", ")", { "typst" }):with_pair(cond.after_text("$")),
-  Rule('"', '"', { "typst" }):with_pair(cond.after_text("$")),
-
   -- From wiki: https://github.com/windwp/nvim-autopairs/wiki/Custom-rules#insertion-with-surrounding-check
   -- Interestingly, adding the single quote one breaks the {} one. No clue why!
   Rule("{", "},", "lua"):with_pair(ts_conds.is_ts_node({ "table_constructor" })),

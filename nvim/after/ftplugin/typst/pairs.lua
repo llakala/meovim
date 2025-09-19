@@ -32,6 +32,10 @@ local not_in_math = function(_)
 end
 
 require("nvim-autopairs").add_rules({
+  -- Allow delimiters before a dollar sign within math
+  Rule("(", ")", { "typst" }):with_pair(cond.after_text("$")),
+  Rule('"', '"', { "typst" }):with_pair(cond.after_text("$")),
+
   -- From:
   -- https://github.com/davinjason09/dotfiles/blob/3fb4eefe88d4811cab432c013013a8752cd5f86e/home/dot_config/nvim/after/ftplugin/typst.lua#L12
   Rule("$", "$", "typst")
