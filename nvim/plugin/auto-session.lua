@@ -41,7 +41,7 @@ session.setup({
         }, {})
 
         vim.api.nvim_cmd({
-          cmd = "SessionRestore",
+          cmd = "AutoSession restore",
           args = { Cwd.get_repo_root() },
         }, {})
       end
