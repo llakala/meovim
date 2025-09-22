@@ -40,10 +40,8 @@ session.setup({
           args = { Cwd.get_repo_root() },
         }, {})
 
-        vim.api.nvim_cmd({
-          cmd = "AutoSession restore",
-          args = { Cwd.get_repo_root() },
-        }, {})
+        -- `nvim_cmd` with the relevant arg wasn't working - not sure why
+        vim.api.nvim_command("AutoSession restore " .. Cwd.get_repo_root())
       end
     end,
   },
