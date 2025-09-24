@@ -29,15 +29,15 @@ vim.api.nvim_create_autocmd({ "CursorMoved" }, {
     -- to 0.03ms when we're already centered, and 0.10ms when we have to call
     -- `zz`, The execution time was so fast that I used `:sleep` to make sure
     -- that `reltime()` was actually giving an output in seconds!
-    local window_start = vim.fn.line("w0")
-    local window_end = vim.fn.line("w$")
+    local window_top = vim.fn.line("w0")
+    local window_bottom = vim.fn.line("w$")
     local current_line = vim.fn.line(".")
-    local buffer_end = vim.fn.line("$")
+    local last_line = vim.fn.line("$")
     local winheight = vim.fn.winheight(0)
     local winradius = math.floor(winheight / 2)
 
-    local distance_to_bottom = window_end - current_line
-    local distance_to_start = current_line - window_start
+    local distance_to_bottom = window_bottom - current_line
+    local distance_to_top = current_line - window_top
 
     -- If the height is even, Neovim shows one extra line below the cursor.
     -- Round down, and pretend both heights are the same.
@@ -48,12 +48,12 @@ vim.api.nvim_create_autocmd({ "CursorMoved" }, {
 
     -- We can see the bottom of the buffer, and our current line is centered
     -- relative to the top of the window.
-    local safe_at_bottom = window_end == buffer_end and distance_to_start == winradius
+    local safe_at_bottom = window_bottom == last_line and distance_to_top == winradius
 
     -- We can see the top of the buffer, and are on the top half of the screen
-    local safe_at_top = window_start == 1 and distance_to_start < winradius
+    local safe_at_top = window_top == 1 and distance_to_top < winradius
 
-    local safe_at_center = distance_to_start == distance_to_bottom and distance_to_bottom == winradius
+    local safe_at_center = distance_to_top == distance_to_bottom and distance_to_bottom == winradius
 
     if safe_at_center or safe_at_top or safe_at_bottom then
       return
