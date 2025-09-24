@@ -48,11 +48,10 @@ vim.api.nvim_create_autocmd({ "CursorMoved" }, {
 
     -- We can see the bottom of the buffer, and our current line is centered
     -- relative to the top of the window.
-    local safe_at_bottom = buffer_end == window_end and distance_to_start == winradius
+    local safe_at_bottom = window_end == buffer_end and distance_to_start == winradius
 
-    -- We can see the top of the buffer, and are more than halfway up on the
-    -- screen
-    local safe_at_top = window_start == 1 and distance_to_bottom > winradius
+    -- We can see the top of the buffer, and are on the top half of the screen
+    local safe_at_top = window_start == 1 and distance_to_start < winradius
 
     local safe_at_center = distance_to_start == distance_to_bottom and distance_to_bottom == winradius
 
