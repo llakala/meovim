@@ -24,7 +24,6 @@ let
     hlargs-nvim # Highlight function arguments (in supported languages)
     luasnip
     nvim-highlight-colors # Highlight hex codes
-    stay-centered-nvim # Always keep current line at center of screen
     snacks-nvim
     ts-comments-nvim # Lets me have multiple comment strings for `gcc` action
     tiny-inline-diagnostic-nvim # Better `virtual_lines` from nvim 0.11
