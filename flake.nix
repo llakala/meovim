@@ -2,19 +2,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     mnw.url = "github:Gerg-L/mnw";
-
-    # Not actually using this, but we need to pin the version for neovimPlugins
-    # pass in your own flake-utils to prevent duplication
-    flake-utils.url = "github:numtide/flake-utils";
-
-    neovimPlugins = {
-      url = "github:NixNeovim/NixNeovimPlugins";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
   };
 
-  outputs = { self, nixpkgs, neovimPlugins, ... } @ inputs:
+  outputs = { self, nixpkgs, ... } @ inputs:
   let
     lib = nixpkgs.lib;
 
@@ -60,8 +50,8 @@
     packages = forAllSystems (pkgs: let
       # Binaries and plugins that I grab from elsewhere. Stored in their own
       # files so I'm not editing monolithic files to add stuff
-      startPlugins = import ./startPlugins.nix { inherit pkgs neovimPlugins; };
-      optPlugins = import ./optPlugins.nix { inherit pkgs neovimPlugins; };
+      startPlugins = import ./startPlugins.nix { inherit pkgs; };
+      optPlugins = import ./optPlugins.nix { inherit pkgs; };
       binaries = import ./binaries.nix { inherit pkgs; };
 
       # Custom derivations that I wrote myself. Need to be turned into a list,

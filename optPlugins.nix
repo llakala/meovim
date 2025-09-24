@@ -1,4 +1,4 @@
-{ pkgs, neovimPlugins }:
+{ pkgs }:
 
 let
   pkgsPlugins = with pkgs.vimPlugins; [

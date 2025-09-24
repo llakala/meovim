@@ -1,7 +1,7 @@
-{ pkgs, neovimPlugins }:
+{ pkgs }:
 
 let
-  pkgsPlugins = with pkgs.vimPlugins; [
+  nixpkgsPlugins = with pkgs.vimPlugins; [
     # Essentials
     auto-session
     blink-cmp
@@ -85,9 +85,4 @@ let
     typescript
   ]);
 
-  # Plugins that aren't in nixpkgs yet
-  # Check https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md
-  extraPlugins = with neovimPlugins.packages.${pkgs.system}; [
-  ];
-
-in pkgsPlugins ++ extraPlugins ++ [ treeSitterGrammars ]
+in nixpkgsPlugins ++ [ treeSitterGrammars ]
