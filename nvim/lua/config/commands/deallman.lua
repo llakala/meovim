@@ -77,5 +77,3 @@ vim.api.nvim_create_user_command("Deallman", function()
   --]]
   vim.cmd([[:%s&\v\=([^\:\n]+)\n\s*([\[\{\(])&=\1 \2]])
 end, {})
-
-cabbrev("dalm", "Deallman")

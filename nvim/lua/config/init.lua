@@ -2,7 +2,6 @@ require("config.globals.cwd")
 
 require("config.options")
 require("config.keybinds")
-require("config.abbrev")
 require("config.lsp")
 require("config.colorscheme")
 
