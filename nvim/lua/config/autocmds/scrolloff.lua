@@ -1,63 +1,28 @@
--- This requires special logic to not break my `fFtT` highlights. Neovim clears
--- hghlights on `zz`, even if the cursor doesn't end up moving. This means that
--- if I run `zz` on every movement, jumping with `f` in the current line will
--- clear the highlights.
+-- Better `:set scrolloff` for keeping the cursor centered. `zz` has the
+-- frustrating behavior of always clearing highlights, even if the current line
+-- is already centered. This breaks my `fFtT` character highlighting. To fix
+-- this, we only run `zz` if we actually changed lines.
 --
--- To work around this, I detect whether our cursor is currently centered on the
--- screen, and only run `zz` if it's not. This is more difficult to do than
--- you'd expect - it's trivial if we're in the middle of a buffer and the window
--- height is odd, but the moment that's not true, you need extra logic.
---
--- Naturally, this is a hack, which would be better solved by many changes on
--- the Neovim side, including (but not limited to):
--- 1. Having a more specific CursorMoved autocmd, like CursorMovedV for vertical
--- movement
--- 2. Adding a parameter to the CursorMoved autocmd, which would provide the
--- previous and new cursor position. This would let us take a simple difference
--- for the lnum, and greatly decrease the footprint of this
--- 3. Smarter `zz` highlight clearing, where it doesn't clear highlights if you
--- remain in the same line
---
--- When I'm less swamped, I hope to create a Neovim issue for implementing #3,
--- as I consider it the sanest and easiest solution.
+-- Credit to
+-- https://github.com/fsmiamoto/dotfiles/blob/21a9d9fc31be43f6d6daae796be543f841fe840f/common/.vimrc#L292
+-- for the impl
 vim.api.nvim_create_autocmd({ "CursorMoved" }, {
   desc = "Center cursor",
+  callback = function(args)
+    local curr_line = vim.fn.line(".")
+    local prev_line = vim.b[args.buf].prev_line
 
-  callback = function()
-    -- You might wonder how bad this is for performance, since it's a lot of API
-    -- calls. I had the same question, so I did some profiling, and it comes out
-    -- to 0.03ms when we're already centered, and 0.10ms when we have to call
-    -- `zz`, The execution time was so fast that I used `:sleep` to make sure
-    -- that `reltime()` was actually giving an output in seconds!
-    local window_top = vim.fn.line("w0")
-    local window_bottom = vim.fn.line("w$")
-    local current_line = vim.fn.line(".")
-    local last_line = vim.fn.line("$")
-    local winheight = vim.fn.winheight(0)
-    local winradius = math.floor(winheight / 2)
-
-    local distance_to_bottom = window_bottom - current_line
-    local distance_to_top = current_line - window_top
-
-    -- If the height is even, Neovim shows one extra line below the cursor.
-    -- Round down, and pretend both heights are the same.
-    if (winheight % 2) == 0 then
-      distance_to_bottom = distance_to_bottom - 1
-      winradius = winradius - 1
+    -- Whenever we open a buffer, we'll always start at line 1 - even if we open
+    -- at a specific line, nvim still starts at line 1, it just moves you after
+    -- the buffer is loaded. This means that if prev isn't set, we must be at
+    -- line 1!
+    if prev_line == nil then
+      prev_line = 1
     end
 
-    -- We can see the bottom of the buffer, and our current line is centered
-    -- relative to the top of the window.
-    local safe_at_bottom = window_bottom == last_line and distance_to_top == winradius
-
-    -- We can see the top of the buffer, and are on the top half of the screen
-    local safe_at_top = window_top == 1 and distance_to_top < winradius
-
-    local safe_at_center = distance_to_top == distance_to_bottom and distance_to_bottom == winradius
-
-    if safe_at_center or safe_at_top or safe_at_bottom then
-      return
+    if prev_line ~= curr_line then
+      vim.api.nvim_command("normal! zz")
+      vim.b[args.buf].prev_line = curr_line
     end
-    vim.api.nvim_command("normal! zz")
   end,
 })
