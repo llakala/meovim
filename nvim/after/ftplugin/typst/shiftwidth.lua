@@ -1,1 +1,0 @@
-o.textwidth = 120
