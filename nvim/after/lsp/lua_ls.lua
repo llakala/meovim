@@ -3,6 +3,7 @@ return {
     Lua = {
       hint = {
         enable = true,
+        paramName = "Literal",
         arrayIndex = "Disable",
       },
 
