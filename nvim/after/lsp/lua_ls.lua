@@ -17,7 +17,9 @@ return {
       },
 
       diagnostics = {
-        globals = { "ya", "cx", "Command" }, -- Yazi globals
+        -- Yazi and Neovim globals, for before lazydev loads in
+        globals = { "vim", "require", "ya", "cx", "Command" },
+
         disable = { "missing-fields", "lowercase-global" },
       },
     },
