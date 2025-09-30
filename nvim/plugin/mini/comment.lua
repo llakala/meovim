@@ -48,7 +48,7 @@ end
 
 local function select_eol_comment(operator, line, commentstr)
   -- These represents the beginning and the end of the commentstring. We'll
-  -- choose one of them to use depending on `include_header`. commentstr is
+  -- choose one of them to use depending on `operator`. commentstr is
   -- pre-escaped, so we don't need to bother with escaping it
   local comment_start, comment_end = line:find(commentstr)
 
@@ -68,8 +68,8 @@ local function select_eol_comment(operator, line, commentstr)
 
   local from_col = nil
 
-  -- We include the comment in the selection if it was `dgc`, but leave it out
-  -- if it was `cgc`
+  -- We include the comment header in the selection if it was `dgc`, but leave
+  -- it out if it was `cgc`
   -- TODO: add smarter range logic for `d`, so we only include whitespace before
   -- comment header if it exists
   if operator == "c" then
@@ -89,7 +89,6 @@ local function select_eol_comment(operator, line, commentstr)
     vim.cmd("normal! \27")
   end
 
-  --
   vim.api.nvim_win_set_cursor(0, { line_num, from_col })
   vim.cmd("normal! v")
   vim.api.nvim_win_set_cursor(0, { line_num, to_col })
@@ -97,7 +96,6 @@ end
 
 vim.keymap.set({ "x", "o" }, "ic", function()
   local operator = vim.fn.mode() == "v" and "v" or vim.v.operator
-
   local line = vim.api.nvim_get_current_line()
 
   -- Get the commentstring up until %s (including the space). Then, escape it
