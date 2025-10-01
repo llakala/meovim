@@ -68,14 +68,20 @@ local function select_eol_comment(operator, line, commentstr)
 
   local from_col = nil
 
-  -- We include the comment header in the selection if it was `dgc`, but leave
-  -- it out if it was `cgc`
-  -- TODO: add smarter range logic for `d`, so we only include whitespace before
-  -- comment header if it exists
+  -- `dic` -> select from start of comment header to eol, include leading
+  -- space if it exists
+  --
+  -- `vic` / `gwic` / `[^cd]ic` -> select from start of comment header to eol,
+  -- don't include leading space
+  --
+  -- `cic` -> select from end of comment header to eol
   if operator == "c" then
     from_col = comment_end
   elseif operator == "d" then
-    from_col = comment_start - 2
+    -- TODO: include multiple leading spaces, instead of just one
+    local char_before_comment = line:sub(comment_start - 1, comment_start - 1)
+    local offset = char_before_comment == " " and 2 or 1
+    from_col = comment_start - offset
   else
     from_col = comment_start - 1
   end
@@ -100,6 +106,8 @@ vim.keymap.set({ "x", "o" }, "ic", function()
 
   -- Get the commentstring up until %s (including the space). Then, escape it
   -- for use in lua regex
+  -- TODO: allow matching even if the space isn't there, so `--comment` is
+  -- matched
   local commentstr = vim.pesc(vim.bo.commentstring:match("^(.*)%%s"))
 
   -- If the line has a comment that's only following whitespace, we can
