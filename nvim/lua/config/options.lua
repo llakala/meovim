@@ -34,13 +34,16 @@ o.jumpoptions = "stack,view"
 --
 -- We use a custom function from the Cwd namespace that ignores subdirs of git
 -- repos, so `nvim myrepo` will give the same result as `nvim myrepo/foo/bar`
-local workspace_path = Cwd.get_project_cwd()
-local cache_dir = vim.fn.stdpath("data")
-local unique_id = vim.fn.fnamemodify(workspace_path, ":t") .. "_" .. vim.fn.sha256(workspace_path):sub(1, 8)
-local shadafile = cache_dir .. "/myshada/" .. unique_id .. ".shada"
-vim.o.exrc = true
-vim.o.secure = true
-vim.o.shadafile = shadafile
+-- Only activate in git repos, to save on startuptime elsewhere
+local workspace_path = vim.g.repo_root
+if workspace_path ~= nil then
+  local cache_dir = vim.fn.stdpath("data")
+  local unique_id = vim.fn.fnamemodify(workspace_path, ":t") .. "_" .. vim.fn.sha256(workspace_path):sub(1, 8)
+  local shadafile = cache_dir .. "/myshada/" .. unique_id .. ".shada"
+  vim.o.exrc = true
+  vim.o.secure = true
+  vim.o.shadafile = shadafile
+end
 
 -- UI
 

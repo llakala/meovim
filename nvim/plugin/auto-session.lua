@@ -1,6 +1,8 @@
 local session = require("auto-session")
 local Lib = require("auto-session.lib")
 
+local at_repo_root = vim.g.repo_root == vim.uv.cwd()
+
 -- Is true when Neovim is called with no arguments or a folder argument. Helps
 -- to ensure that sessions don't get improperly loaded when we should just be
 -- opening a specific file. Credit goes to:
@@ -11,7 +13,7 @@ local passed_nothing_or_dir = arg_count == 0 or (arg_count == 1 and vim.fn.isdir
 
 session.setup({
   -- Only create a new session if you're at the root of a git repo
-  auto_create = Cwd.at_repo_root,
+  auto_create = at_repo_root,
 
   -- Still save the session if a help file fails to load. Some help files are
   -- from plugins that are loaded lazily, so if we reopen nvim, the helpfile
@@ -31,17 +33,17 @@ session.setup({
   -- cwd nonsense
   no_restore_cmds = {
     function()
-      if Cwd.in_git_repo() and not Cwd.at_repo_root() and passed_nothing_or_dir then
+      if vim.g.repo_root ~= nil and not at_repo_root and passed_nothing_or_dir then
         -- Neovim cd, not shell cd. Means when we exit Neovim,
         -- auto-session will consider us to be in the right
         -- directory.
         vim.api.nvim_cmd({
           cmd = "cd",
-          args = { Cwd.get_repo_root() },
+          args = { vim.g.repo_root },
         }, {})
 
         -- `nvim_cmd` with the relevant arg wasn't working - not sure why
-        vim.api.nvim_command("AutoSession restore " .. Cwd.get_repo_root())
+        vim.api.nvim_command("AutoSession restore " .. vim.g.repo_root)
       end
     end,
   },

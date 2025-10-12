@@ -11,6 +11,5 @@ nnoremap("<leader>z", Yazi.yazi, { desc = "Open Yazi from current file" })
 -- Most of the time, you don't want this, and instead should be working through
 -- fzf-lua - so we map it to `y` which is difficult to reach.
 nnoremap("<leader>y", function()
-  local cwd = vim.fn.getcwd()
-  Yazi.yazi({}, cwd)
+  Yazi.yazi({}, vim.uv.cwd())
 end, { desc = "Open Yazi from project root" })
