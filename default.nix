@@ -1,23 +1,16 @@
 { pkgs, mnw }:
 
 let
-  inherit (pkgs) lib;
-
-  mkPackageSet = filepaths: let
-    callPackage = lib.callPackageWith (pkgs // { localPackages = packages; });
-    packages = builtins.mapAttrs
-      (_: path: callPackage path {})
-      filepaths;
-  in packages;
+  inherit (pkgs) callPackage;
 
   startPlugins = import ./startPlugins.nix { inherit pkgs; };
   optPlugins = import ./optPlugins.nix { inherit pkgs; };
   binaries = import ./binaries.nix { inherit pkgs; };
 
-  customStartPlugins = mkPackageSet {
-    vim-nix = ./other/startPlugins/vim-nix.nix;
-    fFtT-highlights-nvim = ./other/startPlugins/fFtT-highlights-nvim.nix;
-    lazydev-nvim = ./other/startPlugins/lazydev-nvim.nix;
+  customStartPlugins = {
+    vim-nix = callPackage ./other/startPlugins/vim-nix.nix {};
+    fFtT-highlights-nvim = callPackage ./other/startPlugins/fFtT-highlights-nvim.nix {};
+    lazydev-nvim = callPackage ./other/startPlugins/lazydev-nvim.nix {};
   };
   customOptPlugins = {};
   customBinaries = {};
@@ -42,17 +35,9 @@ in mnw.lib.wrap pkgs {
     "basedpyright", "ts_ls", "marksman", "tinymist", "clangd" })
   '';
 
-  plugins.start =
-    startPlugins
-    ++ builtins.attrValues customStartPlugins;
-
-  plugins.opt =
-    optPlugins
-    ++ builtins.attrValues customOptPlugins;
-
-  extraBinPath =
-    binaries
-    ++ builtins.attrValues customBinaries;
+  plugins.start = startPlugins ++ builtins.attrValues customStartPlugins;
+  plugins.opt = optPlugins ++ builtins.attrValues customOptPlugins;
+  extraBinPath = binaries ++ builtins.attrValues customBinaries;
 
   plugins.dev.config = {
     pure = ./nvim;
