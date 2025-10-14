@@ -1,4 +1,4 @@
-local regex = "^\\s*=\\+"
+local regex = "^=\\+"
 
 -- Jump between headers in Typst. There isn't much precedence for what to do
 -- with the beginning/end of the buffer when there aren't any matches - so I
