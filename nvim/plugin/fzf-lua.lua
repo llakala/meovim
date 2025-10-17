@@ -42,28 +42,26 @@ end
 -- Custom action that allows deleting the current buffer. If you do, it swaps to
 -- the last buffer you used!
 local function delete_buffer_action(selected, opts)
-  -- List of buffers sorted by how frequently we accessed them.
-  local sorted_buflist = get_sorted_buflist()
-  local current_buf = sorted_buflist[1]
-
   for _, sel in ipairs(selected) do
-    local entry = path.entry_to_file(sel, opts)
-    local bufnr = entry.bufnr
+    local file = path.entry_to_file(sel, opts)
+    local buf_to_delete = file.bufnr
 
     -- If the current file has unsaved changes, prompt the user to save
-    local is_dirty = utils.buffer_is_dirty(bufnr, true, false)
+    local is_dirty = utils.buffer_is_dirty(buf_to_delete, true, false)
     local save_dialog = function()
-      return utils.save_dialog(bufnr)
+      return utils.save_dialog(buf_to_delete)
     end
 
-    if bufnr and (not is_dirty or vim.api.nvim_buf_call(bufnr, save_dialog)) then
-      if bufnr == current_buf then
+    if buf_to_delete and (not is_dirty or vim.api.nvim_buf_call(buf_to_delete, save_dialog)) then
+      local sorted_buflist = get_sorted_buflist()
+      local current_buf = sorted_buflist[1]
+
+      if buf_to_delete == current_buf then
         local windows = vim.fn.win_findbuf(current_buf)
 
-        -- Buffer we accessed most recently after the current buf. We can't use
-        -- alternate file here, because the REAL current buf is actually the
-        -- picker - so we need to go two files back. This is why we created a
-        -- sorted buflist in the first place.
+        -- We need the buffer we accessed most recently after the current buf.
+        -- We can't use alternate file here, because the REAL current buf is
+        -- actually the picker - so we need to go two files back.
         local new_buf = sorted_buflist[2]
 
         for _, win in ipairs(windows) do
@@ -71,7 +69,7 @@ local function delete_buffer_action(selected, opts)
         end
       end
 
-      vim.api.nvim_buf_delete(bufnr, { force = true })
+      vim.api.nvim_buf_delete(buf_to_delete, { force = true })
     end
   end
 end
