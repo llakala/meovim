@@ -31,8 +31,9 @@ require("conform").setup({
       prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
     },
   },
+  format_on_save = nil,
 
-  format_on_save = function(bufnr)
+  format_after_save = function(bufnr)
     -- Be sure to use `vim.b`, not anything else like `vim.o`
     if vim.b[bufnr].disable_autoformat then
       return nil
@@ -48,7 +49,7 @@ require("conform").setup({
 
     -- Calls conform.format(). We put our options in default_format_opts
     -- above, so they're applied when calling :fmt too
-    return {}
+    return { async = true }
   end,
 })
 
@@ -64,7 +65,7 @@ vim.api.nvim_create_user_command("Fmt", function(args)
     }
   end
 
-  require("conform").format({ range = range })
+  require("conform").format({ range = range, async = true })
 end, { range = true })
 
 -- Fine, I'm not supposed to make custom commands that are lowercase
