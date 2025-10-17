@@ -15,7 +15,6 @@ require("nvim-surround").setup({
       add = { "( ", " )" },
       delete = right_delete,
     },
-
     ["["] = {
       add = { "[", "]" },
       delete = left_delete,
@@ -24,13 +23,20 @@ require("nvim-surround").setup({
       add = { "[ ", " ]" },
       delete = right_delete,
     },
-
     ["{"] = {
       add = { "{", "}" },
       delete = left_delete,
     },
     ["}"] = {
       add = { "{ ", " }" },
+      delete = right_delete,
+    },
+    ["<"] = {
+      add = { "<", ">" },
+      delete = left_delete,
+    },
+    [">"] = {
+      add = { "< ", " >" },
       delete = right_delete,
     },
 
