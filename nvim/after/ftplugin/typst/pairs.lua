@@ -3,11 +3,11 @@ local cond = require("nvim-autopairs.conds")
 local ts_conds = require("nvim-autopairs.ts-conds")
 
 local in_math = function(_)
-  return Custom.in_ts_group({ "math" }, { "content", "string", "code" })
+  return Autopairs_utils.in_ts_group({ "math" }, { "content", "string", "code" })
 end
 
 local in_content = function(_)
-  return Custom.in_ts_group({ "content", "string" }, { "math", "code" })
+  return Autopairs_utils.in_ts_group({ "content", "string" }, { "math", "code" })
 end
 
 require("nvim-autopairs").add_rules({

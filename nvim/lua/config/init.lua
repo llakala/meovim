@@ -1,5 +1,4 @@
 require("config.globals.cwd")
-require("config.globals.in_ts_node")
 
 require("config.options")
 require("config.keybinds")
