@@ -9,4 +9,5 @@ npairs.add_rules({
   Rule("= ", ";", "nix"):with_pair(function(_)
     Autopairs_utils.in_ts_group({ "binding_set", "attrset_expression" }, {})
   end),
+  Autopairs_utils.replacePunctuation("nix", ";"),
 })
