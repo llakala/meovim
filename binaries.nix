@@ -20,6 +20,7 @@ let
   packages = with pkgs; [
     # Language servers
     nixd
+    nil
     (jdt-language-server.override { jdk = pkgs.jdk_headless; }) # decreases closure
     lua-language-server
     fish-lsp
@@ -35,5 +36,4 @@ let
     (google-java-format.override { jre = pkgs.jre_headless; })
     stylua
   ];
-
 in packages ++ [ customYazi ]
