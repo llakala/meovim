@@ -1,6 +1,5 @@
 local npairs = require("nvim-autopairs")
 local Rule = require("nvim-autopairs.rule")
-local ts = require("nvim-treesitter.ts_utils")
 
 npairs.add_rules({
   -- Homerolled logic to auto-add semicolons. I didn't think most nodes even had
@@ -18,7 +17,6 @@ npairs.add_rules({
     if child == nil then
       return false
     end
-    vim.print(child:type())
     return vim.tbl_contains({ "{", "let" }, child:type())
   end),
 
