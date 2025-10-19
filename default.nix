@@ -3,14 +3,14 @@
 let
   inherit (pkgs) callPackage;
 
-  startPlugins = import ./startPlugins.nix { inherit pkgs; };
-  optPlugins = import ./optPlugins.nix { inherit pkgs; };
-  binaries = import ./binaries.nix { inherit pkgs; };
+  startPlugins = import ./packages/startPlugins.nix { inherit pkgs; };
+  optPlugins = import ./packages/optPlugins.nix { inherit pkgs; };
+  binaries = import ./packages/binaries.nix { inherit pkgs; };
 
   customStartPlugins = {
-    vim-nix = callPackage ./other/startPlugins/vim-nix.nix {};
-    fFtT-highlights-nvim = callPackage ./other/startPlugins/fFtT-highlights-nvim.nix {};
-    lazydev-nvim = callPackage ./other/startPlugins/lazydev-nvim.nix {};
+    vim-nix = callPackage ./packages/startPlugins/vim-nix.nix {};
+    fFtT-highlights-nvim = callPackage ./packages/startPlugins/fFtT-highlights-nvim.nix {};
+    lazydev-nvim = callPackage ./packages/startPlugins/lazydev-nvim.nix {};
   };
   customOptPlugins = {};
   customBinaries = {};
