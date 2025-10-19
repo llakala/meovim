@@ -21,7 +21,6 @@ let
     cutlass-nvim
     fugitive
     vim-rhubarb # Make `:GBrowse` from fugitive work with Github
-    hlargs-nvim # Highlight function arguments (in supported languages)
     luasnip
     nvim-highlight-colors # Highlight hex codes
     snacks-nvim
