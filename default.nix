@@ -19,21 +19,9 @@ in mnw.lib.wrap pkgs {
   appName = "nvim";
   neovim = pkgs.neovim-unwrapped;
 
-  initLua = /* lua */ ''
-    -- Uncomment when you want to profile nvim startup. Be sure to have
-    -- the snacks.nvim repo cloned for this to work!
-
-    -- vim.opt.rtp:append("/home/emanresu/Documents/repos/snacks.nvim/")
-    -- require("snacks.profiler").startup()
-
-    require("config")
-    require("lz.n").load("lazy")
-
-    -- Add to this whenever you add a new server to the `lsp` folder!
-    -- Ridiculous that nvim can't load them for you as far as I can tell
-    vim.lsp.enable({ "fish_lsp", "gleam", "lua_ls", "nil_ls", "nixd",
-    "basedpyright", "ts_ls", "marksman", "tinymist", "clangd" })
-  '';
+  luaFiles = [
+    ./init.lua
+  ];
 
   plugins.start = startPlugins ++ builtins.attrValues customStartPlugins;
   plugins.opt = optPlugins ++ builtins.attrValues customOptPlugins;
