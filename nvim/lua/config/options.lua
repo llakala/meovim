@@ -14,7 +14,7 @@ o.undofile = true -- Persistent undo
 
 g.mapleader = " "
 
-o.mouse = "nva" -- Enable mouse (but not in command mode).
+o.mouse = ""
 o.clipboard = "unnamedplus"
 
 vim.opt.matchpairs:append("<:>") -- % goes between <>
