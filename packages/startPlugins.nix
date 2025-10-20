@@ -7,8 +7,8 @@ let
     blink-cmp
     conform-nvim
     fzf-lua
-    lualine-nvim
     lualine-lsp-progress
+    lualine-nvim
     lz-n # Lazy loading, without package management
     nvim-autopairs
     nvim-lspconfig
@@ -20,12 +20,12 @@ let
     colorful-menu-nvim # Show completion types in color
     cutlass-nvim
     fugitive
-    vim-rhubarb # Make `:GBrowse` from fugitive work with Github
     luasnip
     nvim-highlight-colors # Highlight hex codes
     snacks-nvim
-    ts-comments-nvim # Lets me have multiple comment strings for `gcc` action
     tiny-inline-diagnostic-nvim # Better `virtual_lines` from nvim 0.11
+    ts-comments-nvim # Lets me have multiple comment strings for `gcc` action
+    vim-rhubarb # Make `:GBrowse` from fugitive work with Github
 
     # mini-nvim stuff
     mini-ai
@@ -55,8 +55,8 @@ let
     comment # highlight todos and fixmes
     fish
     gitcommit
-    luadoc # --- type annotations
     gleam
+    luadoc # --- type annotations
     nix
 
     # Languages I use less often
