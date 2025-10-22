@@ -104,12 +104,12 @@ o.laststatus = 3
 o.splitbelow = true
 o.splitright = true
 
--- Formatting
+-- Changes from defaults:
+-- 1. Removed `t` - only comments should be autoformatted. We add it back in the
+-- ftplugins of languages like markdown
+-- 2. Added `r`, `o` and `/`, so comment headers get continued
+o.formatoptions = "cjqro/"
 
--- Continue line comments in all languages. Without adding `ro`, it only seemed
--- to work in some languages. Keep `t`, so text width also applies to something
--- like markdown
-o.formatoptions = "tcqjro/"
-
--- Auto-wrap comments (but not other stuff, thanks to the `t` changes above)
+-- Auto-wrap comments (but not other stuff, thanks to not having `t` in
+-- formatoptions by default)
 o.textwidth = 80

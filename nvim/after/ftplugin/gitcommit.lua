@@ -4,3 +4,5 @@
 -- ever try to add a blink plugin that gives me git completions and forget about
 -- this, I'll probably be very confused. Sorry, future me!
 vim.b.completion = false
+
+vim.opt_local.formatoptions:append({ t = true }) -- Wrap all text, not just comments
