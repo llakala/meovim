@@ -32,6 +32,10 @@ vim.api.nvim_create_autocmd("User", {
 
 ls.setup({
   enable_autosnippets = true,
+  snip_env = {
+    in_ts_group = Custom.in_ts_group,
+  },
 })
 
-require("luasnip.loaders.from_lua").load({ paths = { "~/Documents/projects/snippets" } })
+local snippet_dirs = vim.fn.globpath(vim.o.runtimepath, "snippets", nil, true)
+require("luasnip.loaders.from_lua").load({ paths = snippet_dirs })
