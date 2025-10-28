@@ -37,5 +37,4 @@ ls.setup({
   },
 })
 
-local snippet_dirs = vim.fn.globpath(vim.o.runtimepath, "snippets", nil, true)
-require("luasnip.loaders.from_lua").load({ paths = snippet_dirs })
+require("luasnip.loaders.from_lua").load({ paths = { "/home/emanresu/Documents/projects/meovim/nvim/snippets/" } })
