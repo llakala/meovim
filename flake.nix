@@ -4,18 +4,16 @@
     mnw.url = "github:Gerg-L/mnw";
   };
 
-  outputs = { self, nixpkgs, ... } @ inputs:
+  outputs = { self, nixpkgs, mnw }:
   let
     lib = nixpkgs.lib;
-
     supportedSystems = [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
     forAllSystems = function: lib.genAttrs
       supportedSystems
       (system: function nixpkgs.legacyPackages.${system});
-
   in {
     packages = forAllSystems (pkgs: {
-      default = import ./default.nix { inherit pkgs; inherit (inputs) mnw; };
+      default = import ./default.nix { inherit pkgs mnw; };
     });
 
     devShells = forAllSystems (pkgs: {
@@ -23,6 +21,5 @@
         packages = lib.singleton self.packages.${pkgs.system}.default.devMode;
       };
     });
-
   };
 }
