@@ -68,8 +68,8 @@ local function set_keymaps(bufnr)
     if not ok or not is_letter_mark(mark) then
       return
     end
-    register_mark(mark, bufnr)
     vim.cmd("normal! m" .. mark)
+    register_mark(mark, bufnr)
   end, { desc = "Add mark", buffer = bufnr })
 
   vim.keymap.set("n", "dm", function()
@@ -82,9 +82,9 @@ local function set_keymaps(bufnr)
 
   vim.keymap.set("n", "dM", function()
     marks[bufnr] = {}
-    vim.fn.sign_unplace(sign_group_name, { buffer = bufnr })
     vim.cmd("delmarks!")
     vim.cmd("delmarks A-Z")
+    vim.fn.sign_unplace(sign_group_name, { buffer = bufnr })
   end, { desc = "Delete all buffer marks", buffer = bufnr })
 end
 
