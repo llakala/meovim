@@ -147,6 +147,10 @@ require("fzf-lua").setup({
       vertical = "up:45%",
     },
   },
+
+  fzf_opts = {
+    ["--cycle"] = true,
+  },
 })
 
 FzfLua.register_ui_select()
