@@ -19,13 +19,13 @@ function! CodebergHandler(opts)
   let remote = substitute(remote, ':', '\/', '')
   let remote = substitute(remote, '\.git$', '', '')
 
-  " if a:opts.line1 == 0
-  "   return "https://" . remote . "/src/branch/" . a:opts.commit . "/" . a:opts.path
-  " elseif a:opts.line1 == a:opts.line2
-  "   return "https://" . remote . "/src/commit/" . a:opts.commit . "/" . a:opts.path . "#L" . a:opts.line1
-  " else
-  "   return "https://" . remote . "/src/commit/" . a:opts.commit . "/" . a:opts.path . "#L" . a:opts.line1 . "-L" . a:opts.line2
-  " endif
+  if a:opts.line1 == 0
+    return "https://" . remote . "/src/branch/" . a:opts.commit . "/" . a:opts.path
+  elseif a:opts.line1 == a:opts.line2
+    return "https://" . remote . "/src/commit/" . a:opts.commit . "/" . a:opts.path . "#L" . a:opts.line1
+  else
+    return "https://" . remote . "/src/commit/" . a:opts.commit . "/" . a:opts.path . "#L" . a:opts.line1 . "-L" . a:opts.line2
+  endif
 endfunction
 
 let s:handlers = get(g:, 'fugitive_browse_handlers', [])
