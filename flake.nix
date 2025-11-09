@@ -18,7 +18,7 @@
 
     devShells = forAllSystems (pkgs: {
       default = pkgs.mkShellNoCC {
-        packages = lib.singleton self.packages.${pkgs.system}.default.devMode;
+        packages = lib.singleton self.packages.${pkgs.stdenv.hostPlatform.system}.default.devMode;
       };
     });
   };
