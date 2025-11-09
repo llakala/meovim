@@ -167,15 +167,13 @@ nnoremap("gO", FzfLua.lsp_document_symbols)
 nnoremap("grd", FzfLua.diagnostics_workspace)
 
 nnoremap("<leader>b", FzfLua.buffers, { desc = "Swap buffer, including hidden buffers" })
-nnoremap("<leader>f", FzfLua.files, { desc = "Add new file in project" })
-nnoremap("<leader>s", FzfLua.live_grep, { desc = "Search text in project" })
 
-nnoremap(
-  "<leader>l", -- l for local! doesn't hurt that it's easy to reach
-  function()
-    FzfLua.files({
-      cwd = vim.fn.expand("%:p:h"),
-    })
-  end,
-  { desc = "Add new file in current folder" }
-)
+nnoremap("<leader>f", FzfLua.files, { desc = "Add new file in project" })
+nnoremap("<leader>F", function()
+  FzfLua.files({ cwd = vim.fn.expand("%:p:h") })
+end, { desc = "Add new file in current folder" })
+
+nnoremap("<leader>s", FzfLua.live_grep, { desc = "Search text in project" })
+nnoremap("<leader>S", function()
+  FzfLua.live_grep({ cwd = vim.fn.expand("%:p:h") })
+end, { desc = "Search text in current filder" })
