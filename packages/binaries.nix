@@ -21,19 +21,10 @@ let
     # Language servers
     nixd
     nil
-    (jdt-language-server.override { jdk = pkgs.jdk_headless; }) # decreases closure
     lua-language-server
-    fish-lsp
-    gleam
-    clang-tools
-    typescript-language-server
-    basedpyright
-    ruff
-    marksman
     tinymist
 
     # Formatters
-    (google-java-format.override { jre = pkgs.jre_headless; })
     stylua
   ];
 in packages ++ [ customYazi ]
