@@ -14,7 +14,7 @@ let
     nvim-lspconfig
     nvim-surround
     rainbow-delimiters-nvim
-    yazi-nvim
+    oil-nvim
 
     # Neat features
     colorful-menu-nvim # Show completion types in color

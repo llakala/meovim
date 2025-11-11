@@ -2,6 +2,7 @@ require("lualine").setup({
   extensions = {
     "fzf",
     "fugitive",
+    "oil",
   },
 
   sections = {
