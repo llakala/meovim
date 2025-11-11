@@ -61,12 +61,13 @@ oil.setup({
   keymaps = {
     H = "actions.parent",
     L = "actions.select",
-    J = "j",
-    K = "k",
-    ["<C-h>"] = "actions.parent",
-    ["<C-l>"] = "actions.select",
-    ["<C-j>"] = "j",
-    ["<C-k>"] = "k",
+    J = false,
+    K = false,
+    ["<C-h>"] = false,
+    ["<C-l>"] = false,
+    ["<C-j>"] = false,
+    ["<C-k>"] = false,
+
     f = {
       function()
         search_first_char(true, false)
@@ -85,8 +86,13 @@ oil.setup({
     [","] = function()
       goto_next(false)
     end,
+
     ["<CR>"] = false,
-    ["<Esc>"] = ":bd<CR>",
+    ["<Esc>"] = {
+      ":bd<CR>",
+      silent = true,
+    },
+    ["<Tab>"] = "actions.preview",
   },
   win_options = {
     signcolumn = "yes",
