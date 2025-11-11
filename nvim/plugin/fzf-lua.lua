@@ -137,6 +137,12 @@ require("fzf-lua").setup({
     filter = filter_unlisted_buffers,
   },
 
+  -- Disable regex for searching - I need special characters much more than I
+  -- want regex search
+  grep = {
+    rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings -e",
+  },
+
   -- Automatically create an fzf colorscheme based on our nvim colorscheme
   fzf_colors = true,
 
