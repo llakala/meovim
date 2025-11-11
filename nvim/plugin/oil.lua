@@ -58,6 +58,12 @@ local goto_next = function(forward)
 end
 
 oil.setup({
+  -- I have the ftplugin ignore the prompt, so we want to make sure nothing
+  -- actually gets deleted by accident. In the future I'd like to try out using
+  -- the git status of a file, and only prompt if you're deleting a file with
+  -- uncommitted changes.
+  delete_to_trash = true,
+
   keymaps = {
     H = "actions.parent",
     L = "actions.select",
