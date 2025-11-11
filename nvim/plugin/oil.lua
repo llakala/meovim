@@ -5,8 +5,12 @@ oil.setup({
   keymaps = {
     H = "actions.parent",
     L = "actions.select",
+    J = "j",
+    K = "k",
     ["<C-h>"] = "actions.parent",
     ["<C-l>"] = "actions.select",
+    ["<C-j>"] = "j",
+    ["<C-k>"] = "k",
     ["<CR>"] = false,
     ["<Esc>"] = ":bd<CR>",
   },
