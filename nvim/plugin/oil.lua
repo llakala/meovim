@@ -46,10 +46,6 @@ local search_first_char = function(forward, reuse_prompt)
 end
 
 local goto_next = function(forward)
-  if vim.v.hlsearch then
-    local char = forward and "n" or "N"
-    vim.api.nvim_feedkeys(char, "n", true)
-  end
   if vim.b.search_char == nil or vim.b.searching_forward == nil then
     vim.print("No direction specified")
     return
@@ -83,10 +79,10 @@ oil.setup({
       end,
       mode = "n",
     },
-    n = function()
+    [";"] = function()
       goto_next(true)
     end,
-    N = function()
+    [","] = function()
       goto_next(false)
     end,
     ["<CR>"] = false,
