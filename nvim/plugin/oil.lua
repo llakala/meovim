@@ -2,7 +2,7 @@ local oil = require("oil")
 
 vim.b.search_char = nil
 vim.b.searching_forward = nil
-local search_first_char = function(reuse_prompt, dir)
+local search_first_char = function(reuse_prompt)
   if reuse_prompt then
     prompt = vim.b.search_char
     if prompt == nil then
