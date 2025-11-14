@@ -1,7 +1,7 @@
 local oil = require("oil")
+local ns = vim.api.nvim_create_namespace("OilHighlights")
 
 vim.b.search_char = nil
-vim.b.searching_forward = nil
 local search_first_char = function(reuse_prompt)
   if reuse_prompt then
     prompt = vim.b.search_char
@@ -13,29 +13,35 @@ local search_first_char = function(reuse_prompt)
     prompt = vim.fn.getcharstr()
   end
 
-  -- Wraparound search, starting from the current entry, so if you're searching
-  -- for the current letter, and you don't find it, we wrap back around to the
-  -- start.
-  starting_line = vim.fn.line(".")
-  num_iterations = vim.fn.line("$")
-  for iteration_index = 0, num_iterations - 1 do
-    local entry_index = 1 + math.fmod(starting_line + iteration_index, num_iterations)
-    local entry = oil.get_entry_on_line(0, entry_index)
+  -- Search for the prompt character, limiting the search range to the first
+  -- column of every line. Oil has an option called `constrain_cursor`, which
+  -- makes it so we can only edit the filename, and not other columns. Jumping
+  -- to the start of the line is a surefire way to get the right column for
+  -- searching
+  vim.api.nvim_feedkeys("^", "n", false)
+  local search_col = vim.fn.col(".")
+  local regex = "\\%" .. search_col .. "c" .. prompt
+  vim.fn.search(regex, "")
 
-    if entry == nil then
-      vim.print("Null entry somehow with index " .. entry_index)
-      return
-    end
-    local first_char = entry.name:sub(1, 1)
-    if prompt == first_char then
-      vim.fn.feedkeys(entry_index .. "G")
-      if not reuse_prompt then
-        vim.b.search_char = prompt
+  if not reuse_prompt then
+    vim.b.search_char = prompt
+
+    local num_lines = vim.api.nvim_buf_line_count(0)
+    local lines = vim.api.nvim_buf_get_lines(0, 0, num_lines, false)
+    vim.api.nvim_buf_clear_namespace(0, ns, 0, num_lines)
+
+    -- Highlight each line matching the prompted character
+    for lnum, line in ipairs(lines) do
+      local col = line:sub(search_col, search_col)
+      if col == prompt then
+        vim.api.nvim_buf_set_extmark(0, ns, lnum - 1, search_col - 1, {
+          hl_group = { "DiagnosticWarn" },
+          end_col = line:len(),
+          id = lnum,
+        })
       end
-      return
     end
   end
-  vim.print("No results found")
 end
 
 oil.setup({
@@ -80,8 +86,8 @@ oil.setup({
         if sort_by_recent then
           oil.set_sort({ { "mtime", "desc" } })
           oil.set_columns({
-            { "icon" },
             { "mtime", highlight = "NonText", format = "%b %d" },
+            { "icon" },
           })
         else
           oil.set_sort({
