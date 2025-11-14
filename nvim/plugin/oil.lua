@@ -99,6 +99,25 @@ oil.setup({
       silent = true,
     },
     ["<Tab>"] = "actions.preview",
+    ["gs"] = {
+      callback = function()
+        sort_by_recent = not sort_by_recent
+        if sort_by_recent then
+          oil.set_sort({ { "mtime", "desc" } })
+          oil.set_columns({
+            { "icon" },
+            { "mtime", highlight = "NonText", format = "%b %d" },
+          })
+        else
+          oil.set_sort({
+            { "type", "asc" },
+            { "name", "asc" },
+          })
+          oil.set_columns({ "icon" })
+        end
+      end,
+      nowait = true, -- Override the existing `gs` bind
+    },
   },
   win_options = {
     signcolumn = "yes",
