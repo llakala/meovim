@@ -127,32 +127,30 @@ Custom.delete_surrounding_indent = function()
     }
     vim.fn.setreg(vim.v.register, table.concat(surrounding_lines, "\n"), "l")
     return
+  end
+
   -- Comment the surrounding lines
-  elseif operator == "g@" then
+  if operator == "g@" then
     require("vim._comment").toggle_lines(outer_start + 1, outer_start + 1)
     require("vim._comment").toggle_lines(outer_end + 1, outer_end + 1)
     return
   end
 
-  ---@param what 'outer'|'inner'
-  ---@param with string[]
-  local replace_scope = function(what, with)
-    vim._with({ lockmarks = true }, function()
-      if what == "outer" then
-        vim.api.nvim_buf_set_lines(buf, outer_start, outer_end + 1, false, with)
-      elseif what == "inner" then
-        vim.api.nvim_buf_set_lines(buf, inner_start, inner_end + 1, false, with)
-      else
-        vim.print("Invalid `what` value!")
-      end
-    end)
+  if operator ~= "d" then
+    vim.print("Unimplemented operator!")
+    return
   end
 
+  -- Deindent the lines we'll be keeping
   for i, line in ipairs(inner_lines) do
     local line_indent = vim.fn.indent(inner_start + i)
     inner_lines[i] = vim.text.indent(line_indent - indent_width, line, { expandtab = 1 })
   end
-  replace_scope("outer", inner_lines)
+
+  -- Replace the full range with the deindented new version
+  vim._with({ lockmarks = true }, function()
+    vim.api.nvim_buf_set_lines(buf, outer_start, outer_end + 1, false, inner_lines)
+  end)
 
   -- Deferring means this doesn't get accidentally deleted, since vim expects
   -- any cursor movement in operator mode to mean the operation you want to
