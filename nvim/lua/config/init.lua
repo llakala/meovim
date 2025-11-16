@@ -1,11 +1,13 @@
+Custom = {}
+
+require("config.globals.cwd")
+require("config.globals.in_ts_group")
+require("config.globals.surrounding_indent")
+
 require("config.options")
 require("config.keybinds")
 require("config.lsp")
 require("config.colorscheme")
-
-Custom = {}
-require("config.globals.cwd")
-require("config.globals.in_ts_group")
 
 require("config.autocmds.marks")
 require("config.autocmds.yank")

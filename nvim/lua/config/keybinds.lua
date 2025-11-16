@@ -63,3 +63,6 @@ end, { desc = "Next error" })
 -- doesn't seem to exist anecdotally. I should really be using `gw`, since it
 -- preserves your cursor location, but intuition is a son of a bitch.
 vnoremap("gq", "gw", { desc = "Format" })
+
+-- Custom binding that deletes the lines starting/ending an indentation level
+vim.keymap.set("o", "I", Custom.delete_surrounding_indent)
