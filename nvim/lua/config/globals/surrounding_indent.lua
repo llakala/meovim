@@ -111,11 +111,12 @@ Custom.delete_surrounding_indent = function()
   if in_operator_mode then
     operator, count1 = vim.v.operator, vim.v.count1
   else
-    count1 = 1 -- Couldn't find a way to query this from nvim-surround
     if vim.go.operatorfunc:find("change") then
       operator = "c"
+      count1 = require("nvim-surround.cache").change.count
     elseif vim.go.operatorfunc:find("delete") then
       operator = "d"
+      count1 = require("nvim-surround.cache").delete.count
     else
       vim.print("Unknown operatorfunc " .. vim.go.operatorfunc)
       return
