@@ -107,7 +107,8 @@ Custom.delete_surrounding_indent = function()
   -- logic to get around this
   local mode = vim.api.nvim_get_mode()
   local operator, count1
-  if mode.mode:find("o") then
+  local in_operator_mode = mode.mode:find("o")
+  if in_operator_mode then
     operator, count1 = vim.v.operator, vim.v.count1
   else
     count1 = 1 -- Couldn't find a way to query this from nvim-surround
@@ -138,6 +139,11 @@ Custom.delete_surrounding_indent = function()
     inner_lines = vim.api.nvim_buf_get_lines(buf, inner_start, inner_end + 1, false)
   end
 
+  local surrounding_lines = {
+    unpack(vim.api.nvim_buf_get_lines(buf, outer_start, inner_start, false)),
+    unpack(vim.api.nvim_buf_get_lines(buf, inner_end + 1, outer_end + 1, false)),
+  }
+
   -- Yank the surrounding lines
   if operator == "y" then
     -- `vim.hl.on_yank` can't understand my selection here - so perform the
@@ -145,16 +151,21 @@ Custom.delete_surrounding_indent = function()
     local ns = vim.api.nvim_create_namespace("scope_border")
     vim.hl.range(buf, ns, "IncSearch", { outer_start, indent - indent_width }, { outer_start, -1 })
     vim.hl.range(buf, ns, "IncSearch", { outer_end, indent - indent_width }, { outer_end, -1 })
+
     vim.defer_fn(function()
       vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+      vim.fn.setreg(vim.v.register, table.concat(surrounding_lines, "\n"), "l")
     end, 150)
-
-    local surrounding_lines = {
-      unpack(vim.api.nvim_buf_get_lines(buf, outer_start, inner_start, false)),
-      unpack(vim.api.nvim_buf_get_lines(buf, inner_end + 1, outer_end + 1, false)),
-    }
-    vim.fn.setreg(vim.v.register, table.concat(surrounding_lines, "\n"), "l")
     return
+  end
+
+  -- I have a separate cut bind (alt+d). If I used this, then it didn't go
+  -- through nvim-surround, and we should yank the surrounding lines. Keep
+  -- going, though, since we should delete them too!
+  if operator == "d" and in_operator_mode then
+    vim.defer_fn(function()
+      vim.fn.setreg(vim.v.register, table.concat(surrounding_lines, "\n"), "l")
+    end, 1)
   end
 
   -- Comment the surrounding lines
