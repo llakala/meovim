@@ -50,6 +50,10 @@ require("nvim-surround").setup({
       -- Slightly modified to preserve the wrapping lines
       delete = "^(```.-)()%\n.-(```)()$",
     },
+
+    i = {
+      delete = Custom.delete_surrounding_indent,
+    },
   },
 
   keymaps = {

@@ -65,4 +65,4 @@ end, { desc = "Next error" })
 vnoremap("gq", "gw", { desc = "Format" })
 
 -- Custom binding that deletes the lines starting/ending an indentation level
-vim.keymap.set("o", "I", Custom.delete_surrounding_indent)
+vim.keymap.set("o", "si", Custom.delete_surrounding_indent)

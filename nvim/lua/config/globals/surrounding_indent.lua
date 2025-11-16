@@ -101,13 +101,32 @@ Custom.delete_surrounding_indent = function()
 
   local row, col = unpack(vim.api.nvim_win_get_cursor(win))
 
-  local operator, count1 = vim.v.operator, vim.v.count1
+  -- This function gets called normally through `vim.keymap.set` for something
+  -- like `ysi` - but `dsi` and `csi` are overriden by nvim-surround, which
+  -- doesn't pass us the normal `vim.v` operators. We add special "v:operator-at-home"
+  -- logic to get around this
+  local mode = vim.api.nvim_get_mode()
+  local operator, count1
+  if mode.mode:find("o") then
+    operator, count1 = vim.v.operator, vim.v.count1
+  else
+    count1 = 1 -- Couldn't find a way to query this from nvim-surround
+    if vim.go.operatorfunc:find("change") then
+      operator = "c"
+    elseif vim.go.operatorfunc:find("delete") then
+      operator = "d"
+    else
+      vim.print("Unknown operatorfunc " .. vim.go.operatorfunc)
+      return
+    end
+  end
 
   local scope = get_scope(row, count1)
   if not scope then
     return
   end
 
+  local indent = scope.indent
   local indent_width = scope.indent_width
   local outer_start, outer_end = scope.outer_start, scope.outer_end
   local inner_start, inner_end = scope.inner_start, scope.inner_end
@@ -121,6 +140,15 @@ Custom.delete_surrounding_indent = function()
 
   -- Yank the surrounding lines
   if operator == "y" then
+    -- `vim.hl.on_yank` can't understand my selection here - so perform the
+    -- highlight myself!
+    local ns = vim.api.nvim_create_namespace("scope_border")
+    vim.hl.range(buf, ns, "IncSearch", { outer_start, indent - indent_width }, { outer_start, -1 })
+    vim.hl.range(buf, ns, "IncSearch", { outer_end, indent - indent_width }, { outer_end, -1 })
+    vim.defer_fn(function()
+      vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+    end, 150)
+
     local surrounding_lines = {
       unpack(vim.api.nvim_buf_get_lines(buf, outer_start, inner_start, false)),
       unpack(vim.api.nvim_buf_get_lines(buf, inner_end + 1, outer_end + 1, false)),
@@ -137,7 +165,7 @@ Custom.delete_surrounding_indent = function()
   end
 
   if operator ~= "d" then
-    vim.print("Unimplemented operator!")
+    vim.print("Unimplemented operator " .. operator .. "!")
     return
   end
 
