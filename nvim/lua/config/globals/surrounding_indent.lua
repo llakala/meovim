@@ -65,7 +65,8 @@ end
 
 ---@param line_number integer
 ---@param count integer
-local get_scope = function(line_number, count)
+---@param zero_indexed boolean
+Custom.get_scope = function(line_number, count, zero_indexed)
   local outer_start, outer_end, indent
 
   while count >= 1 do
@@ -83,16 +84,21 @@ local get_scope = function(line_number, count)
 
   local inner_start, inner_end = outer_start + 1, outer_end - 1
 
-  local scope = {
-    outer_start = outer_start - 1,
-    outer_end = outer_end - 1,
-    inner_start = inner_start - 1,
-    inner_end = inner_end - 1,
+  if zero_indexed then
+    outer_start = outer_start - 1
+    outer_end = outer_end - 1
+    inner_start = inner_start - 1
+    inner_end = inner_end - 1
+  end
+
+  return {
+    outer_start = outer_start,
+    outer_end = outer_end,
+    inner_start = inner_start,
+    inner_end = inner_end,
     indent = indent,
     indent_width = indent - vim.fn.indent(outer_start),
   }
-
-  return scope
 end
 
 Custom.delete_surrounding_indent = function()
@@ -100,30 +106,14 @@ Custom.delete_surrounding_indent = function()
   local buf = 0
 
   local row, col = unpack(vim.api.nvim_win_get_cursor(win))
+  local operator, count1 = vim.v.operator, vim.v.count1
 
-  -- This function gets called normally through `vim.keymap.set` for something
-  -- like `ysi` - but `dsi` and `csi` are overriden by nvim-surround, which
-  -- doesn't pass us the normal `vim.v` operators. We add special "v:operator-at-home"
-  -- logic to get around this
-  local mode = vim.api.nvim_get_mode()
-  local operator, count1
-  local in_operator_mode = mode.mode:find("o")
-  if in_operator_mode then
-    operator, count1 = vim.v.operator, vim.v.count1
-  else
-    if vim.go.operatorfunc:find("change") then
-      operator = "c"
-      count1 = require("nvim-surround.cache").change.count
-    elseif vim.go.operatorfunc:find("delete") then
-      operator = "d"
-      count1 = require("nvim-surround.cache").delete.count
-    else
-      vim.print("Unknown operatorfunc " .. vim.go.operatorfunc)
-      return
-    end
+  if operator ~= "d" and operator ~= "y" and operator ~= "g@" then
+    vim.print("Unimplemented operator " .. operator .. "!")
+    return
   end
 
-  local scope = get_scope(row, count1)
+  local scope = Custom.get_scope(row, count1, true)
   if not scope then
     return
   end
@@ -133,42 +123,6 @@ Custom.delete_surrounding_indent = function()
   local outer_start, outer_end = scope.outer_start, scope.outer_end
   local inner_start, inner_end = scope.inner_start, scope.inner_end
 
-  local inner_lines
-  if inner_start == inner_end then
-    inner_lines = vim.api.nvim_buf_get_lines(buf, inner_start, inner_start + 1, false)
-  else
-    inner_lines = vim.api.nvim_buf_get_lines(buf, inner_start, inner_end + 1, false)
-  end
-
-  local surrounding_lines = {
-    unpack(vim.api.nvim_buf_get_lines(buf, outer_start, inner_start, false)),
-    unpack(vim.api.nvim_buf_get_lines(buf, inner_end + 1, outer_end + 1, false)),
-  }
-
-  -- Yank the surrounding lines
-  if operator == "y" then
-    -- `vim.hl.on_yank` can't understand my selection here - so perform the
-    -- highlight myself!
-    local ns = vim.api.nvim_create_namespace("scope_border")
-    vim.hl.range(buf, ns, "IncSearch", { outer_start, indent - indent_width }, { outer_start, -1 })
-    vim.hl.range(buf, ns, "IncSearch", { outer_end, indent - indent_width }, { outer_end, -1 })
-
-    vim.defer_fn(function()
-      vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
-      vim.fn.setreg(vim.v.register, table.concat(surrounding_lines, "\n"), "l")
-    end, 150)
-    return
-  end
-
-  -- I have a separate cut bind (alt+d). If I used this, then it didn't go
-  -- through nvim-surround, and we should yank the surrounding lines. Keep
-  -- going, though, since we should delete them too!
-  if operator == "d" and in_operator_mode then
-    vim.defer_fn(function()
-      vim.fn.setreg(vim.v.register, table.concat(surrounding_lines, "\n"), "l")
-    end, 1)
-  end
-
   -- Comment the surrounding lines
   if operator == "g@" then
     require("vim._comment").toggle_lines(outer_start + 1, outer_start + 1)
@@ -176,9 +130,31 @@ Custom.delete_surrounding_indent = function()
     return
   end
 
-  if operator ~= "d" then
-    vim.print("Unimplemented operator " .. operator .. "!")
+  local surrounding_lines = {
+    unpack(vim.api.nvim_buf_get_lines(buf, outer_start, inner_start, false)),
+    unpack(vim.api.nvim_buf_get_lines(buf, inner_end + 1, outer_end + 1, false)),
+  }
+
+  -- `vim.hl.on_yank` can't understand my selection - so perform the
+  -- highlight myself!
+  if operator == "y" then
+    local ns = vim.api.nvim_create_namespace("scope_border")
+    vim.hl.range(buf, ns, "IncSearch", { outer_start, indent - indent_width }, { outer_start, -1 })
+    vim.hl.range(buf, ns, "IncSearch", { outer_end, indent - indent_width }, { outer_end, -1 })
+    vim.defer_fn(function()
+      vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+      vim.fn.setreg(vim.v.register, table.concat(surrounding_lines, "\n"), "l")
+    end, 150)
     return
+  end
+
+  vim.fn.setreg(vim.v.register, table.concat(surrounding_lines, "\n"), "l")
+
+  local inner_lines
+  if inner_start == inner_end then
+    inner_lines = vim.api.nvim_buf_get_lines(buf, inner_start, inner_start + 1, false)
+  else
+    inner_lines = vim.api.nvim_buf_get_lines(buf, inner_start, inner_end + 1, false)
   end
 
   -- Deindent the lines we'll be keeping
@@ -202,4 +178,42 @@ Custom.delete_surrounding_indent = function()
     }
     vim.api.nvim_win_set_cursor(win, cursor_dedent)
   end, 1)
+end
+
+-- Used for nvim-surround
+Custom.get_indent_selections = function(linewise, count1)
+  local current_line = vim.fn.line(".")
+  local scope = Custom.get_scope(current_line, count1, false)
+  if not scope then
+    return nil
+  end
+
+  local startline_length = vim.fn.col({ scope.outer_start, "$" })
+  local endline_length = vim.fn.col({ scope.outer_end, "$" })
+
+  -- We also include support for keeping the lines in the buffer, and just
+  -- select the non-whitespace contents. This is used for `csi` (although I don't
+  -- use it much)
+  local left, right
+  if linewise then
+    left = {
+      first_pos = { scope.outer_start, 1 },
+      last_pos = { scope.outer_start + 1, 0 },
+    }
+    right = {
+      first_pos = { scope.outer_end - 1, 0 },
+      last_pos = { scope.outer_end, endline_length - 1 },
+    }
+  else
+    left = {
+      first_pos = { scope.outer_start, scope.indent - scope.indent_width + 1 },
+      last_pos = { scope.outer_start, startline_length - 1 },
+    }
+    right = {
+      first_pos = { scope.outer_end, scope.indent - scope.indent_width + 1 },
+      last_pos = { scope.outer_end, endline_length - 1 },
+    }
+  end
+
+  return { left = left, right = right }
 end

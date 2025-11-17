@@ -1,3 +1,5 @@
+local cache = require("nvim-surround.cache")
+
 local left_delete = "^(.)().-(.)()$"
 local right_delete = "^(. ?)().-( ?.)()$"
 
@@ -51,8 +53,17 @@ require("nvim-surround").setup({
       delete = "^(```.-)()%\n.-(```)()$",
     },
 
+    -- Works with lines surrounding the current indentation level
     i = {
-      delete = Custom.delete_surrounding_indent,
+      add = { { "", "" }, { "", "" } },
+      delete = function()
+        return Custom.get_indent_selections(true, cache.delete.count)
+      end,
+      change = {
+        target = function()
+          return Custom.get_indent_selections(false, cache.change.count)
+        end,
+      },
     },
   },
 
