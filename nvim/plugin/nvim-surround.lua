@@ -55,7 +55,6 @@ require("nvim-surround").setup({
 
     -- Works with lines surrounding the current indentation level
     i = {
-      add = { { "", "" }, { "", "" } },
       delete = function()
         return Custom.get_indent_selections(true, cache.delete.count)
       end,
