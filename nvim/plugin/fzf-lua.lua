@@ -137,6 +137,11 @@ require("fzf-lua").setup({
     filter = filter_unlisted_buffers,
   },
 
+  files = {
+    -- Changed from the default to also remove .direnv
+    fd_opts = "--color=never --hidden --type f --type l --exclude .git --exclude .direnv",
+  },
+
   -- Disable regex for searching - I need special characters much more than I
   -- want regex search
   grep = {
