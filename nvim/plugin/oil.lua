@@ -4,6 +4,9 @@ local ns = vim.api.nvim_create_namespace("OilHighlights")
 
 vim.b.search_char = nil
 local search_first_char = function(reuse_prompt)
+  local buf = 0
+
+  local prompt
   if reuse_prompt then
     prompt = vim.b.search_char
     if prompt == nil then
@@ -24,23 +27,24 @@ local search_first_char = function(reuse_prompt)
   local regex = "\\%" .. search_col .. "c" .. prompt
   vim.fn.search(regex, "")
 
-  if not reuse_prompt then
-    vim.b.search_char = prompt
+  if reuse_prompt then
+    return
+  end
+  vim.b.search_char = prompt
 
-    local num_lines = vim.api.nvim_buf_line_count(0)
-    local lines = vim.api.nvim_buf_get_lines(0, 0, num_lines, false)
-    vim.api.nvim_buf_clear_namespace(0, ns, 0, num_lines)
+  local num_lines = vim.api.nvim_buf_line_count(buf)
+  local lines = vim.api.nvim_buf_get_lines(0, 0, num_lines, false)
+  vim.api.nvim_buf_clear_namespace(0, ns, 0, num_lines)
 
-    -- Highlight each line matching the prompted character
-    for lnum, line in ipairs(lines) do
-      local col = line:sub(search_col, search_col)
-      if col == prompt then
-        vim.api.nvim_buf_set_extmark(0, ns, lnum - 1, search_col - 1, {
-          hl_group = { "DiagnosticWarn" },
-          end_col = line:len(),
-          id = lnum,
-        })
-      end
+  -- Highlight each line matching the prompted character
+  for lnum, line in ipairs(lines) do
+    local col = line:sub(search_col, search_col)
+    if col == prompt then
+      vim.api.nvim_buf_set_extmark(0, ns, lnum - 1, search_col - 1, {
+        hl_group = { "DiagnosticWarn" },
+        end_col = line:len(),
+        id = lnum,
+      })
     end
   end
 end
