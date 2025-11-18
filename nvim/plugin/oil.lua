@@ -1,4 +1,5 @@
 local oil = require("oil")
+local fzf_lua = require("fzf-lua")
 local ns = vim.api.nvim_create_namespace("OilHighlights")
 
 vim.b.search_char = nil
@@ -98,6 +99,23 @@ oil.setup({
         end
       end,
       nowait = true, -- Override the existing `gs` bind
+    },
+
+    -- Heavily referenced from
+    -- https://github.com/samiulsami/nvim/blob/7a72a0c7328ba4dc58bfe4e0d32750a5323f6267/lua/plugins/oil.lua#L94
+    ["<leader>s"] = {
+      function()
+        fzf_lua.live_grep({
+          cwd = oil.get_current_dir(),
+          actions = {
+            ["default"] = function(selected, opts)
+              local win = vim.api.nvim_get_current_win()
+              vim.api.nvim_win_close(win, false)
+              fzf_lua.actions.file_edit(selected, opts)
+            end,
+          },
+        })
+      end,
     },
   },
   win_options = {
