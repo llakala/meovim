@@ -107,20 +107,22 @@ oil.setup({
 
     -- Heavily referenced from
     -- https://github.com/samiulsami/nvim/blob/7a72a0c7328ba4dc58bfe4e0d32750a5323f6267/lua/plugins/oil.lua#L94
-    ["<leader>s"] = {
-      function()
-        fzf_lua.live_grep({
-          cwd = oil.get_current_dir(),
-          actions = {
-            ["default"] = function(selected, opts)
-              local win = vim.api.nvim_get_current_win()
-              vim.api.nvim_win_close(win, false)
-              fzf_lua.actions.file_edit(selected, opts)
-            end,
-          },
-        })
-      end,
-    },
+    ["<leader>s"] = function()
+      fzf_lua.live_grep({
+        cwd = oil.get_current_dir(),
+        cwd_prompt = true,
+        actions = {
+          ["default"] = function(selected, opts)
+            local win = vim.api.nvim_get_current_win()
+            vim.api.nvim_win_close(win, false)
+            fzf_lua.actions.file_edit(selected, opts)
+          end,
+        },
+      })
+    end,
+
+    -- Disable for now, so I don't try it and expect it to work
+    ["<leader>f"] = function() end,
   },
   win_options = {
     signcolumn = "yes",
