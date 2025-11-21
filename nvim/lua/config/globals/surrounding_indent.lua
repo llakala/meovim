@@ -1,146 +1,54 @@
--- Heavily modified version of https://github.com/neovim/neovim/discussions/34221
--- Provides a textobject function to work with surrounding indentation levels!
--- I cleaned up the logic for readability, and fixed a few bugs I found.
+local MiniIndentscope = require("mini.indentscope")
+local ns = vim.api.nvim_create_namespace("scope_border")
 
----@param from integer
----@param dir -1|1
-local ilines = function(from, dir)
-  local lnum = from
-  local min, max = 1, vim.api.nvim_buf_line_count(0)
-  return function()
-    if lnum < min or lnum > max then
-      return nil
-    end
-    local line = vim.api.nvim_buf_get_lines(0, lnum - 1, lnum, false)[1]
-    local curr = lnum
-    lnum = lnum + dir
-    return curr, line
-  end
-end
-
----@param line_number integer
-local find_scope = function(line_number)
-  -- Find indent
-  local i, j ---@type integer, integer
-  for lnum, line in ilines(line_number, -1) do
-    if vim.trim(line) ~= "" then
-      i = lnum
-      break
-    end
-  end
-  for lnum, line in ilines(line_number, 1) do
-    if vim.trim(line) ~= "" then
-      j = lnum
-      break
-    end
-  end
-  if not i or not j then
-    return nil, -1, -1
-  end
-  local indent = math.min(vim.fn.indent(i), vim.fn.indent(j))
-  if indent < 1 then
-    return nil, -1, -1
-  end
-
-  -- Find edges
-  local outer_start, outer_end ---@type integer?, integer?
-  for lnum, line in ilines(i, -1) do
-    if vim.trim(line) ~= "" and vim.fn.indent(lnum) < indent then
-      outer_start = lnum
-      break
-    end
-  end
-  for lnum, line in ilines(j, 1) do
-    if vim.trim(line) ~= "" and vim.fn.indent(lnum) < indent then
-      outer_end = lnum
-      break
-    end
-  end
-  if not outer_start or not outer_end then
-    return nil, -1, -1
-  end
-
-  return outer_start, outer_end, indent
-end
-
----@param line_number integer
----@param count integer
----@param zero_indexed boolean
-Custom.get_scope = function(line_number, count, zero_indexed)
-  local outer_start, outer_end, indent
-
-  while count >= 1 do
-    outer_start, outer_end, indent = find_scope(line_number)
-    if not outer_start then
-      return nil
-    end
-    count = count - 1
-    line_number = outer_start
-  end
-
-  if not outer_start then
-    return nil
-  end
-
-  local inner_start, inner_end = outer_start + 1, outer_end - 1
-
-  if zero_indexed then
-    outer_start = outer_start - 1
-    outer_end = outer_end - 1
-    inner_start = inner_start - 1
-    inner_end = inner_end - 1
-  end
-
-  return {
-    outer_start = outer_start,
-    outer_end = outer_end,
-    inner_start = inner_start,
-    inner_end = inner_end,
-    indent = indent,
-    indent_width = indent - vim.fn.indent(outer_start),
-  }
-end
-
-Custom.delete_surrounding_indent = function()
+Custom.operate_on_surrounding_indent = function()
   local win = vim.api.nvim_get_current_win()
   local buf = 0
 
   local row, col = unpack(vim.api.nvim_win_get_cursor(win))
   local operator, count1 = vim.v.operator, vim.v.count1
 
-  if operator ~= "d" and operator ~= "y" and operator ~= "g@" then
+  if not vim.tbl_contains({ "d", "y", "g@" }, operator) then
     vim.print("Unimplemented operator " .. operator .. "!")
     return
   end
 
-  local scope = Custom.get_scope(row, count1, true)
-  if not scope then
+  local scope = MiniIndentscope.get_scope(nil, nil)
+  for _ = 2, count1 do
+    scope = MiniIndentscope.get_scope(scope.border.top, nil)
+  end
+  if scope.border.indent < 0 then
     return
   end
 
-  local indent = scope.indent
-  local indent_width = scope.indent_width
-  local outer_start, outer_end = scope.outer_start, scope.outer_end
-  local inner_start, inner_end = scope.inner_start, scope.inner_end
+  local body = scope.body
+  local border = scope.border
+  local indent_change = body.indent - border.indent
+
+  -- Functions like `nvim_buf_get_lines` are zero-based, so it's easier if our
+  -- numbers are too
+  body.top, body.bottom = body.top - 1, body.bottom - 1
+  border.top, border.bottom = border.top - 1, border.bottom - 1
 
   -- Comment the surrounding lines
+  -- Technically brittle because this could be a different operator - but fine
+  -- for my purposes
   if operator == "g@" then
-    require("vim._comment").toggle_lines(outer_start + 1, outer_start + 1)
-    require("vim._comment").toggle_lines(outer_end + 1, outer_end + 1)
+    require("vim._comment").toggle_lines(border.top, border.top)
+    require("vim._comment").toggle_lines(border.bottom, border.bottom)
     return
   end
 
   local surrounding_lines = {
-    unpack(vim.api.nvim_buf_get_lines(buf, outer_start, inner_start, false)),
-    unpack(vim.api.nvim_buf_get_lines(buf, inner_end + 1, outer_end + 1, false)),
+    unpack(vim.api.nvim_buf_get_lines(buf, border.top, border.top + 1, true)),
+    unpack(vim.api.nvim_buf_get_lines(buf, border.bottom, border.bottom + 1, true)),
   }
 
   -- `vim.hl.on_yank` can't understand my selection - so perform the
   -- highlight myself!
   if operator == "y" then
-    local ns = vim.api.nvim_create_namespace("scope_border")
-    vim.hl.range(buf, ns, "IncSearch", { outer_start, indent - indent_width }, { outer_start, -1 })
-    vim.hl.range(buf, ns, "IncSearch", { outer_end, indent - indent_width }, { outer_end, -1 })
+    vim.hl.range(buf, ns, "IncSearch", { border.top, border.indent }, { border.top, -1 })
+    vim.hl.range(buf, ns, "IncSearch", { border.bottom, border.indent }, { border.bottom, -1 })
     vim.defer_fn(function()
       vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
       vim.fn.setreg(vim.v.register, table.concat(surrounding_lines, "\n"), "l")
@@ -148,48 +56,46 @@ Custom.delete_surrounding_indent = function()
     return
   end
 
+  -- Still yank the surrounding lines for `d`
   vim.fn.setreg(vim.v.register, table.concat(surrounding_lines, "\n"), "l")
 
-  local inner_lines
-  if inner_start == inner_end then
-    inner_lines = vim.api.nvim_buf_get_lines(buf, inner_start, inner_start + 1, false)
-  else
-    inner_lines = vim.api.nvim_buf_get_lines(buf, inner_start, inner_end + 1, false)
-  end
-
   -- Deindent the lines we'll be keeping
+  local inner_lines = vim.api.nvim_buf_get_lines(buf, body.top, body.bottom + 1, true)
   for i, line in ipairs(inner_lines) do
-    local line_indent = vim.fn.indent(inner_start + i)
-    inner_lines[i] = vim.text.indent(line_indent - indent_width, line, { expandtab = 1 })
+    local current_indent = vim.fn.indent(body.top + i)
+    inner_lines[i] = vim.text.indent(current_indent - indent_change, line, { expandtab = 1 })
   end
 
   -- Replace the full range with the deindented new version
   vim._with({ lockmarks = true }, function()
-    vim.api.nvim_buf_set_lines(buf, outer_start, outer_end + 1, false, inner_lines)
+    vim.api.nvim_buf_set_lines(buf, border.top, border.bottom + 1, true, inner_lines)
   end)
 
-  -- Deferring means this doesn't get accidentally deleted, since vim expects
+  -- Scheduling means this doesn't get accidentally deleted, since vim expects
   -- any cursor movement in operator mode to mean the operation you want to
   -- perform
-  vim.defer_fn(function()
+  vim.schedule(function()
     local cursor_dedent = {
-      math.max(1, row - (inner_start - outer_start)),
-      math.max(0, col - indent_width),
+      math.max(1, row - (body.top - border.top)),
+      math.max(0, col - indent_change),
     }
     vim.api.nvim_win_set_cursor(win, cursor_dedent)
-  end, 1)
+  end)
 end
 
 -- Used for nvim-surround
 Custom.get_indent_selections = function(linewise, count1)
-  local current_line = vim.fn.line(".")
-  local scope = Custom.get_scope(current_line, count1, false)
-  if not scope then
-    return nil
+  local scope = MiniIndentscope.get_scope(nil, nil)
+  for _ = 2, count1 do
+    scope = MiniIndentscope.get_scope(scope.border.top, nil)
+  end
+  if scope.border.indent < 0 then
+    return
   end
 
-  local startline_length = vim.fn.col({ scope.outer_start, "$" })
-  local endline_length = vim.fn.col({ scope.outer_end, "$" })
+  local border = scope.border
+  local top_length = vim.fn.col({ border.top, "$" })
+  local bottom_length = vim.fn.col({ border.bottom, "$" })
 
   -- We also include support for keeping the lines in the buffer, and just
   -- select the non-whitespace contents. This is used for `csi` (although I don't
@@ -197,21 +103,21 @@ Custom.get_indent_selections = function(linewise, count1)
   local left, right
   if linewise then
     left = {
-      first_pos = { scope.outer_start, 1 },
-      last_pos = { scope.outer_start + 1, 0 },
+      first_pos = { border.top, 1 },
+      last_pos = { border.top + 1, 0 },
     }
     right = {
-      first_pos = { scope.outer_end - 1, 0 },
-      last_pos = { scope.outer_end, endline_length - 1 },
+      first_pos = { border.bottom - 1, 0 },
+      last_pos = { border.bottom, bottom_length - 1 },
     }
   else
     left = {
-      first_pos = { scope.outer_start, scope.indent - scope.indent_width + 1 },
-      last_pos = { scope.outer_start, startline_length - 1 },
+      first_pos = { border.top, border.indent + 1 },
+      last_pos = { border.top, top_length - 1 },
     }
     right = {
-      first_pos = { scope.outer_end, scope.indent - scope.indent_width + 1 },
-      last_pos = { scope.outer_end, endline_length - 1 },
+      first_pos = { border.bottom, border.indent + 1 },
+      last_pos = { border.bottom, bottom_length - 1 },
     }
   end
 

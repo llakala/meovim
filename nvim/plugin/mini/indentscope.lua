@@ -15,3 +15,6 @@ isc.setup({
   },
   symbol = "│",
 })
+
+-- Custom binding that operates on the lines starting/ending an indentation level
+vim.keymap.set("o", "si", Custom.operate_on_surrounding_indent)
