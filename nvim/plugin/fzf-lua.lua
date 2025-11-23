@@ -21,7 +21,7 @@ local function get_sorted_buflist()
 
   -- Sort on how recently the buffer was used
   info = vim.fn.sort(info, function(a, b)
-    return a.lastused <= b.lastused
+    return a.lastused < b.lastused
   end)
 
   -- Don't include the buffer if it was hidden or unlisted (with an exception
