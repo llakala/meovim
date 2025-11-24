@@ -18,32 +18,38 @@ local search_first_char = function(reuse_prompt)
   end
 
   -- Search for the prompt character, limiting the search range to the first
-  -- column of every line. Oil has an option called `constrain_cursor`, which
-  -- makes it so we can only edit the filename, and not other columns. Jumping
-  -- to the start of the line is a surefire way to get the right column for
-  -- searching
+  -- column of every line.
+  --
+  -- Oil has an option called `constrain_cursor`, which makes it so we can only
+  -- edit the filename, and not other columns.  This is supposed to make sure we
+  -- end up at the start of the line before doing search logic, but it doesn't
+  -- seem to work - need to make an issue oil-side asking for this to be
+  -- queriable
   vim.api.nvim_feedkeys("^", "n", false)
   local search_col = vim.fn.col(".")
-  local regex = "\\%" .. search_col .. "c" .. prompt
-  vim.fn.search(regex, "")
+  local pattern = "\\%" .. search_col .. "c" .. prompt
+  vim.fn.search(pattern, "")
 
+  -- Exit early in `<C-;> mode`, so we don't regenerate highlights for no reason
   if reuse_prompt then
     return
   end
+
   vim.b.search_char = prompt
+  vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
 
-  local num_lines = vim.api.nvim_buf_line_count(buf)
-  local lines = vim.api.nvim_buf_get_lines(0, 0, num_lines, false)
-  vim.api.nvim_buf_clear_namespace(0, ns, 0, num_lines)
+  -- Iterate through all the matched lines and highlight them
+  -- Note that we need to use `bufnr()` - bufnr of 0 doesn't work for matchbufline!
+  local matches = vim.fn.matchbufline(vim.fn.bufnr(), pattern, 1, "$")
+  for _, match in ipairs(matches) do
+    local line = unpack(vim.api.nvim_buf_get_lines(buf, match.lnum - 1, match.lnum, true))
+    local col = string.sub(line, search_col, search_col)
 
-  -- Highlight each line matching the prompted character
-  for lnum, line in ipairs(lines) do
-    local col = line:sub(search_col, search_col)
     if col == prompt then
-      vim.api.nvim_buf_set_extmark(0, ns, lnum - 1, search_col - 1, {
+      vim.api.nvim_buf_set_extmark(buf, ns, match.lnum - 1, search_col - 1, {
         hl_group = { "DiagnosticWarn" },
         end_col = line:len(),
-        id = lnum,
+        id = match.lnum,
       })
     end
   end
