@@ -1,4 +1,5 @@
 local oil = require("oil")
+local actions = require("oil.actions")
 local fzf_lua = require("fzf-lua")
 local ns = vim.api.nvim_create_namespace("OilHighlights")
 
@@ -64,7 +65,10 @@ oil.setup({
 
   keymaps = {
     H = "actions.parent",
-    L = "actions.select",
+    L = function()
+      vim.cmd.WriteOil()
+      actions.select.callback()
+    end,
     J = false,
     K = false,
     ["<C-h>"] = false,
