@@ -4,7 +4,7 @@ local fzf_lua = require("fzf-lua")
 local ns = vim.api.nvim_create_namespace("OilHighlights")
 
 vim.b.search_char = nil
-local search_first_char = function(reuse_prompt)
+local search_first_char = function(reuse_prompt, forward)
   local buf = 0
 
   local prompt
@@ -18,18 +18,19 @@ local search_first_char = function(reuse_prompt)
     prompt = vim.fn.getcharstr()
   end
 
-  -- Search for the prompt character, limiting the search range to the first
-  -- column of every line.
-  --
   -- Oil has an option called `constrain_cursor`, which makes it so we can only
   -- edit the filename, and not other columns.  This is supposed to make sure we
   -- end up at the start of the line before doing search logic, but it doesn't
   -- seem to work - need to make an issue oil-side asking for this to be
   -- queriable
   vim.api.nvim_feedkeys("^", "n", false)
+
+  -- Search for the prompt character, limiting the search range to the first
+  -- column of every line.
   local search_col = vim.fn.col(".")
   local pattern = "\\%" .. search_col .. "c" .. prompt
-  vim.fn.search(pattern, "")
+  local flags = forward and "" or "b"
+  vim.fn.search(pattern, flags)
 
   -- Exit early in `<C-;> mode`, so we don't regenerate highlights for no reason
   if reuse_prompt then
@@ -78,13 +79,19 @@ oil.setup({
 
     ["<C-f>"] = {
       function()
-        search_first_char(false)
+        search_first_char(false, true)
       end,
       mode = "n",
     },
     ["<C-;>"] = {
       function()
-        search_first_char(true)
+        search_first_char(true, true)
+      end,
+      mode = "n",
+    },
+    ["<C-,>"] = {
+      function()
+        search_first_char(true, false)
       end,
       mode = "n",
     },
