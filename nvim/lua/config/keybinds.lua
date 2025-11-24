@@ -30,18 +30,6 @@ function anoremap(key, map, opts)
   mkNoremap({ "n", "x", "o" }, key, map, opts)
 end
 
-function bufmap(lhs, rhs, desc)
-  desc = desc or ""
-
-  -- Hardcoded to use normal mode for now - can add alternates when necessary
-  vim.keymap.set("n", lhs, rhs, {
-    buffer = true,
-    noremap = false,
-    silent = true,
-    desc = desc,
-  })
-end
-
 -- i<Esc> won't move the cursor at all, while a<Esc> will move the cursor
 -- one to the right. I prefer this, as I use i more than a. Helix-style!
 inoremap("<Esc>", "<Esc>l")

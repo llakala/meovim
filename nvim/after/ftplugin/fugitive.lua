@@ -12,4 +12,4 @@ vim.cmd([[
 ]])
 
 -- d for diff
-bufmap("d", "<plug>fugitive:=")
+vim.keymap.set("n", "d", "<plug>fugitive:=", { buffer = true })
