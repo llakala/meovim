@@ -119,16 +119,25 @@ oil.setup({
         cwd_prompt = true,
         actions = {
           ["default"] = function(selected, opts)
-            local win = vim.api.nvim_get_current_win()
-            vim.api.nvim_win_close(win, false)
+            oil.close()
             fzf_lua.actions.file_edit(selected, opts)
           end,
         },
       })
     end,
 
-    -- Disable for now, so I don't try it and expect it to work
-    ["<leader>f"] = function() end,
+    ["<leader>f"] = function()
+      fzf_lua.live_grep({
+        cwd = oil.get_current_dir(),
+        cwd_prompt = true,
+        actions = {
+          ["default"] = function(selected, opts)
+            oil.close()
+            fzf_lua.actions.file_edit(selected, opts)
+          end,
+        },
+      })
+    end,
   },
   win_options = {
     signcolumn = "yes",
