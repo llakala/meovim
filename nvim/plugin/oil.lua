@@ -65,15 +65,17 @@ oil.setup({
   delete_to_trash = true,
 
   keymaps = {
-    H = "actions.parent",
-    L = function()
+    ["<C-h>"] = "actions.parent",
+    ["<C-l>"] = function()
       vim.cmd.WriteOil()
       actions.select.callback()
     end,
+
+    -- TODO: enable again when my intuition is fixed
+    H = false,
     J = false,
     K = false,
-    ["<C-h>"] = false,
-    ["<C-l>"] = false,
+    L = false,
     ["<C-j>"] = false,
     ["<C-k>"] = false,
 
@@ -102,6 +104,7 @@ oil.setup({
       silent = true,
     },
     ["<Tab>"] = "actions.preview",
+
     ["gs"] = {
       callback = function()
         sort_by_recent = not sort_by_recent
