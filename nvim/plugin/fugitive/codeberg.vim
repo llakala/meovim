@@ -4,7 +4,6 @@ endif
 
 " Custom codeberg handler for GBrowse - feel free to steal.
 function! CodebergHandler(opts)
-  echo a:opts
   if a:opts.remote !~? 'codeberg.org'
       return
   endif
