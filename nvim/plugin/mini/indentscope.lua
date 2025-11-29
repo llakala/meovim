@@ -13,8 +13,54 @@ isc.setup({
     delay = 0,
     animation = isc.gen_animation.none(),
   },
+
+  mappings = {
+    goto_top = "",
+    goto_bottom = "",
+  },
+
   symbol = "│",
 })
 
 -- Custom binding that operates on the lines starting/ending an indentation level
 vim.keymap.set("o", "si", Custom.operate_on_surrounding_indent)
+
+-- Custom goto_top and goto_bottom mappings, since I dislike how they're handled
+-- by default
+vim.keymap.set({ "o", "x" }, "[i", function()
+  if vim.fn.mode() ~= "V" then
+    vim.cmd("normal! V")
+  end
+  MiniIndentscope.move_cursor("top", false)
+end)
+vim.keymap.set({ "o", "x" }, "]i", function()
+  if vim.fn.mode() ~= "V" then
+    vim.cmd("normal! V")
+  end
+  MiniIndentscope.move_cursor("bottom", false)
+end)
+vim.keymap.set({ "o", "x" }, "[I", function()
+  if vim.fn.mode() ~= "V" then
+    vim.cmd("normal! V")
+  end
+  MiniIndentscope.move_cursor("top", true)
+end)
+vim.keymap.set({ "o", "x" }, "]I", function()
+  if vim.fn.mode() ~= "V" then
+    vim.cmd("normal! V")
+  end
+  MiniIndentscope.move_cursor("bottom", true)
+end)
+
+vim.keymap.set("n", "[i", function()
+  MiniIndentscope.move_cursor("top", false)
+end)
+vim.keymap.set("n", "]i", function()
+  MiniIndentscope.move_cursor("bottom", false)
+end)
+vim.keymap.set("n", "[I", function()
+  MiniIndentscope.move_cursor("top", true)
+end)
+vim.keymap.set("n", "]I", function()
+  MiniIndentscope.move_cursor("bottom", true)
+end)
