@@ -141,9 +141,8 @@ oil.setup({
     end,
 
     ["<leader>f"] = function()
-      fzf_lua.live_grep({
+      fzf_lua.files({
         cwd = oil.get_current_dir(),
-        cwd_prompt = true,
         actions = {
           ["default"] = function(selected, opts)
             oil.close()
