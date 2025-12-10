@@ -1,5 +1,4 @@
-local MiniAi = require("mini.ai")
-MiniAi.setup({
+require("mini.ai").setup({
   custom_textobjects = {
     -- mini.ai makes this an alias for any type of bracket, which I'll
     -- realistically never use - I like using a specific bracket type
@@ -9,7 +8,5 @@ MiniAi.setup({
     -- We add this for all languages, since I still use codeblocks in languages
     -- where they aren't a feature (like git commit descriptions)
     ["C"] = { "```%S*%s()[^`]+()```" },
-
-    ["$"] = MiniAi.gen_spec.pair("$", "$", { type = "balanced" }),
   },
 })
