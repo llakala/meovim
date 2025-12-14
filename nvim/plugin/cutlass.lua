@@ -4,6 +4,7 @@ require("cutlass").setup({
   cut_key = nil,
 })
 
--- anoremap maps for normal, visual, and operator mode
-anoremap("<A-d>", "d", { desc = "Delete and yank" })
-anoremap("<A-S-d>", "D", { desc = "Delete until end of line" })
+-- Since timeout is disabled, this makes `dyip` delete the current word and yank
+-- it
+nnoremap("dy", "d", { desc = "Delete and yank" })
+nnoremap("cy", "c", { desc = "Change and yank" })
