@@ -13,7 +13,8 @@
       (system: function nixpkgs.legacyPackages.${system});
   in {
     packages = forAllSystems (pkgs: {
-      default = import ./default.nix { inherit pkgs mnw; };
+      default = import ./default.nix { inherit pkgs mnw; small = false; };
+      small = import ./default.nix { inherit pkgs mnw; small = true; };
     });
 
     devShells = forAllSystems (pkgs: {
