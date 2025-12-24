@@ -1,4 +1,4 @@
--- Remove the nil "quote as" code action for attrs, since I find it useless
+-- Remove the nil_ls "quote as" code action for attrs, since I find it useless
 vim.keymap.set({ "n", "x" }, "ga", function()
   return vim.lsp.buf.code_action({
     filter = function(action)
