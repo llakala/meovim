@@ -107,8 +107,8 @@ o.splitright = true
 -- Changes from defaults:
 -- 1. Removed `t` - only comments should be autoformatted. We add it back in the
 -- ftplugins of languages like markdown
--- 2. Added `r`, `o` and `/`, so comment headers get continued
-o.formatoptions = "cjqro/"
+-- 2. Added `r`, so comment headers get continued, but only in insert mode.
+o.formatoptions = "cjqr"
 
 -- Auto-wrap comments (but not other stuff, thanks to not having `t` in
 -- formatoptions by default)
