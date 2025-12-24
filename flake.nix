@@ -3,7 +3,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     mnw.url = "github:Gerg-L/mnw";
     neovim = {
-      url = "github:neovim/neovim";
+      url = "github:neovim/neovim/d7b882697b5dc307a6396ec6163e41dfc74b076d"; # Pinned to commit I've already built
       flake = false;
     };
   };
