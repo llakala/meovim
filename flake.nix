@@ -2,9 +2,13 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     mnw.url = "github:Gerg-L/mnw";
+    neovim = {
+      url = "github:neovim/neovim";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, mnw }:
+  outputs = { self, nixpkgs, mnw, neovim }:
   let
     lib = nixpkgs.lib;
     supportedSystems = [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
@@ -13,8 +17,8 @@
       (system: function nixpkgs.legacyPackages.${system});
   in {
     packages = forAllSystems (pkgs: {
-      default = import ./default.nix { inherit pkgs mnw; small = false; };
-      small = import ./default.nix { inherit pkgs mnw; small = true; };
+      default = import ./default.nix { inherit pkgs mnw neovim; small = false; };
+      small = import ./default.nix { inherit pkgs mnw neovim; small = true; };
     });
 
     devShells = forAllSystems (pkgs: {

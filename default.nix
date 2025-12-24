@@ -1,11 +1,15 @@
-{ pkgs, mnw, small ? true }:
+{ pkgs, mnw, neovim, small ? true }:
 
 let
   args = { inherit pkgs; };
 in
 mnw.lib.wrap pkgs {
   appName = "nvim";
-  neovim = pkgs.neovim-unwrapped;
+  neovim = pkgs.neovim.unwrapped.overrideAttrs {
+    version = "0.12.0";
+    src = neovim;
+    doInstallCheck = false;
+  };
 
   luaFiles = [
     ./init.lua
