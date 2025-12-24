@@ -1,135 +1,126 @@
--- Shows marks in signcolumn
--- From https://github.com/MariaSolOs/dotfiles/blob/f1d6229f4a4675745aff95c540dc8f1b9007a77a/.config/nvim/lua/marks.lua
---
--- TODO: find a way to make this use the marks from my shadafile. If anyone
--- knows how to do this, please make an issue letting me know!
+local M = {}
 
-local marks = {}
-local sign_cache = {}
-local sign_group_name = "mariasolos/marks_signs"
+M.config = {
+  priority = 100,
+  group = "MarkGutter",
+  name_prefix = "MarkGutter_",
+}
 
-local function is_lowercase_mark(mark)
-  return 97 <= mark:byte() and mark:byte() <= 122
+-- Give all marks (global and local) for a current buffer.
+---@param bufnr number Buffer number to get marks for
+---@return vim.fn.getmarklist.ret.item[] List of marks where keys are mark names (a-z for local, A-Z for global) and values contain line/column positions
+function M.list_all_marks_for_buffer(bufnr)
+  local local_marks = vim.fn.getmarklist(bufnr)
+  local global_marks = vim.tbl_filter(function(mark)
+    -- pos is a 4-tuple with the bufnr, lnum, col, offset. See `:h getmarklist()`.
+    local global_mark_bufnr = mark.pos[1]
+    return global_mark_bufnr == bufnr
+  end, vim.fn.getmarklist())
+
+  return vim.list_extend(local_marks, global_marks)
 end
 
-local function is_uppercase_mark(mark)
-  return 65 <= mark:byte() and mark:byte() <= 90
-end
-
-local function is_letter_mark(mark)
-  return is_lowercase_mark(mark) or is_uppercase_mark(mark)
-end
-
-local function delete_mark(mark, bufnr)
-  local buffer_marks = marks[bufnr]
-  if not buffer_marks or not buffer_marks[mark] then
-    return
-  end
-
-  -- Remove the sign.
-  vim.fn.sign_unplace(sign_group_name, { buffer = bufnr, id = buffer_marks[mark].id })
-  buffer_marks[mark] = nil
-
-  -- Remove the mark.
-  vim.cmd("delmarks " .. mark)
-end
-
-local function register_mark(mark, bufnr, line)
-  local buffer_marks = marks[bufnr]
-  if not buffer_marks then
-    return
-  end
-
-  if buffer_marks[mark] then
-    -- Mark already exists, remove it first.
-    delete_mark(mark, bufnr)
-  end
-
-  -- Add the sign to the tracking table.
-  local id = mark:byte() * 100
-  line = line or vim.api.nvim_win_get_cursor(0)[1]
-  buffer_marks[mark] = { line = line, id = id }
-
-  -- Create the sign.
-  local sign_name = "Marks_" .. mark
-  if not sign_cache[sign_name] then
-    vim.fn.sign_define(sign_name, { text = mark, texthl = "DiagnosticSignOk" })
-    sign_cache[sign_name] = true
-  end
-  vim.fn.sign_place(id, sign_group_name, sign_name, bufnr, {
-    lnum = line,
-    priority = 10,
+function M.render_mark(bufnr, mark, lnum)
+  vim.fn.sign_place(mark:byte(), M.config.group, M.config.name_prefix .. mark, bufnr, {
+    lnum = lnum,
+    priority = M.config.priority,
   })
 end
 
-local function set_keymaps(bufnr)
-  vim.keymap.set("n", "m", function()
-    local ok, mark = pcall(vim.fn.getcharstr)
-    if not ok or not is_letter_mark(mark) then
-      return
-    end
-    vim.cmd("normal! m" .. mark)
-    register_mark(mark, bufnr)
-  end, { desc = "Add mark", buffer = bufnr })
+-- Rerender all marks in the sign column
+function M.render_all_marks(bufnr)
+  -- Clear all existing marks
+  vim.fn.sign_unplace(M.config.group, { buffer = bufnr })
 
-  vim.keymap.set("n", "dm", function()
-    local ok, mark = pcall(vim.fn.getcharstr)
-    if not ok or not is_letter_mark(mark) then
-      return
-    end
-    delete_mark(mark, bufnr)
-  end, { desc = "Delete mark", buffer = bufnr })
+  -- Get all marks
+  local all_marks = M.list_all_marks_for_buffer(bufnr)
 
-  vim.keymap.set("n", "dM", function()
-    marks[bufnr] = {}
-    vim.cmd("delmarks!")
-    vim.cmd("delmarks A-Z")
-    vim.fn.sign_unplace(sign_group_name, { buffer = bufnr })
-  end, { desc = "Delete all buffer marks", buffer = bufnr })
+  -- Place signs for each mark
+  for _, mark in ipairs(all_marks) do
+    -- Extract the character from 'x
+    local mark_char = mark.mark:sub(2, 2)
+
+    if mark_char:match("[a-zA-Z]") then
+      vim.fn.sign_place(mark_char:byte(), M.config.group, M.config.name_prefix .. mark_char, bufnr, {
+        lnum = mark.pos[2],
+        priority = M.config.priority,
+      })
+    end
+  end
 end
 
--- Set up autocommands to refresh the signs.
-vim.api.nvim_create_autocmd("BufWinEnter", {
-  group = vim.api.nvim_create_augroup(sign_group_name, { clear = true }),
-  callback = function(args)
-    local bufnr = args.buf
-    -- Only handle normal buffers.
-    if vim.bo[bufnr].bt ~= "" then
-      return true
-    end
+function M.delete_mark(mark)
+  local bufnr = vim.api.nvim_get_current_buf()
+  vim.fn.sign_unplace(M.config.group, { buffer = bufnr, id = mark:byte() })
+  vim.cmd("delmarks " .. mark)
+end
 
-    set_keymaps(bufnr)
+function M.delete_all_marks()
+  local bufnr = vim.api.nvim_get_current_buf()
+  vim.fn.sign_unplace(M.config.group, { buffer = bufnr })
+  vim.cmd("delmarks A-Za-z")
+end
 
-    if not marks[bufnr] then
-      marks[bufnr] = {}
-    end
+function M.setup(user_config)
+  -- Merge user config with defaults
+  if user_config then
+    M.config = vim.tbl_deep_extend("force", M.config, user_config)
+  end
 
-    -- Remove all marks that were deleted.
-    for mark, _ in pairs(marks[bufnr]) do
-      if vim.api.nvim_buf_get_mark(bufnr, mark)[1] == 0 then
-        delete_mark(mark, bufnr)
-      end
-    end
+  -- Define highlight groups
+  vim.api.nvim_set_hl(0, "MarkGutterLower", { link = "DiagnosticSignOk", default = true })
+  vim.api.nvim_set_hl(0, "MarkGutterUpper", { link = "DiagnosticSignOk", default = true })
 
-    -- Register the letter marks.
-    for _, data in ipairs(vim.fn.getmarklist()) do
-      local mark = data.mark:sub(2, 3)
-      local mark_buf, mark_line = unpack(data.pos)
-      local cached_mark = marks[bufnr][mark]
+  -- Lowercase marks (a-z)
+  for i = 97, 122 do
+    local char = string.char(i)
+    vim.fn.sign_define(M.config.name_prefix .. char, {
+      text = char,
+      texthl = "MarkGutterLower",
+      linehl = "",
+      numhl = "",
+    })
+  end
 
-      if mark_buf == bufnr and is_uppercase_mark(mark) and (not cached_mark or mark_line ~= cached_mark.line) then
-        register_mark(mark, bufnr, mark_line)
-      end
-    end
+  -- Uppercase marks (A-Z)
+  for i = 65, 90 do
+    local char = string.char(i)
+    vim.fn.sign_define(M.config.name_prefix .. char, {
+      text = char,
+      texthl = "MarkGutterUpper",
+      linehl = "",
+      numhl = "",
+    })
+  end
 
-    for _, data in ipairs(vim.fn.getmarklist(bufnr)) do
-      local mark = data.mark:sub(2, 3)
-      local mark_line = data.pos[2]
-      local cached_mark = marks[bufnr][mark]
+  local augroup = vim.api.nvim_create_augroup(M.config.group, { clear = true })
 
-      if is_lowercase_mark(mark) and (not cached_mark or mark_line ~= cached_mark.line) then
-        register_mark(mark, bufnr, mark_line)
-      end
-    end
-  end,
-})
+  vim.api.nvim_create_autocmd("BufWinEnter", {
+    group = augroup,
+    callback = function(event)
+      M.render_all_marks(event.buf)
+    end,
+  })
+
+  vim.api.nvim_create_autocmd("MarkSet", {
+    group = augroup,
+    callback = function(event)
+      M.render_mark(event.buf, event.data.name, event.data.line)
+    end,
+  })
+
+  vim.keymap.set("n", "dm", function()
+    local mark = vim.fn.getcharstr()
+    M.delete_mark(mark)
+  end, { desc = "Delete mark" })
+
+  vim.keymap.set("n", "dM", function()
+    M.delete_all_marks()
+  end, { desc = "Delete all marks" })
+end
+
+if vim.fn.has("nvim-0.12") == 1 then
+  M.setup()
+else
+  vim.print("Nightly neovim required!")
+end
