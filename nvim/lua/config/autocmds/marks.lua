@@ -1,3 +1,10 @@
+-- Core code logic from https://github.com/nathanmsmith/.config/blob/f8abcc3a0a4e81424cd27bdab5d947c0edfa9d1b/nvim/lua/marks.lua#L1
+-- Modified to fit my purposes, match my code aesthetics, and remove features I
+-- didn't use.
+--
+-- Renders marks when loading a buffer, and adds mark deletion keybinds (dma to
+-- delete mark a, dM to delete all marks). Uses the nightly 0.12 MarkSet autocmd
+-- (which was added by nathanmsmith, ty!)
 local M = {}
 
 M.config = {
