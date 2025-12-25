@@ -28,10 +28,12 @@ function M.list_all_marks_for_buffer(bufnr)
 end
 
 function M.render_mark(bufnr, mark, lnum)
-  vim.fn.sign_place(mark:byte(), M.config.group, M.config.name_prefix .. mark, bufnr, {
-    lnum = lnum,
-    priority = M.config.priority,
-  })
+  if mark:match("[a-zA-Z]") then
+    vim.fn.sign_place(mark:byte(), M.config.group, M.config.name_prefix .. mark, bufnr, {
+      lnum = lnum,
+      priority = M.config.priority,
+    })
+  end
 end
 
 -- Rerender all marks in the sign column
