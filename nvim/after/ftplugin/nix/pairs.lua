@@ -10,9 +10,10 @@ local auto_semicolon = function(prefix)
     :with_del(function(_)
       return false
     end)
+    :with_pair(cond.is_end_line())
 end
 
 npairs.add_rules({
-  auto_semicolon("= "):with_pair(cond.not_before_regex("!", 2)):with_pair(cond.is_end_line()),
-  auto_semicolon("inherit "):with_pair(cond.is_end_line()),
+  auto_semicolon("= "):with_pair(cond.not_before_regex("!", 2)),
+  auto_semicolon("inherit "),
 })
