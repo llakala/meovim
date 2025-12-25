@@ -8,21 +8,18 @@
 -- for the impl
 vim.api.nvim_create_autocmd({ "CursorMoved" }, {
   desc = "Center cursor",
-  callback = function(args)
+  callback = function()
     local curr_line = vim.fn.line(".")
-    local prev_line = vim.b[args.buf].prev_line
 
     -- Whenever we open a buffer, we'll always start at line 1 - even if we open
     -- at a specific line, nvim still starts at line 1, it just moves you after
     -- the buffer is loaded. This means that if prev isn't set, we must be at
     -- line 1!
-    if prev_line == nil then
-      prev_line = 1
-    end
+    local prev_line = vim.b.prev_line or 1
 
     if prev_line ~= curr_line then
       vim.api.nvim_command("normal! zz")
-      vim.b[args.buf].prev_line = curr_line
+      vim.b.prev_line = curr_line
     end
   end,
 })
