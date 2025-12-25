@@ -11,6 +11,7 @@ require("colorscheme")
 
 require("autocmds.marks")
 require("autocmds.yank")
+require("autocmds.shift")
 require("autocmds.suspend")
 require("autocmds.trailing")
 require("autocmds.scrolloff")
