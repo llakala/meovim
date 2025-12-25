@@ -8,3 +8,6 @@ require("cutlass").setup({
 -- it
 nnoremap("dy", "d", { desc = "Delete and yank" })
 nnoremap("cy", "c", { desc = "Change and yank" })
+
+vnoremap("D", "d", { desc = "Delete and yank" })
+vnoremap("C", "c", { desc = "Change and yank" })
