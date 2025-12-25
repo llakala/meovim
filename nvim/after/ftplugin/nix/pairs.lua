@@ -13,6 +13,6 @@ local auto_semicolon = function(prefix)
 end
 
 npairs.add_rules({
-  auto_semicolon("= "):with_pair(cond.not_before_regex("!", 2)),
-  auto_semicolon("inherit "),
+  auto_semicolon("= "):with_pair(cond.not_before_regex("!", 2)):with_pair(cond.is_end_line()),
+  auto_semicolon("inherit "):with_pair(cond.is_end_line()),
 })
