@@ -26,5 +26,8 @@ mnw.lib.wrap pkgs {
   };
   extraBinPath =
     import ./packages/binaries.nix args
-    ++ (if small then [] else import ./packages/extraBinaries.nix args);
+    ++ (
+      if small then []
+      else import ./packages/extraBinaries.nix args
+    );
 }
