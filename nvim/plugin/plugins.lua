@@ -7,9 +7,3 @@ require("rainbow-delimiters.setup").setup({
     "RainbowDelimiterGreen",
   },
 })
-
-require("nvim-treesitter.configs").setup({
-  highlight = {
-    enable = true,
-  },
-})
