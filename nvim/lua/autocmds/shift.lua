@@ -37,7 +37,7 @@ vim.api.nvim_create_autocmd("TextChanged", {
       local row, col = unpack(pos)
       local shiftwidth = vim.fn.shiftwidth()
       local sign = operator == ">" and 1 or -1
-      local new_pos = { row, col + (sign * shiftwidth) }
+      local new_pos = { row, math.max(0, col + (sign * shiftwidth)) }
       vim.api.nvim_win_set_cursor(0, new_pos)
     end
   end,
