@@ -13,7 +13,6 @@ vim.lsp.enable({
   "gleam",
   "lua_ls",
   "nil_ls",
-  "nixd",
   "basedpyright",
   "ts_ls",
   "marksman",
