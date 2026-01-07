@@ -73,3 +73,5 @@ end, { range = true })
 -- Called when auto-format is disabled for a language or folder,
 -- but we want to format it anyways
 vim.cmd.cabbrev("fmt", "Fmt")
+
+vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
