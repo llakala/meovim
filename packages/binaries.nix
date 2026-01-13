@@ -8,5 +8,5 @@ with pkgs; [
 
   # Formatters
   stylua
-  nixfmt-rfc-style
+  nixfmt
 ]
