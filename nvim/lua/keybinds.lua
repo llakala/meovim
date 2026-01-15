@@ -72,3 +72,10 @@ nnoremap('y"', function()
   end
   vim.fn.setreg(vim.v.register, contents)
 end)
+
+-- I never use :delete, so make it into the equivalent of quitting a single
+-- buffer
+vim.cmd.cabbrev("d", "q")
+vim.cmd.cabbrev("wd", "wq")
+vim.cmd.cabbrev("q", "qa")
+vim.cmd.cabbrev("wq", "wqa")

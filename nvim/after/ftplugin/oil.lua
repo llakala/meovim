@@ -5,5 +5,5 @@ end, {})
 
 vim.cmd([[
   :cabbrev <buffer> <silent> w WriteOil
-  :cabbrev <buffer> <silent> wq execute 'WriteOil' <bar> q
+  :cabbrev <buffer> <silent> wq execute 'WriteOil' <bar> qa
 ]])
