@@ -6,6 +6,7 @@ in {
   vim-nix = callPackage ./startPlugins/vim-nix.nix {};
   fFtT-highlights-nvim = callPackage ./startPlugins/fFtT-highlights-nvim.nix {};
   lazydev-nvim = callPackage ./startPlugins/lazydev-nvim.nix {};
+  oil-nvim = callPackage ./startPlugins/oil-nvim.nix {};
 
   inherit (pkgs.vimPlugins)
     # Essentials
@@ -20,7 +21,6 @@ in {
     nvim-lspconfig
     nvim-surround
     rainbow-delimiters-nvim
-    oil-nvim
     # Neat features
     colorful-menu-nvim # Show completion types in color
     cutlass-nvim

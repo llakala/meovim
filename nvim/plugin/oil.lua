@@ -66,10 +66,15 @@ oil.setup({
 
   keymaps = {
     ["<C-h>"] = "actions.parent",
-    ["<C-l>"] = function()
-      vim.cmd.WriteOil()
-      actions.select.callback()
-    end,
+    -- actions.select but without the list of changes to be performed, since I
+    -- live my life on the edge
+    ["<C-l>"] = {
+      "actions.select",
+      opts = {
+        -- Added in my personal fork (will upstream at some point)
+        confirm = false,
+      },
+    },
 
     -- TODO: enable again when my intuition is fixed
     H = false,
