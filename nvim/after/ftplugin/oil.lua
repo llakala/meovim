@@ -9,7 +9,8 @@ vim.cmd([[
 ]])
 
 -- From https://github.com/stevearc/oil.nvim/issues/310#issuecomment-2019214285
--- Deletes a buffer when the
+-- Deletes a buffer when the file is deleted on the Oil side! Happy and
+-- surprised to see someone already wrote this
 vim.api.nvim_create_autocmd("User", {
   pattern = "OilActionsPost",
   callback = function(args)
