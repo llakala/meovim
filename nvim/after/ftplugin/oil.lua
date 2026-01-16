@@ -6,6 +6,7 @@ end, {})
 vim.cmd([[
   :cabbrev <buffer> <silent> w WriteOil
   :cabbrev <buffer> <silent> wq execute 'WriteOil' <bar> qa
+  :cabbrev <buffer> <silent> wd execute 'WriteOil' <bar> q
 ]])
 
 -- From https://github.com/stevearc/oil.nvim/issues/310#issuecomment-2019214285
