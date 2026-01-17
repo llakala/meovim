@@ -75,7 +75,7 @@ end)
 
 -- I never use :delete, so make it into the equivalent of quitting a single
 -- buffer
-vim.cmd.cabbrev("d", "q")
+vim.cmd.cabbrev("d", "bd")
 vim.cmd.cabbrev("wd", "wq")
 vim.cmd.cabbrev("q", "qa")
 vim.cmd.cabbrev("wq", "wqa")
