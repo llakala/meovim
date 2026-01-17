@@ -8,6 +8,7 @@
 -- for the impl
 vim.api.nvim_create_autocmd({ "CursorMoved" }, {
   desc = "Center cursor",
+  group = vim.api.nvim_create_augroup("CenterCurrentLine", {}),
   callback = function()
     local curr_line = vim.fn.line(".")
 

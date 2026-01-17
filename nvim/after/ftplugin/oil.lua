@@ -14,6 +14,7 @@ vim.cmd([[
 -- surprised to see someone already wrote this
 vim.api.nvim_create_autocmd("User", {
   pattern = "OilActionsPost",
+  group = vim.api.nvim_create_augroup("DeleteBufferAfterAction", {}),
   callback = function(args)
     local parse_url = function(url)
       return url:match("^.*://(.*)$")

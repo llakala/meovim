@@ -9,6 +9,7 @@ end, { expr = true })
 
 vim.api.nvim_create_autocmd("TextChanged", {
   desc = "Keep cursor in the same place when shifting text",
+  group = vim.api.nvim_create_augroup("KeepCursorPositionOnShift", {}),
   callback = function()
     local pos = vim.b.cursor_pre_shift
     if pos ~= nil then
