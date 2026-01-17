@@ -42,7 +42,6 @@ in {
     # Filetype-specific
     markdown-preview-nvim
     nvim-jdtls
-    typst-preview-nvim
     # Dependencies
     nvim-web-devicons
     ;
