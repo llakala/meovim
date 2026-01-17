@@ -40,7 +40,6 @@ in {
     onedarkpro-nvim
     tokyonight-nvim
     # Filetype-specific
-    markdown-preview-nvim
     # Dependencies
     nvim-web-devicons
     ;
