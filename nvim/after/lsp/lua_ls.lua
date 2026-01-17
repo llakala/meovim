@@ -24,4 +24,7 @@ return {
       },
     },
   },
+  on_attach = function()
+    vim.lsp.document_color.enable(false)
+  end,
 }
