@@ -2,11 +2,16 @@ require("lualine").setup({
   extensions = {
     "fzf",
     "fugitive",
-    "oil",
   },
 
   sections = {
-    lualine_b = { "branch" },
+    lualine_b = {
+      "branch",
+      {
+        "diagnostics",
+        sources = { "nvim_diagnostic" },
+      },
+    },
 
     lualine_c = {
       {
