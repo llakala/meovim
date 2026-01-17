@@ -41,7 +41,6 @@ in {
     tokyonight-nvim
     # Filetype-specific
     markdown-preview-nvim
-    nvim-jdtls
     # Dependencies
     nvim-web-devicons
     ;
