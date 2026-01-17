@@ -1,3 +1,4 @@
+---@type lz.n.PluginSpec
 return {
   "typst-preview-nvim",
   ft = "typst",
