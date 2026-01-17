@@ -3,7 +3,6 @@ let
   inherit (pkgs) callPackage;
 in {
   # Custom plugins
-  vim-nix = callPackage ./startPlugins/vim-nix.nix {};
   fFtT-highlights-nvim = callPackage ./startPlugins/fFtT-highlights-nvim.nix {};
   lazydev-nvim = callPackage ./startPlugins/lazydev-nvim.nix {};
   oil-nvim = callPackage ./startPlugins/oil-nvim.nix {};
