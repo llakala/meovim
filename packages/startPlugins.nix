@@ -40,7 +40,6 @@ in {
     onedarkpro-nvim
     tokyonight-nvim
     # Filetype-specific
-    helpview-nvim
     markdown-preview-nvim
     nvim-jdtls
     typst-preview-nvim
