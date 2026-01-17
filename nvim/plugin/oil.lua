@@ -1,5 +1,5 @@
 local oil = require("oil")
-local actions = require("oil.actions")
+local utils = require("oil.util")
 local fzf_lua = require("fzf-lua")
 local ns = vim.api.nvim_create_namespace("OilHighlights")
 
@@ -55,6 +55,59 @@ local search_first_char = function(reuse_prompt, forward)
       })
     end
   end
+end
+
+-- The oil logic for qflist stuff only allows you to add a range or a search
+-- pattern. I want to add the current entry most often, so this adds support for
+-- that.
+local function add_to_qflist()
+  local dir = oil.get_current_dir()
+  local qf_entries = {}
+
+  local qf_action = nil
+  if vim.g.just_entered_oil then
+    qf_action = "r"
+  else
+    qf_action = "a"
+  end
+
+  local function add_file(entry)
+    if entry and entry.type == "file" then
+      local qf_entry = {
+        filename = dir .. entry.name,
+        lnum = 1,
+        col = 1,
+        text = entry.name,
+      }
+      table.insert(qf_entries, qf_entry)
+    end
+  end
+
+  if utils.is_visual_mode() then
+    local range = utils.get_visual_range()
+    if range == nil then
+      return
+    end
+    for i = range.start_lnum, range.end_lnum do
+      local entry = oil.get_entry_on_line(0, i)
+      add_file(entry)
+    end
+  else
+    local entry = oil.get_cursor_entry()
+    add_file(entry)
+  end
+
+  if #qf_entries == 0 then
+    vim.notify("[oil] No entries found to send to quickfix", vim.log.levels.WARN)
+    return
+  end
+
+  vim.api.nvim_exec_autocmds("QuickFixCmdPre", {})
+  local qf_title = "oil files"
+  vim.fn.setqflist({}, qf_action, { title = qf_title, items = qf_entries })
+
+  vim.g.open_qf_on_quit = true -- I have this handled in the oil ftplugin
+  vim.g.just_entered_oil = false
 end
 
 oil.setup({
@@ -129,6 +182,8 @@ oil.setup({
       end,
       nowait = true, -- Override the existing `gs` bind
     },
+
+    ["<C-a>"] = add_to_qflist,
 
     -- Heavily referenced from
     -- https://github.com/samiulsami/nvim/blob/7a72a0c7328ba4dc58bfe4e0d32750a5323f6267/lua/plugins/oil.lua#L94

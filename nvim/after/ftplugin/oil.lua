@@ -1,4 +1,8 @@
 local oil = require("oil")
+local utils = require("oil.util")
+
+vim.g.just_entered_oil = true
+
 vim.api.nvim_buf_create_user_command(0, "WriteOil", function()
   oil.save({ confirm = false })
 end, {})
@@ -39,6 +43,18 @@ vim.api.nvim_create_autocmd("User", {
 
         vim.fn.win_execute(winnr, "bfirst | bd" .. bufnr)
       end
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufUnload", {
+  buffer = 0,
+  group = vim.api.nvim_create_augroup("OpenQuickfixIfChanged", {}),
+  callback = function()
+    -- I have an action that sets this, so when we exit oil, we can run it
+    if vim.g.open_qf_on_quit then
+      vim.cmd.copen()
+      vim.g.open_qf_on_quit = false
     end
   end,
 })
