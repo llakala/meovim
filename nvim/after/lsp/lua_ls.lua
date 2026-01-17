@@ -2,6 +2,9 @@
 return {
   settings = {
     Lua = {
+      semantic = {
+        enable = false,
+      },
       hint = {
         enable = true,
         paramName = "Literal",

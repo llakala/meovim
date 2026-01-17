@@ -9,6 +9,7 @@ let
     fish
     gitcommit
     gleam
+    lua
     luadoc # --- type annotations
     nix
 
