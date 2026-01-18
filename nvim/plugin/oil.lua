@@ -149,6 +149,16 @@ oil.setup({
     ["<C-j>"] = false,
     ["<C-k>"] = false,
 
+    -- Print path to current entry
+    ["g~"] = function()
+      local dir = oil.get_current_dir()
+      local entry = oil.get_cursor_entry()
+      if entry == nil then
+        return
+      end
+      vim.print(dir .. entry.name)
+    end,
+
     ["<C-f>"] = {
       function()
         search_first_char(false, true)
