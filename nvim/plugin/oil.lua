@@ -159,6 +159,7 @@ oil.setup({
     ["<CR>"] = false,
     ["<Esc>"] = {
       ":bd<CR>",
+      mode = "n",
       silent = true,
     },
     ["<Tab>"] = "actions.preview",
