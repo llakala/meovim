@@ -61,18 +61,27 @@ end
 -- pattern. I want to add the current entry most often, so this adds support for
 -- that.
 local function add_to_qflist()
+  local message = {}
   local dir = oil.get_current_dir()
+  local current_qflist = vim.fn.getqflist()
   local qf_entries = {}
 
   local qf_action = nil
-  if vim.g.just_entered_oil then
+  if vim.g.just_entered_oil and #current_qflist > 0 then
     qf_action = "r"
+    table.insert(message, "Deleting current entries, adding '")
   else
     qf_action = "a"
+    table.insert(message, "Adding '")
   end
 
-  local function add_file(entry)
+  local function add_file(entry, index)
     if entry and entry.type == "file" then
+      if index == 1 then
+        table.insert(message, entry.name)
+      else
+        table.insert(message, ", " .. entry.name)
+      end
       local qf_entry = {
         filename = dir .. entry.name,
         lnum = 1,
@@ -83,19 +92,22 @@ local function add_to_qflist()
     end
   end
 
-  if utils.is_visual_mode() then
+  if not utils.is_visual_mode() then
+    local entry = oil.get_cursor_entry()
+    add_file(entry, 1)
+  else
     local range = utils.get_visual_range()
     if range == nil then
       return
     end
     for i = range.start_lnum, range.end_lnum do
       local entry = oil.get_entry_on_line(0, i)
-      add_file(entry)
+      add_file(entry, i - range.start_lnum + 1)
     end
-  else
-    local entry = oil.get_cursor_entry()
-    add_file(entry)
   end
+
+  table.insert(message, "' to qflist")
+  vim.print(table.concat(message))
 
   if #qf_entries == 0 then
     vim.notify("[oil] No entries found to send to quickfix", vim.log.levels.WARN)
