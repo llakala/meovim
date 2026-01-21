@@ -1,4 +1,4 @@
-{ pkgs, mnw, neovim, small ? true }:
+{ pkgs, mnw, neovim, small ? false }:
 
 let
   args = { inherit pkgs; };
