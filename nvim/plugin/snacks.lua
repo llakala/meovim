@@ -2,7 +2,20 @@ Snacks = require("snacks")
 
 require("snacks").setup({
   quickfile = { enabled = true },
-  input = { enabled = true }, -- Doesn't replace all input, but will work for stuff like lsp renames
+
+  -- Doesn't replace all input, but will work for stuff like lsp renames
+  input = {
+    enabled = true,
+    win = {
+      on_win = function()
+        -- See https://github.com/folke/snacks.nvim/issues/2198
+        vim.schedule(function()
+          vim.cmd("stopinsert")
+          vim.cmd("norm ^")
+        end)
+      end,
+    },
+  },
 
   -- Display indent lines, like `indent-blankline`
   indent = {
