@@ -27,7 +27,6 @@ in {
     nvim-colorizer-lua # highlight hex codes
     snacks-nvim
     tiny-inline-diagnostic-nvim # Better `virtual_lines` from nvim 0.11
-    ts-comments-nvim # Lets me have multiple comment strings for `gcc` action
     # mini-nvim stuff
     mini-ai
     mini-comment
