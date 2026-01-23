@@ -1,10 +1,14 @@
 { pkgs }:
 
+let
+  nil = pkgs.callPackage ./binaries/nil.nix {};
+in
+
 with pkgs; [
   # Language servers
-  nil
   lua-language-server
   tinymist
+  nil
 
   # Formatters
   stylua
