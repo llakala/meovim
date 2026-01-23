@@ -37,4 +37,6 @@ ls.setup({
   },
 })
 
-require("luasnip.loaders.from_lua").load({ paths = { "/home/emanresu/Documents/projects/meovim/nvim/snippets/" } })
+require("luasnip.loaders.from_lua").lazy_load({
+  lazy_paths = { "/home/emanresu/Documents/projects/meovim/nvim/snippets/" },
+})
