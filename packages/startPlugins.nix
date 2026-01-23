@@ -24,7 +24,7 @@ in {
     colorful-menu-nvim # Show completion types in color
     cutlass-nvim
     luasnip
-    nvim-colorizer-lua # highlight hex codes
+    nvim-highlight-colors # Highlight hex codes
     snacks-nvim
     tiny-inline-diagnostic-nvim # Better `virtual_lines` from nvim 0.11
     # mini-nvim stuff

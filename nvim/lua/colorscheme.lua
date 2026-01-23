@@ -17,11 +17,5 @@ require("tokyonight").setup({
 
 vim.cmd([[colorscheme tokyonight]])
 
--- Colorize hex codes red
-require("colorizer").setup({
-  lazy_load = true,
-  user_default_options = {
-    names = false,
-    RGB = false,
-  },
-})
+-- Colorize hex codes
+require("nvim-highlight-colors").setup({})
