@@ -41,9 +41,7 @@ require("conform").setup({
 
     local bufname = vim.api.nvim_buf_get_name(bufnr)
 
-    -- Where I store random cloned git repos
-    -- I probably shouldn't be auto-formatting codebases that aren't mine
-    if bufname:match("/Documents/repos/*") then
+    if bufname:match("/Documents/repos/*") or bufname:match("/Documents/classes/*") then
       return nil
     end
 
