@@ -16,4 +16,7 @@ end
 npairs.add_rules({
   auto_semicolon("= "):with_pair(cond.not_before_regex("!", 2)),
   auto_semicolon("inherit "),
+
+  Rule("/*", "*/", "nix"),
+  Autopairs_utils.surrounding_spaces("/*", " ", "*/", "nix"),
 })
