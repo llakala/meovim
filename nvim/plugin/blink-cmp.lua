@@ -1,4 +1,5 @@
-cmp = require("blink.cmp")
+local cmp = require("blink.cmp")
+local types = require("blink.cmp.types")
 lsp_capabilities = cmp.get_lsp_capabilities()
 
 vim.lsp.config("*", {
@@ -21,13 +22,6 @@ vim.keymap.set("c", "<C-n>", "<Down>")
 vim.keymap.set("c", "<Up>", "<Nop>")
 vim.keymap.set("c", "<Down>", "<Nop>")
 
--- Removing buffer completion from the defaults, and adding omni for classical
--- vim completions (like those from vimtex)
---
--- We define this in its own variable, since we need to unset/reset it for our
--- Ctrl+s binding
-local default_providers = { "lazydev", "lsp", "path", "snippets", "omni" }
-
 cmp.setup({
   keymap = {
     -- Want to make something that I can fully control and understand!
@@ -40,15 +34,23 @@ cmp.setup({
     -- use a custom provider `lsp_snippets` that filters the lsp provider for
     -- only snippets.
     ["<C-s>"] = {
-      function(cmp)
-        local current_providers = cmp.get_context().providers
+      function()
+        local context = cmp.get_context()
+        if context == nil then
+          return
+        end
+        local current_providers = context.providers
+        local snippet_providers = { "snippets", "lazydev", "lsp_snippets" }
 
+        -- Toggle between previous set of providers and snippet providers.
         -- we need vim.inspect since `==` checks identity, not value. Yes, Lua
         -- is pulling a Java on us.
-        if vim.inspect(default_providers) == vim.inspect(current_providers) then
-          cmp.show({ providers = { "snippets", "lazydev", "lsp_snippets" } })
+        if vim.inspect(current_providers) ~= vim.inspect(snippet_providers) then
+          vim.g.prev_providers = current_providers
+          cmp.show({ providers = snippet_providers })
         else
-          cmp.show({ providers = default_providers })
+          cmp.show({ providers = vim.g.prev_providers })
+          vim.g.prev_providers = {}
         end
       end,
     },
@@ -157,7 +159,9 @@ cmp.setup({
   },
 
   sources = {
-    default = default_providers,
+    -- Removing buffer completion from the defaults, and adding omni for
+    -- classical vim completions (like those from vimtex)
+    default = { "lazydev", "lsp", "path", "snippets", "omni" },
 
     providers = {
       -- autosnippets are automatically expanded, so showing the completion
@@ -171,7 +175,7 @@ cmp.setup({
         module = "blink.cmp.sources.lsp",
         transform_items = function(_, items)
           return vim.tbl_filter(function(item)
-            return item.kind == require("blink.cmp.types").CompletionItemKind.Snippet
+            return item.kind == types.CompletionItemKind.Snippet
           end, items)
         end,
       },
