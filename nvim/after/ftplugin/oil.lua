@@ -1,7 +1,4 @@
 local oil = require("oil")
-local utils = require("oil.util")
-
-vim.g.just_entered_oil = true
 
 vim.api.nvim_buf_create_user_command(0, "WriteOil", function()
   oil.save({ confirm = false })

@@ -63,17 +63,9 @@ end
 local function add_to_qflist()
   local message = {}
   local dir = oil.get_current_dir()
-  local current_qflist = vim.fn.getqflist()
   local qf_entries = {}
 
-  local qf_action = nil
-  if vim.g.just_entered_oil and #current_qflist > 0 then
-    qf_action = "r"
-    table.insert(message, "Deleting current entries, adding '")
-  else
-    qf_action = "a"
-    table.insert(message, "Adding '")
-  end
+  table.insert(message, "Adding '")
 
   local function add_file(entry, index)
     if entry and entry.type == "file" then
@@ -116,10 +108,9 @@ local function add_to_qflist()
 
   vim.api.nvim_exec_autocmds("QuickFixCmdPre", {})
   local qf_title = "oil files"
-  vim.fn.setqflist({}, qf_action, { title = qf_title, items = qf_entries })
+  vim.fn.setqflist({}, "a", { title = qf_title, items = qf_entries })
 
   vim.g.open_qf_on_quit = true -- I have this handled in the oil ftplugin
-  vim.g.just_entered_oil = false
 end
 
 oil.setup({
