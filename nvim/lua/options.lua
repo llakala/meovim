@@ -2,9 +2,8 @@
 -- We do it before everything so it can help us the most
 vim.loader.enable()
 
--- Global variables. `vim.o` is preferred over `vim.opt`
-g = vim.g
-o = vim.o
+local g = vim.g
+local o = vim.o
 
 -- Behavior
 
