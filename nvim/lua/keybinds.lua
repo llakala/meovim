@@ -73,9 +73,8 @@ nnoremap('y"', function()
   vim.fn.setreg(vim.v.register, contents)
 end)
 
--- I never use :delete, so make it into the equivalent of quitting a single
--- buffer
+-- q for closing nvim entirely,, d for closing current buffer
 vim.cmd.cabbrev("d", "close")
-vim.cmd.cabbrev("wd", "wq")
+vim.cmd.cabbrev("wd", "w | close")
 vim.cmd.cabbrev("q", "qa")
 vim.cmd.cabbrev("wq", "wqa")
