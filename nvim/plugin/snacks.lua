@@ -1,5 +1,3 @@
-Snacks = require("snacks")
-
 require("snacks").setup({
   quickfile = { enabled = true },
 
