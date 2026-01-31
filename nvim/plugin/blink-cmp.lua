@@ -159,9 +159,12 @@ cmp.setup({
   },
 
   sources = {
-    -- Removing buffer completion from the defaults, and adding omni for
-    -- classical vim completions (like those from vimtex)
-    default = { "lazydev", "lsp", "path", "snippets", "omni" },
+    default = function()
+      if vim.bo.filetype == "nix" then
+        return { "lazydev", "lsp_lower_keywords", "path", "snippets", "omni" }
+      end
+      return { "lazydev", "lsp", "path", "snippets", "omni" }
+    end,
 
     providers = {
       -- autosnippets are automatically expanded, so showing the completion
@@ -177,6 +180,20 @@ cmp.setup({
           return vim.tbl_filter(function(item)
             return item.kind == types.CompletionItemKind.Snippet
           end, items)
+        end,
+      },
+
+      lsp_lower_keywords = {
+        name = "LSP with keywords getting a lower score",
+        module = "blink.cmp.sources.lsp",
+        transform_items = function(_, items)
+          -- the default transformer will do this
+          for _, item in ipairs(items) do
+            if item.kind == types.CompletionItemKind.Keyword then
+              item.score_offset = item.score_offset - 5
+            end
+          end
+          return items
         end,
       },
 
