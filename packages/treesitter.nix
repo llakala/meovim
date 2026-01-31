@@ -4,17 +4,18 @@ let
   # https://search.nixos.org/packages?channel=unstable&sort=alpha_asc&type=packages&query=vimPlugins.nvim-treesitter-parsers
   # Some languages like Lua aren't included bc nvim already includes them
   my-treesitter = pkgs.vimPlugins.nvim-treesitter.withPlugins (p: with p; [
+    vim # Required, get an error without it
+
     # The languages I work in everyday
     comment # highlight todos and fixmes
-    fish
     gitcommit
-    gleam
     lua
-    luadoc # --- type annotations
+    luadoc
     nix
 
     # Languages I use less often
     bash
+    fish
     gitignore
     git_rebase
     java
