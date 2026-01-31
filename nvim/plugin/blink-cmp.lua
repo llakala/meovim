@@ -159,13 +159,10 @@ cmp.setup({
   },
 
   sources = {
-    default = function()
-      if vim.bo.filetype == "nix" then
-        return { "lazydev", "lsp_lower_keywords", "path", "snippets", "omni" }
-      end
-      return { "lazydev", "lsp", "path", "snippets", "omni" }
-    end,
-
+    default = { "lazydev", "lsp", "path", "snippets", "omni" },
+    per_filetype = {
+      nix = { "lazydev", "lsp_no_keywords", "path", "snippets", "omni" },
+    },
     providers = {
       -- autosnippets are automatically expanded, so showing the completion
       -- would be a waste of time
@@ -183,17 +180,14 @@ cmp.setup({
         end,
       },
 
-      lsp_lower_keywords = {
-        name = "LSP with keywords getting a lower score",
+      lsp_no_keywords = {
+        name = "LSP without keywords",
         module = "blink.cmp.sources.lsp",
         transform_items = function(_, items)
           -- the default transformer will do this
-          for _, item in ipairs(items) do
-            if item.kind == types.CompletionItemKind.Keyword then
-              item.score_offset = item.score_offset - 5
-            end
-          end
-          return items
+          return vim.tbl_filter(function(item)
+            return item.kind ~= types.CompletionItemKind.Keyword
+          end, items)
         end,
       },
 
