@@ -1,4 +1,4 @@
-{ pkgs, mnw, neovim, small ? false }:
+{ pkgs, mnw, small ? false }:
 
 let
   args = { inherit pkgs; };
@@ -7,7 +7,12 @@ mnw.lib.wrap pkgs {
   appName = "nvim";
   neovim = pkgs.neovim.unwrapped.overrideAttrs {
     version = "0.12.0";
-    src = neovim;
+    src = pkgs.fetchFromGitHub {
+      owner = "neovim";
+      repo = "neovim";
+      rev = "36db6ff2c128864840e2820491a2172d6b1b7e62";
+      hash = "sha256-iD+eb82J3TrP5/KMjS4LZ7hTJOWMATTTAC5a94+BgiM=";
+    };
     doInstallCheck = false;
   };
 
