@@ -142,10 +142,31 @@ require("fzf-lua").setup({
     fd_opts = "--color=never --hidden --type f --type l --exclude .git --exclude .direnv",
   },
 
-  -- Disable regex for searching - I need special characters much more than I
-  -- want regex search
+  -- Add fixed-strings to the default, and make ctrl-r toggle regex search on/off
   grep = {
     rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings -e",
+    actions = {
+      ["ctrl-g"] = false,
+      ["ctrl-r"] = {
+        fn = function(_, opts)
+          FzfLua.actions.toggle_flag(
+            _,
+            vim.tbl_extend("force", opts, {
+              toggle_flag = "--fixed-strings",
+            })
+          )
+        end,
+        header = function(o)
+          local flag = "--fixed-strings"
+          local cmd = o.cmd or o._cmd
+          if cmd and cmd:match(utils.lua_regex_escape(flag)) then
+            return "enable regex"
+          else
+            return "disable regex"
+          end
+        end,
+      },
+    },
   },
 
   -- Automatically create an fzf colorscheme based on our nvim colorscheme
