@@ -207,5 +207,5 @@ end, { desc = "Add new file in current folder" })
 
 nnoremap("<leader>s", FzfLua.live_grep, { desc = "Search text in project" })
 nnoremap("<leader>S", function()
-  FzfLua.live_grep({ cwd = vim.fn.expand("%:p:h") })
+  FzfLua.live_grep_native({ cwd = vim.fn.expand("%:p:h") })
 end, { desc = "Search text in current folder" })
