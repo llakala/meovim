@@ -138,7 +138,20 @@ cmp.setup({
     },
   },
 
-  snippets = { preset = "luasnip" },
+  snippets = {
+    preset = "luasnip",
+    -- From https://github.com/BirdeeHub/nixCats-nvim/blob/c6000fb730d4067e3e1d65e9d5a2cbcd1ceaef83/templates/example/lua/myLuaConf/plugins/completion.lua#L104
+    -- Prevents snippet placeholders from staying when you leave insert mode
+    active = function()
+      local ls = require("luasnip")
+      if ls.in_snippet() and not cmp.is_visible() then
+        return true
+      elseif not ls.in_snippet() and vim.fn.mode() == "n" then
+        ls.unlink_current()
+      end
+      return false
+    end,
+  },
 
   signature = {
     enabled = true,
