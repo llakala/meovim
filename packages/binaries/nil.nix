@@ -1,5 +1,7 @@
 { nil, fetchFromGitHub, rustPlatform, ... }:
 
+# Version in nixpkgs is out of date and doesn't have a fix to remove comment
+# completion
 nil.overrideAttrs (final: prev: {
   version = "0-unstable-2025-12-09";
   src = fetchFromGitHub {
