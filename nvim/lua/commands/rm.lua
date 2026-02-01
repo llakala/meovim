@@ -14,4 +14,4 @@ vim.api.nvim_create_user_command("Rm", function(ctx)
   vim.cmd.bdelete(file)
 end, { bang = true })
 
-vim.cmd.cabbrev("rm", "Rm")
+cabbrev("rm", "Rm")

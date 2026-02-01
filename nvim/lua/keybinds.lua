@@ -22,12 +22,9 @@ function inoremap(key, map, opts)
   mkNoremap("i", key, map, opts)
 end
 
-function onoremap(key, map, opts)
-  mkNoremap("o", key, map, opts)
-end
-
-function anoremap(key, map, opts)
-  mkNoremap({ "n", "x", "o" }, key, map, opts)
+cabbrev = function(alias, expanded)
+  local command = string.format("<c-r>=((getcmdtype()==':' && getcmdpos()==1) ? '%s' : '%s')<CR>", expanded, alias)
+  vim.cmd.cnoreabbrev(alias, command)
 end
 
 -- i<Esc> won't move the cursor at all, while a<Esc> will move the cursor
@@ -74,7 +71,7 @@ nnoremap('y"', function()
 end)
 
 -- q for closing nvim entirely,, d for closing current buffer
-vim.cmd.cabbrev("d", "close")
-vim.cmd.cabbrev("wd", "w | close")
-vim.cmd.cabbrev("q", "qa")
-vim.cmd.cabbrev("wq", "wqa")
+cabbrev("d", "close")
+cabbrev("wd", "w | close")
+cabbrev("q", "qa")
+cabbrev("wq", "wqa")
