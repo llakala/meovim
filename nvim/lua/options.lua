@@ -39,8 +39,8 @@ if workspace_path ~= nil then
   local cache_dir = vim.fn.stdpath("data")
   local unique_id = vim.fn.fnamemodify(workspace_path, ":t") .. "_" .. vim.fn.sha256(workspace_path):sub(1, 8)
   local shadafile = cache_dir .. "/myshada/" .. unique_id .. ".shada"
-  vim.o.shadafile = shadafile
-  vim.o.shada = "'50,<0"
+  o.shadafile = shadafile
+  o.shada = "'50,<0"
 end
 
 -- UI
@@ -61,7 +61,7 @@ o.smoothscroll = true
 -- Custom window title, showing project cwd and current filename. Regex takes
 -- the full cwd and takes everything after the last slash.
 o.title = true
-vim.o.titlestring = vim.fn.getcwd():match("([^/]+)$") .. ": %t"
+o.titlestring = vim.fn.getcwd():match("([^/]+)$") .. ": %t"
 
 -- Indentation/formatting
 
