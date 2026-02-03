@@ -1,5 +1,5 @@
 vim.api.nvim_set_hl(0, "TrailingWhitespace", { bg = "#e55c7a" })
-group = vim.api.nvim_create_augroup("ShowTrailingWhitespace", {})
+local group = vim.api.nvim_create_augroup("ShowTrailingWhitespace", {})
 
 vim.api.nvim_create_autocmd({ "InsertLeave", "BufWinEnter" }, {
   pattern = "*",
