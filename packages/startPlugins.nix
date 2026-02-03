@@ -22,7 +22,6 @@ in {
     rainbow-delimiters-nvim
     # Neat features
     colorful-menu-nvim # Show completion types in color
-    cutlass-nvim
     luasnip
     nvim-highlight-colors # Highlight hex codes
     snacks-nvim

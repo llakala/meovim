@@ -70,6 +70,23 @@ nnoremap('y"', function()
   vim.fn.setreg(vim.v.register, contents)
 end)
 
+-- Use blackhole register for all editing keymaps
+for _, mode in pairs({ "x", "n" }) do
+  for _, lhs in pairs({ "c", "C", "d", "D", "s", "S", "x", "X" }) do
+    vim.keymap.set(mode, lhs, '"_' .. lhs, { silent = true })
+  end
+end
+
+-- Opt in to copying to clipboard. Since timeout is disabled, this makes `dyip`
+-- delete the current word and yank it
+nnoremap("dy", "d", { desc = "Delete and yank" })
+nnoremap("dY", "D", { desc = "Delete and yank rest of line" })
+vnoremap("D", "d", { desc = "Delete and yank selection" })
+
+nnoremap("cy", "c", { desc = "Change and yank" })
+nnoremap("cY", "C", { desc = "Change and yank rest of line" })
+vnoremap("C", "c", { desc = "Change and yank selection" })
+
 -- q for closing nvim entirely,, d for closing current buffer
 cabbrev("d", "close")
 cabbrev("wd", "w | close")
