@@ -213,18 +213,6 @@ oil.setup({
         },
       })
     end,
-
-    ["<leader>f"] = function()
-      fzf_lua.files({
-        cwd = oil.get_current_dir(),
-        actions = {
-          ["default"] = function(selected, opts)
-            oil.close()
-            fzf_lua.actions.file_edit(selected, opts)
-          end,
-        },
-      })
-    end,
   },
   win_options = {
     signcolumn = "yes",
