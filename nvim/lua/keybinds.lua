@@ -22,7 +22,7 @@ function inoremap(key, map, opts)
   mkNoremap("i", key, map, opts)
 end
 
-cabbrev = function(alias, expanded)
+function cabbrev(alias, expanded)
   local command = string.format("<c-r>=((getcmdtype()==':' && getcmdpos()==1) ? '%s' : '%s')<CR>", expanded, alias)
   vim.cmd.cnoreabbrev(alias, command)
 end
