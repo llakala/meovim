@@ -1,6 +1,6 @@
-local cmp = require("blink.cmp")
+local blink = require("blink.cmp")
 local types = require("blink.cmp.types")
-lsp_capabilities = cmp.get_lsp_capabilities()
+lsp_capabilities = blink.get_lsp_capabilities()
 
 vim.lsp.config("*", {
   capabilities = lsp_capabilities,
@@ -22,7 +22,7 @@ vim.keymap.set("c", "<C-n>", "<Down>")
 vim.keymap.set("c", "<Up>", "<Nop>")
 vim.keymap.set("c", "<Down>", "<Nop>")
 
-cmp.setup({
+blink.setup({
   keymap = {
     -- Want to make something that I can fully control and understand!
     preset = "none",
@@ -35,7 +35,7 @@ cmp.setup({
     -- only snippets.
     ["<C-s>"] = {
       function()
-        local context = cmp.get_context()
+        local context = blink.get_context()
         if context == nil then
           return
         end
@@ -47,9 +47,9 @@ cmp.setup({
         -- is pulling a Java on us.
         if vim.inspect(current_providers) ~= vim.inspect(snippet_providers) then
           vim.g.prev_providers = current_providers
-          cmp.show({ providers = snippet_providers })
+          blink.show({ providers = snippet_providers })
         else
-          cmp.show({ providers = vim.g.prev_providers })
+          blink.show({ providers = vim.g.prev_providers })
           vim.g.prev_providers = {}
         end
       end,
@@ -144,7 +144,7 @@ cmp.setup({
     -- Prevents snippet placeholders from staying when you leave insert mode
     active = function()
       local ls = require("luasnip")
-      if ls.in_snippet() and not cmp.is_visible() then
+      if ls.in_snippet() and not blink.is_visible() then
         return true
       elseif not ls.in_snippet() and vim.fn.mode() == "n" then
         ls.unlink_current()
