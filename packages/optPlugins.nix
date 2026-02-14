@@ -9,7 +9,7 @@ in {
     typst-preview-nvim
     nvim-jdtls
     markdown-preview-nvim
-    fugitive
+    vim-fugitive
     vim-rhubarb # Make `:GBrowse` from fugitive work with Github
     ;
 }
