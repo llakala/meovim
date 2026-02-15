@@ -2,7 +2,7 @@
 ---@type lz.n.PluginSpec[]
 return {
   {
-    "fugitive",
+    "vim-fugitive",
     cmd = {
       "G",
       "Git",
