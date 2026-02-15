@@ -92,7 +92,7 @@ blink.setup({
         enabled = true,
 
         -- Pipe operators there - no need
-        blocked_filetypes = { "gleam" },
+        blocked_filetypes = { "gleam", "typst" },
       },
     },
 
