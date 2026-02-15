@@ -6,13 +6,13 @@ local regex = "^=\\+"
 -- the last line if there aren't any matches, and `[[` will only take you to the
 -- beginning of the first line if you're already there. Quite strange behavior,
 -- but I'll obey.
-vim.keymap.set({ "n", "o" }, "]]", function()
+vim.keymap.set({ "n", "o", "x" }, "]]", function()
   if vim.fn.search(regex, "W") == 0 then
     vim.cmd("norm! G^")
   end
 end, { buffer = true })
 
-vim.keymap.set({ "n", "o" }, "[[", function()
+vim.keymap.set({ "n", "o", "x" }, "[[", function()
   if vim.fn.line(".") == 1 then
     vim.cmd("norm! ^")
   end
