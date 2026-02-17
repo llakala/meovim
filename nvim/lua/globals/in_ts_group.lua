@@ -3,7 +3,7 @@
 -- Referenced from:
 -- 1: https://github.com/CaptainKills/dotfiles/blob/20d7d30f8507280795f5f14014752b40f7c7eff0/nvim/luasnippets/typst.lua#L22
 -- 2: https://github.com/ThetaOmega01/dotfiles/blob/a16df1873bb1f75e8bee2d59fc4c1ea48e7fd252/.config/nvim/lua/snippets/typst.lua#L15
-Custom.in_ts_group = function(allowed, disallowed)
+Custom.in_ts_group = function(allowed, disallowed, default)
   local node = vim.treesitter.get_node()
 
   while node do
@@ -21,5 +21,8 @@ Custom.in_ts_group = function(allowed, disallowed)
     node = node:parent()
   end
 
-  return false
+  if default == nil then
+    return false
+  end
+  return default
 end

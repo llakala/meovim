@@ -7,7 +7,7 @@ local in_math = function(_)
 end
 
 local in_content = function(_)
-  return Custom.in_ts_group({ "content", "string" }, { "math", "code" })
+  return Custom.in_ts_group({ "content", "string" }, { "math", "code" }, true)
 end
 
 require("nvim-autopairs").add_rules({
