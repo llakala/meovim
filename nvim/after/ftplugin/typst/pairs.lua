@@ -15,15 +15,10 @@ require("nvim-autopairs").add_rules({
   Rule("(", ")", { "typst" }):with_pair(cond.after_text("$")),
   Rule('"', '"', { "typst" }):with_pair(cond.after_text("$")),
 
-  -- From:
-  -- https://github.com/davinjason09/dotfiles/blob/3fb4eefe88d4811cab432c013013a8752cd5f86e/home/dot_config/nvim/after/ftplugin/typst.lua#L12
   Rule("$", "$", "typst")
     :with_pair(cond.not_after_regex("[%w]"))
     :with_pair(ts_conds.is_not_ts_node("math"))
-    :with_move(in_math)
-    :replace_map_cr(function()
-      return "<C-g>u<CR><ESC>O<Tab>"
-    end),
+    :with_move(in_math),
 
   -- Only pair these when we're writing markup
   Rule("*", "*", "typst")
