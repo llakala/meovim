@@ -7,14 +7,18 @@ local regex = "^=\\+"
 -- beginning of the first line if you're already there. Quite strange behavior,
 -- but I'll obey.
 vim.keymap.set({ "n", "o", "x" }, "]]", function()
-  if vim.fn.search(regex, "W") == 0 then
-    vim.cmd("norm! G^")
+  for _ = 1, vim.v.count1 do
+    if vim.fn.search(regex, "W") == 0 then
+      vim.cmd("norm! G^")
+    end
   end
 end, { buffer = true })
 
 vim.keymap.set({ "n", "o", "x" }, "[[", function()
-  if vim.fn.line(".") == 1 then
-    vim.cmd("norm! ^")
+  for _ = 1, vim.v.count1 do
+    if vim.fn.line(".") == 1 then
+      vim.cmd("norm! ^")
+    end
+    vim.fn.search(regex, "Wb")
   end
-  vim.fn.search(regex, "Wb")
 end, { buffer = true })
