@@ -6,6 +6,8 @@ require("conform").setup({
     java = { "google-java-format" },
     nix = { "nixfmt" },
     lua = { "stylua" },
+    cpp = { "clang_format" },
+    c = { "clang_format" },
 
     python = {
       "ruff_fix",
@@ -29,6 +31,11 @@ require("conform").setup({
     },
     stylua = {
       prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
+    },
+    clang_format = {
+      prepend_args = {
+        "--style={BasedOnStyle: LLVM, AllowShortFunctionsOnASingleLine: Empty}",
+      },
     },
   },
   format_on_save = nil,
