@@ -34,7 +34,7 @@ require("conform").setup({
     },
     clang_format = {
       prepend_args = {
-        "--style={BasedOnStyle: LLVM, AllowShortFunctionsOnASingleLine: Empty}",
+        "--style={BasedOnStyle: LLVM, ColumnLimit: 120, AllowShortFunctionsOnASingleLine: Empty}",
       },
     },
   },
