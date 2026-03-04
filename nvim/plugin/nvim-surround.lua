@@ -1,46 +1,57 @@
 local cache = require("nvim-surround.cache")
+local config = require("nvim-surround.config")
 
-local left_delete = "^(.)().-(.)()$"
-local right_delete = "^(. ?)().-( ?.)()$"
+-- The defaults use ( for whitespace, and ) for no whitespace. Silly!
+-- See https://github.com/kylechui/nvim-surround/issues/384
+function create_surround(left, right, use_whitespace)
+  local add = nil
+  local find = nil
+  local delete = nil
+
+  if use_whitespace == true then
+    add = { left .. " ", right .. " " } or {}
+    delete = "^(. ?)().-( ?.)()$"
+  else
+    add = { left, right }
+    delete = "^(.)().-(.)()$"
+  end
+
+  local x = {
+    add = add,
+    delete = delete,
+  }
+  return x
+end
+
+vim.g.nvim_surround_no_normal_mappings = true
+
+nnoremap("s", "<Plug>(nvim-surround-normal)")
+nnoremap("ss", "<Plug>(nvim-surround-normal-cur)")
+nnoremap("gs", "<Plug>(nvim-surround-normal-line)")
+nnoremap("gss", "<Plug>(nvim-surround-normal-cur-line)")
+
+vnoremap("s", "<Plug>(nvim-surround-visual)")
+vnoremap("gs", "<Plug>(nvim-surround-visual-line)")
+
+nnoremap("ds", "<Plug>(nvim-surround-delete)")
+nnoremap("cs", "<Plug>(nvim-surround-change)")
 
 require("nvim-surround").setup({
   move_cursor = "sticky",
+  indent_lines = false,
 
-  -- The defaults use ( for whitespace, and ) for no whitespace. Silly!
-  -- See https://github.com/kylechui/nvim-surround/issues/384
   surrounds = {
-    ["("] = {
-      add = { "(", ")" },
-      delete = left_delete,
-    },
-    [")"] = {
-      add = { "( ", " )" },
-      delete = right_delete,
-    },
-    ["["] = {
-      add = { "[", "]" },
-      delete = left_delete,
-    },
-    ["]"] = {
-      add = { "[ ", " ]" },
-      delete = right_delete,
-    },
-    ["{"] = {
-      add = { "{", "}" },
-      delete = left_delete,
-    },
-    ["}"] = {
-      add = { "{ ", " }" },
-      delete = right_delete,
-    },
-    ["<"] = {
-      add = { "<", ">" },
-      delete = left_delete,
-    },
-    [">"] = {
-      add = { "< ", " >" },
-      delete = right_delete,
-    },
+    ["("] = create_surround("(", ")", false),
+    [")"] = create_surround("(", ")", true),
+
+    ["["] = create_surround("[", "]", false),
+    ["]"] = create_surround("[", "]", true),
+
+    ["{"] = create_surround("{", "}", false),
+    ["}"] = create_surround("{", "}", true),
+
+    ["<"] = create_surround("<", ">", false),
+    [">"] = create_surround("<", ">", true),
 
     -- codeblock! We add this for all languages, since I still use codeblocks in
     -- languages where they aren't a feature (like git commit descriptions)
@@ -64,24 +75,6 @@ require("nvim-surround").setup({
         end,
       },
     },
-  },
-
-  keymaps = {
-    insert = false,
-    insert_line = false,
-
-    normal = "s",
-    normal_cur = "ss",
-    normal_line = "gs",
-    normal_cur_line = "gss",
-
-    delete = "ds",
-
-    change = "cs",
-    change_line = false,
-
-    visual = "s",
-    visual_line = "gs",
   },
 })
 
