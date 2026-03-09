@@ -12,7 +12,7 @@ require("tiny-inline-diagnostic").setup({
 
       -- Without this, a line with multiple errors seems to only show one of the
       -- errors
-      always_show = true
-    }
-  }
+      always_show = true,
+    },
+  },
 })
