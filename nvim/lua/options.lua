@@ -93,7 +93,7 @@ o.hlsearch = true -- Highlight search matches
 -- Statusline / window stuff
 
 o.showmode = false -- Using lualine
-o.showcmd = true -- Shows when we press keypresses, which we don't need
+o.showcmd = true
 
 -- Only one statusline, for better separator between horizontal splits
 o.laststatus = 3
