@@ -9,10 +9,22 @@ require("tiny-inline-diagnostic").setup({
     -- than the status quo!
     multilines = {
       enabled = true,
-
       -- Without this, a line with multiple errors seems to only show one of the
       -- errors
       always_show = true,
     },
+
+    show_code = false,
+
+    -- If the diagnostic is on another line, only show the first line of its
+    -- message
+    format = function(diag)
+      local current_line = vim.fn.line(".")
+      local diag_line = diag.lnum
+      if diag_line + 1 == current_line then
+        return diag.message
+      end
+      return diag.message:gmatch("[^\n]*")()
+    end,
   },
 })
