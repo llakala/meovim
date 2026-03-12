@@ -87,11 +87,15 @@ nnoremap("cy", "c", { desc = "Change and yank" })
 nnoremap("cY", "C", { desc = "Change and yank rest of line" })
 vnoremap("C", "c", { desc = "Change and yank selection" })
 
--- q for closing nvim entirely,, d for closing current buffer
+-- q to close nvim entirely, d to close the current buffer. however, wq should
+-- only write the current buffer. if you really want to write all buffers, use
+-- :wa
 cabbrev("d", "close")
 cabbrev("wd", "w | close")
 cabbrev("q", "qa")
-cabbrev("wq", "wqa")
+cabbrev("wq", "w | qa")
+cabbrev("qa", 'echoerr "just use :q"')
+cabbrev("wqa", 'echoerr "just use :wq"')
 
 -- By default, J's count isn't relative, so 2J doesn't perform J twice. I hate
 -- this, so we fix it!
