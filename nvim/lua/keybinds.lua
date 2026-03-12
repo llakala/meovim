@@ -92,3 +92,12 @@ cabbrev("d", "close")
 cabbrev("wd", "w | close")
 cabbrev("q", "qa")
 cabbrev("wq", "wqa")
+
+-- By default, J's count isn't relative, so 2J doesn't perform J twice. I hate
+-- this, so we fix it!
+nnoremap("J", function()
+  vim.cmd("normal! " .. vim.v.count + 1 .. "J")
+end)
+nnoremap("gJ", function()
+  vim.cmd("normal! " .. vim.v.count + 1 .. "gJ")
+end)
