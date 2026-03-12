@@ -105,3 +105,15 @@ end)
 nnoremap("gJ", function()
   vim.cmd("normal! " .. vim.v.count + 1 .. "gJ")
 end)
+
+-- Same idea as above, so 3: runs the command on the next 3 lines
+-- useful for substituting without needing visual mode
+nnoremap(":", function()
+  local expr
+  if vim.v.count == 0 then
+    expr = ":"
+  else
+    expr = ":.,.+" .. vim.v.count
+  end
+  vim.fn.feedkeys(expr, "n")
+end, { nowait = true })
