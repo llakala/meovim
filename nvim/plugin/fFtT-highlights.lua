@@ -30,7 +30,7 @@ require("fFtT-highlights"):setup({
   -- `nohlsearch` and `echo` to the FIRST kind.
   on_reset = function()
     vim.cmd.nohlsearch()
-    vim.cmd.echo()
+    vim.cmd('echo ""')
   end,
 })
 
@@ -39,5 +39,5 @@ require("fFtT-highlights"):setup({
 -- orange highlights!
 vim.keymap.set("n", "<Esc>", function()
   vim.cmd.nohlsearch()
-  vim.cmd.echo()
+  vim.cmd('echo ""')
 end, { silent = true, desc = "Clear highlights and cmdline" })
