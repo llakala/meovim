@@ -5,8 +5,6 @@ vim.loader.enable()
 local g = vim.g
 local o = vim.o
 
--- Behavior
-
 o.backup = false
 o.writebackup = false
 o.undofile = true -- Persistent undo
@@ -43,8 +41,6 @@ if workspace_path ~= nil then
   o.shada = "'50,<0"
 end
 
--- UI
-
 o.winborder = "rounded"
 o.termguicolors = true
 
@@ -62,8 +58,6 @@ o.smoothscroll = true
 -- the full cwd and takes everything after the last slash.
 o.title = true
 o.titlestring = vim.fn.getcwd():match("([^/]+)$") .. ": %t"
-
--- Indentation/formatting
 
 o.expandtab = true -- spaces as tab
 o.tabstop = 2 -- 2 spaces for tabs
@@ -84,13 +78,9 @@ o.autoindent = true
 
 o.wrap = false
 
--- Search
-
 o.ignorecase = true
 o.smartcase = true
 o.hlsearch = true -- Highlight search matches
-
--- Statusline / window stuff
 
 o.showmode = false -- Using lualine
 o.showcmd = true
