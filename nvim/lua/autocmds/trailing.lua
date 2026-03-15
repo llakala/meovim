@@ -7,7 +7,7 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "BufWinEnter" }, {
   callback = function()
     -- buftype logic prevents weird windows like completions from getting
     -- trailing whitespace highlighting.
-    if vim.bo.buftype == "" then
+    if vim.bo.buftype == "" and not vim.b.disable_trailing then
       vim.cmd([[match TrailingWhitespace /\s\+$/]])
     end
   end,
@@ -18,5 +18,9 @@ vim.api.nvim_create_autocmd("InsertEnter", {
   group = group,
   -- Only shows trailing whitespace on OTHER lines, not the line you're
   -- currently typing on. Thanks, vimwiki!
-  command = [[match trailingWhitespace /\s\+\%#\@<!$/]],
+  callback = function()
+    if vim.bo.buftype == "" and not vim.b.disable_trailing then
+      vim.cmd([[match trailingWhitespace /\s\+\%#\@<!$/]])
+    end
+  end,
 })

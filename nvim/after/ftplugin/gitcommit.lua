@@ -5,5 +5,8 @@
 -- this, I'll probably be very confused. Sorry, future me!
 vim.b.completion = false
 
+-- For my personal autocmd
+vim.b.disable_trailing = true
+
 -- Wrap all text, not just comments
 vim.opt_local.formatoptions:append({ t = true })
