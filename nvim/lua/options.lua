@@ -41,7 +41,7 @@ if workspace_path ~= nil then
   o.shada = "'50,<0"
 end
 
-require("vim._extui").enable({})
+require("vim._core.ui2").enable({})
 
 o.winborder = "rounded"
 o.termguicolors = true
