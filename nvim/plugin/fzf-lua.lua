@@ -140,11 +140,17 @@ require("fzf-lua").setup({
   files = {
     -- Changed from the default to also remove .direnv
     fd_opts = "--color=never --hidden --type f --type l --exclude .git --exclude .direnv",
+    fzf_opts = {
+      ["--history"] = vim.fn.stdpath("data") .. "/fzf-lua-files",
+    },
   },
 
   -- Add fixed-strings to the default, and make ctrl-r toggle regex search on/off
   grep = {
     rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings -e",
+    fzf_opts = {
+      ["--history"] = vim.fn.stdpath("data") .. "/fzf-lua-search",
+    },
     actions = {
       ["ctrl-g"] = false,
       ["ctrl-r"] = {
