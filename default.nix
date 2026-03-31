@@ -10,8 +10,8 @@ mnw.lib.wrap pkgs {
     src = pkgs.fetchFromGitHub {
       owner = "neovim";
       repo = "neovim";
-      rev = "8499af1119f0f96b4fd57ef9099ce5a2503bc952";
-      hash = "sha256-/PyUJOW1PMUdfy+ewWbngxttcaNsQmWpCEueNsAUBZE=";
+      rev = "fc7e5cf6c93fef08effc183087a2c8cc9bf0d75a";
+      hash = "sha256-uWhrGAwQ2nnAkyJ46qGkYxJ5K1jtyUIQOAVu3yTlquk=";
     };
     doInstallCheck = false;
   };
