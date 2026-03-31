@@ -18,6 +18,7 @@ require("autocmds.scrolloff")
 
 require("commands.allman")
 require("commands.redir")
+require("commands.enter")
 require("commands.termhl")
 require("commands.rm")
 require("commands.deallman")
