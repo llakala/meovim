@@ -1,4 +1,4 @@
-vim.api.nvim_create_user_command("Rm", function(ctx)
+vim.api.nvim_create_user_command("Remove", function(ctx)
   local file = vim.fn.expand("%")
 
   if vim.o.modified then
@@ -14,4 +14,4 @@ vim.api.nvim_create_user_command("Rm", function(ctx)
   vim.cmd.bdelete(file)
 end, { bang = true })
 
-cabbrev("rm", "Rm")
+cabbrev("rm", "Remove")
