@@ -6,6 +6,7 @@ in {
   fFtT-highlights-nvim = callPackage ./startPlugins/fFtT-highlights-nvim.nix {};
   lazydev-nvim = callPackage ./startPlugins/lazydev-nvim.nix {};
   oil-nvim = callPackage ./startPlugins/oil-nvim.nix {};
+  mini-indentscope = callPackage ./startPlugins/mini-indentscope.nix {};
 
   inherit (pkgs.vimPlugins)
     # Essentials
@@ -30,11 +31,9 @@ in {
     mini-ai
     mini-comment
     mini-extra # More textobjects for mini-ai
-    mini-indentscope
     # Colorschemes
     onedarkpro-nvim
     tokyonight-nvim
-    # Filetype-specific
     # Dependencies
     nvim-web-devicons
     ;
