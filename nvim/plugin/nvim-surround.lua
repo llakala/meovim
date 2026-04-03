@@ -38,7 +38,6 @@ nnoremap("cs", "<Plug>(nvim-surround-change)")
 
 require("nvim-surround").setup({
   move_cursor = "sticky",
-  indent_lines = false,
 
   surrounds = {
     ["("] = create_surround("(", ")", false),
