@@ -117,3 +117,7 @@ nnoremap(":", function()
   end
   vim.fn.feedkeys(expr, "n")
 end, { nowait = true })
+
+-- Paste from selection clipboard
+nnoremap("gp", '"*p')
+nnoremap("gP", '"*P')
