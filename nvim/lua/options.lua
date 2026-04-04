@@ -9,22 +9,16 @@ o.backup = false
 o.writebackup = false
 o.undofile = true -- Persistent undo
 
-g.mapleader = " "
-
-o.mouse = ""
 o.clipboard = "unnamedplus"
-
-vim.opt.matchpairs:append("<:>") -- % goes between <>
-
--- Some people swear by it, but I want closing tabs to actually close them
 o.hidden = false
-
--- Timeout isn't intuitive.
+o.jumpoptions = "stack,view"
+g.mapleader = " "
+o.mouse = ""
+o.splitbelow = true
+o.splitright = true
 o.timeout = false
 
--- When jumping around, don't center the line, so the screen position doesn't
--- change.
-o.jumpoptions = "stack,view"
+vim.opt.matchpairs:append("<:>") -- % goes between <>
 
 -- Project-specific marks through shada file, from:
 -- https://www.reddit.com/r/neovim/comments/1gv3uqk/comment/lxzi96y/
@@ -41,58 +35,19 @@ if workspace_path ~= nil then
   o.shada = "'50,<0"
 end
 
-require("vim._core.ui2").enable({})
-
-o.winborder = "rounded"
-o.termguicolors = true
-
-o.cursorline = true
-o.cursorlineopt = "both" -- Highlights the line number of the cursorline
-
-o.number = true
-o.relativenumber = true
-o.signcolumn = "yes"
-
--- Shows a continuation `>>>` when wrapping line is cut off
-o.smoothscroll = true
-
--- Custom window title, showing project cwd and current filename. Regex takes
--- the full cwd and takes everything after the last slash.
-o.title = true
-o.titlestring = vim.fn.getcwd():match("([^/]+)$") .. ": %t"
-
-o.expandtab = true -- spaces as tab
-o.tabstop = 2 -- 2 spaces for tabs
-o.shiftwidth = 0 -- Reuse value of tabstop
-
 -- If you need it, do `zi`
 o.foldenable = false
 o.foldmethod = "indent"
 
--- Round to the nearest indentation level when using `<` and `>`
-o.shiftround = true
-
+o.expandtab = true -- spaces as tab
+o.tabstop = 2 -- 2 spaces for tabs
+o.shiftwidth = 0 -- Reuse value of tabstop
+o.shiftround = true -- Round to the nearest indentation level when using `<` and `>`
 o.breakindent = true -- Continue indented wrapped line at same level
-
--- we don't turn on smartindent or cindent, and instead rely on filetype
--- indentation
-o.autoindent = true
+o.autoindent = true -- keep smartindent and cindent off, and rely on filetype indentation
 
 o.wrap = false
-
-o.ignorecase = true
-o.smartcase = true
-o.hlsearch = true -- Highlight search matches
-
-o.showmode = false -- Using lualine
-o.showcmd = true
-
--- Only one statusline, for better separator between horizontal splits
-o.laststatus = 3
-
--- Keep my eyes in the right place!
-o.splitbelow = true
-o.splitright = true
+o.textwidth = 80
 
 -- Changes from defaults:
 -- 1. Removed `t` - only comments should be autoformatted. We add it back in the
@@ -100,6 +55,9 @@ o.splitright = true
 -- 2. Added `r`, so comment headers get continued, but only in insert mode.
 o.formatoptions = "cjqr"
 
--- Auto-wrap comments (but not other stuff, thanks to not having `t` in
--- formatoptions by default)
-o.textwidth = 80
+o.ignorecase = true
+o.smartcase = true
+o.hlsearch = true -- Highlight search matches
+
+o.showmode = false -- Using lualine
+o.showcmd = true
