@@ -5,6 +5,7 @@ require("globals.in_ts_group")
 require("globals.surrounding_indent")
 
 require("options")
+require("ui")
 require("keybinds")
 require("lsp")
 require("colorscheme")
