@@ -3,7 +3,7 @@ local Lib = require("auto-session.lib")
 
 local arg_count = vim.fn.argc()
 
-session.setup({
+local settings = {
   -- Only create a new session if you're at the root of a git repo
   auto_create = vim.g.repo_root == vim.uv.cwd(),
 
@@ -23,13 +23,37 @@ session.setup({
 
   no_restore_cmds = {
     function()
-      if vim.g.repo_root ~= nil and arg_count == 0 then
+      if vim.g.repo_root ~= nil then
         vim.cmd.cd(vim.g.repo_root) -- Neovim cd for stuff like oil
         session.restore_session(vim.g.repo_root, { show_message = false })
       end
     end,
   },
-})
+}
+
+if arg_count ~= 0 then
+  settings.pre_restore_cmds = {
+    function()
+      startup_buffers = vim.api.nvim_list_bufs()
+    end,
+  }
+  settings.preserve_buffer_on_restore = function(buffer)
+    return vim.tbl_contains(startup_buffers, buffer)
+  end
+  vim.api.nvim_create_autocmd("SessionLoadPost", {
+    callback = function()
+      vim.api.nvim_win_set_buf(0, startup_buffers[1])
+      vim.cmd.only()
+    end,
+  })
+  settings.pre_save_cmds = {
+    function()
+      vim.cmd.bdelete(startup_buffers)
+    end,
+  }
+end
+
+session.setup(settings)
 
 -- We save most things to session, but skip localoptions - they're typically
 -- done for testing, and shouldn't stay around.
