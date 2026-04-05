@@ -7,6 +7,7 @@ in {
   lazydev-nvim = callPackage ./startPlugins/lazydev-nvim.nix {};
   oil-nvim = callPackage ./startPlugins/oil-nvim.nix {};
   mini-indentscope = callPackage ./startPlugins/mini-indentscope.nix {};
+  snacks-nvim = callPackage ./startPlugins/snacks-nvim.nix {};
 
   inherit (pkgs.vimPlugins)
     # Essentials
@@ -25,7 +26,6 @@ in {
     colorful-menu-nvim # Show completion types in color
     luasnip
     nvim-highlight-colors # Highlight hex codes
-    snacks-nvim
     tiny-inline-diagnostic-nvim # Better `virtual_lines` from nvim 0.11
     # mini-nvim stuff
     mini-ai
