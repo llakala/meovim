@@ -1,4 +1,4 @@
-local group = vim.api.nvim_create_augroup("OpenQuickfixAutomaticalyy", {})
+local group = vim.api.nvim_create_augroup("OpenQuickfixAutomatically", {})
 
 vim.api.nvim_create_autocmd("QuickFixCmdPre", {
   buffer = 0,
@@ -6,6 +6,7 @@ vim.api.nvim_create_autocmd("QuickFixCmdPre", {
   callback = function()
     vim.api.nvim_create_autocmd("WinClosed", {
       once = true,
+      group = group,
       command = "copen",
     })
   end,

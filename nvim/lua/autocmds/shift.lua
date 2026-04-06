@@ -22,5 +22,4 @@ vim.api.nvim_create_autocmd("TextChanged", {
       vim.b.cursor_pre_shift = nil
     end
   end,
-  group = vim.api.nvim_create_augroup("ShiftLogic", { clear = true }),
 })
