@@ -2,19 +2,6 @@ vim.env.FZF_DEFAULT_OPTS = nil
 local utils = require("fzf-lua.utils")
 local path = require("fzf-lua.path")
 
--- Given some bufnr, return whether it should be included. We filter out most
--- buffers that aren't listed, except help files
-local function filter_unlisted_buffers(bufnr)
-  local ft = vim.bo[bufnr].filetype
-  local is_listed = vim.bo[bufnr].buflisted
-
-  if ft == "help" then
-    return true
-  else
-    return is_listed
-  end
-end
-
 -- Return a list of the open bufnrs, sorted by how recently they were accessed
 local function get_sorted_buflist()
   local info = vim.fn.getbufinfo()
@@ -26,8 +13,8 @@ local function get_sorted_buflist()
 
   -- Don't include the buffer if it was hidden or unlisted (with an exception
   -- for helpfiles, which can be unlisted)
-  info = vim.tbl_filter(function(current)
-    return filter_unlisted_buffers(current.bufnr) and current.hidden == 0
+  info = vim.tbl_filter(function(buf)
+    return vim.bo[buf.bufnr].filetype == "help" or buf.listed == 1
   end, info)
 
   -- Take the full info and turn it into just the bufnrs
@@ -134,7 +121,10 @@ require("fzf-lua").setup({
     -- We want to show helpfiles, but they're unlisted - so we allow all
     -- unlisted buffers, but filter them for only helpfiles
     show_unlisted = true,
-    filter = filter_unlisted_buffers,
+    filter = function(bufnr)
+      local bo = vim.bo[bufnr]
+      return bo.filetype == "help" or bo.buflisted
+    end,
   },
 
   files = {
