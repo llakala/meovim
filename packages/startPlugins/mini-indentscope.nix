@@ -1,5 +1,6 @@
 { vimPlugins, fetchFromGitHub }:
 
+# Pointing to my fork that makes a line with only spaces count as indented
 vimPlugins.mini-indentscope.overrideAttrs {
   src = fetchFromGitHub {
     owner = "llakala";
