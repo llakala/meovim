@@ -1,12 +1,9 @@
 local blink = require("blink.cmp")
 local types = require("blink.cmp.types")
-lsp_capabilities = blink.get_lsp_capabilities()
 
 vim.lsp.config("*", {
-  capabilities = lsp_capabilities,
+  capabilities = blink.get_lsp_capabilities(),
 })
-
-local colorful_menu = require("colorful-menu")
 
 -- Acts as enter for cmdline, even if a completion isn't currently on
 vim.keymap.set("c", "<C-l>", "<CR>")
@@ -22,6 +19,8 @@ vim.keymap.set("c", "<C-n>", "<Down>")
 vim.keymap.set("c", "<Up>", "<Nop>")
 vim.keymap.set("c", "<Down>", "<Nop>")
 
+local prev_providers = nil
+
 blink.setup({
   keymap = {
     -- Want to make something that I can fully control and understand!
@@ -34,8 +33,8 @@ blink.setup({
     -- use a custom provider `lsp_snippets` that filters the lsp provider for
     -- only snippets.
     ["<C-s>"] = {
-      function()
-        local context = blink.get_context()
+      function(api)
+        local context = api.get_context()
         if context == nil then
           return
         end
@@ -46,11 +45,11 @@ blink.setup({
         -- we need vim.inspect since `==` checks identity, not value. Yes, Lua
         -- is pulling a Java on us.
         if vim.inspect(current_providers) ~= vim.inspect(snippet_providers) then
-          vim.g.prev_providers = current_providers
-          blink.show({ providers = snippet_providers })
+          prev_providers = current_providers
+          api.show({ providers = snippet_providers })
         else
-          blink.show({ providers = vim.g.prev_providers })
-          vim.g.prev_providers = {}
+          api.show({ providers = prev_providers })
+          prev_providers = {}
         end
       end,
     },
@@ -109,7 +108,7 @@ blink.setup({
             end,
 
             -- colorize each completion type
-            highlight = colorful_menu.blink_components_highlight,
+            highlight = require("colorful-menu").blink_components_highlight,
           },
         },
       },

@@ -6,7 +6,7 @@ return {
   after = function()
     require("jdtls").start_or_attach({
       cmd = { "jdtls" },
-      capabilities = lsp_capabilities,
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
 
       settings = {
         -- make sure things are under `settings.java`, or things just
