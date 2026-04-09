@@ -10,3 +10,8 @@ vim.b.disable_trailing = true
 
 -- Wrap all text, not just comments
 vim.opt_local.formatoptions:append({ t = true })
+
+vim.cmd([[
+  DiffGitCached -p
+  wincmd p
+]])
