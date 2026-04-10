@@ -17,6 +17,7 @@ o.mouse = ""
 o.splitbelow = true
 o.splitright = true
 o.timeout = false
+o.virtualedit = "block"
 
 vim.opt.matchpairs:append("<:>") -- % goes between <>
 
