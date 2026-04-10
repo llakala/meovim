@@ -11,7 +11,14 @@ vim.b.disable_trailing = true
 -- Wrap all text, not just comments
 vim.opt_local.formatoptions:append({ t = true })
 
-vim.cmd([[
-  DiffGitCached -p
-  wincmd p
-]])
+-- If we're amending the current commit, show that commit's diff properly
+local command
+local first_line = table.concat(vim.api.nvim_buf_get_lines(0, 0, 1, false), "\n")
+if first_line == "" then
+  command = "DiffGitCached -p"
+else
+  command = "DiffGitCached -p HEAD~1"
+end
+
+vim.cmd(command)
+vim.cmd("wincmd p")
