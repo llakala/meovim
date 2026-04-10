@@ -47,15 +47,29 @@ local function select_multiline_comment(operator)
 end
 
 local function select_eol_comment(operator, line, commentstr)
-  -- These represents the beginning and the end of the commentstring. We'll
-  -- choose one of them to use depending on `operator`. commentstr is
-  -- pre-escaped, so we don't need to bother with escaping it
-  local comment_start, comment_end = line:find(commentstr)
+  -- These represents the beginning and the end of the commentstring. commentstr is
+  -- pre-escaped when sent into this function
+  local comment_start, comment_end
+  local from_col
 
-  -- This represents the commentstr not being found in the line. Not sure how
-  -- the end index could be nil if the start index wasn't, but better safe than
-  -- sorry
-  if comment_start == nil or comment_end == nil then
+  if operator == "d" then
+    -- select from start of comment header to eol, include leading spaces if
+    -- they exist
+    comment_start, _ = line:find(" *" .. commentstr)
+    from_col = comment_start and comment_start - 1 or nil
+  elseif operator == "c" then
+    -- Select from end of comment header to eol, not including spaces after
+    -- header
+    _, comment_end = line:find(commentstr .. " ?")
+    from_col = comment_end
+  else
+    -- select from start of comment header to eol, don't include leading spaces
+    comment_start, _ = line:find(commentstr)
+    from_col = comment_start and comment_start - 1 or nil
+  end
+
+  -- This represents the commentstr not being found in the line.
+  if from_col == nil then
     return nil
   end
 
@@ -65,26 +79,6 @@ local function select_eol_comment(operator, line, commentstr)
   -- like /* */ - mini.comment doesn't support them, and I can only handle so
   -- much regex.
   local line_num = vim.fn.line(".")
-
-  local from_col = nil
-
-  -- `dic` -> select from start of comment header to eol, include leading
-  -- space if it exists
-  --
-  -- `vic` / `gwic` / `[^cd]ic` -> select from start of comment header to eol,
-  -- don't include leading space
-  --
-  -- `cic` -> select from end of comment header to eol
-  if operator == "c" then
-    from_col = comment_end
-  elseif operator == "d" then
-    -- TODO: include multiple leading spaces, instead of just one
-    local char_before_comment = line:sub(comment_start - 1, comment_start - 1)
-    local offset = char_before_comment == " " and 2 or 1
-    from_col = comment_start - offset
-  else
-    from_col = comment_start - 1
-  end
 
   -- Till the end of the line, not including final newline
   local to_col = line:len() - 1
@@ -104,11 +98,9 @@ vim.keymap.set({ "x", "o" }, "ic", function()
   local operator = vim.fn.mode() == "v" and "v" or vim.v.operator
   local line = vim.api.nvim_get_current_line()
 
-  -- Get the commentstring up until %s (including the space). Then, escape it
-  -- for use in lua regex
-  -- TODO: allow matching even if the space isn't there, so `--comment` is
-  -- matched
-  local commentstr = vim.pesc(vim.bo.commentstring:match("^(.*)%%s"))
+  -- Get the commentstring up until its space, then escape it for use in lua
+  -- regex
+  local commentstr = vim.pesc(vim.bo.commentstring:match("^([^ ]*)"))
 
   -- If the line has a comment that's only following whitespace, we can
   -- defer to mini.comment. We only have custom logic for EOL comments,
