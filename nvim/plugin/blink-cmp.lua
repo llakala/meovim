@@ -90,7 +90,7 @@ blink.setup({
       auto_brackets = {
         enabled = true,
 
-        -- Pipe operators there - no need
+        -- Languages where we trust the lsp to complete brackets
         blocked_filetypes = { "gleam", "typst", "cpp" },
       },
     },
