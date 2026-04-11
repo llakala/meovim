@@ -6,23 +6,6 @@ npairs.setup()
 
 Autopairs_utils = {}
 
-Autopairs_utils.replacePunctuation = function(lang, punct)
-  return Rule("", punct, lang)
-    :with_move(function(opts)
-      return opts.char == punct
-    end)
-    :with_pair(function()
-      return false
-    end)
-    :with_del(function()
-      return false
-    end)
-    :with_cr(function()
-      return false
-    end)
-    :use_key(punct)
-end
-
 -- From wiki: https://github.com/windwp/nvim-autopairs/wiki/Custom-rules#insertion-with-surrounding-check
 Autopairs_utils.surrounding_spaces = function(a1, ins, a2, lang)
   return Rule(ins, ins, lang)
@@ -39,9 +22,9 @@ end
 
 -- For testing, just run `:e` after sourcing on a given file
 npairs.add_rules({
-  Autopairs_utils.surrounding_spaces("(", " ", ")"),
-  Autopairs_utils.surrounding_spaces("{", " ", "}"),
-  Autopairs_utils.surrounding_spaces("[", " ", "]"),
+  Autopairs_utils.surrounding_spaces("(", " ", ")", "-lua"),
+  Autopairs_utils.surrounding_spaces("{", " ", "}", "-lua"),
+  Autopairs_utils.surrounding_spaces("[", " ", "]", "-lua"),
 
   -- Copied from the nvim-autopairs source:
   -- https://github.com/windwp/nvim-autopairs/blob/23320e75953ac82e559c610bec5a90d9c6dfa743/lua/nvim-autopairs/rules/basic.lua#L44C8-L45C54

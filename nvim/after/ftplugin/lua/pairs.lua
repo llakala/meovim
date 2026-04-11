@@ -1,16 +1,24 @@
 local npairs = require("nvim-autopairs")
 local Rule = require("nvim-autopairs.rule")
 local ts_conds = require("nvim-autopairs.ts-conds")
+local conds = require("nvim-autopairs.conds")
+
+local function add_trailing_comma(left, right)
+  return Rule(left, right .. ",", "lua")
+    :with_pair(conds.not_after_text(","))
+    :with_pair(ts_conds.is_ts_node({ "table_constructor" }))
+end
 
 npairs.add_rules({
-  -- From wiki:
-  -- https://github.com/windwp/nvim-autopairs/wiki/Custom-rules#insertion-with-surrounding-check
-  -- For some reason, these only work with a specific order, I can't add one for
-  -- parentheses, and if I tweak another rule very slightly, they stop working.
-  -- I hate nvim-autopairs.
-  Rule('"', '",', "lua"):with_pair(ts_conds.is_ts_node({ "table_constructor" })),
-  Rule("{", "},", "lua"):with_pair(ts_conds.is_ts_node({ "table_constructor" })),
-  Rule("'", "',", "lua"):with_pair(ts_conds.is_ts_node({ "table_constructor" })),
+  Rule("=", ",", "lua")
+    :with_pair(conds.not_after_regex("%s?}", 2), nil)
+    :with_pair(ts_conds.is_ts_node({ "table_constructor" }))
+    :with_cr(conds.none())
+    :with_move(function(opts)
+      return opts.char == opts.next_char:sub(1, 1)
+    end),
 
-  Autopairs_utils.replacePunctuation("lua", ","),
+  add_trailing_comma("(", ")"),
+  add_trailing_comma('"', '"'),
+  add_trailing_comma("{", "}"),
 })
