@@ -1,6 +1,6 @@
 local npairs = require("nvim-autopairs")
 local Rule = require("nvim-autopairs.rule")
-local cond = require("nvim-autopairs.conds")
+local conds = require("nvim-autopairs.conds")
 
 npairs.setup()
 
@@ -12,8 +12,8 @@ Autopairs_utils.surrounding_spaces = function(a1, ins, a2, lang)
     :with_pair(function(opts)
       return a1 .. a2 == opts.line:sub(opts.col - #a1, opts.col + #a2 - 1)
     end)
-    :with_move(cond.none())
-    :with_cr(cond.none())
+    :with_move(conds.none())
+    :with_cr(conds.none())
     :with_del(function(opts)
       local col = vim.api.nvim_win_get_cursor(0)[2]
       return a1 .. ins .. ins .. a2 == opts.line:sub(col - #a1 - #ins + 1, col + #ins + #a2) -- insert only works for #ins == 1 anyway
@@ -31,5 +31,5 @@ npairs.add_rules({
   -- It has this locked to specific languages, but I write codeblocks in all
   -- sorts of languages - and if I'm typing three `, I definitely want a
   -- codeblock.
-  Rule("```", "```"):with_pair(cond.not_before_char("`", 3)),
+  Rule("```", "```"):with_pair(conds.not_before_char("`", 3)),
 })
