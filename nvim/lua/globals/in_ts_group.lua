@@ -9,8 +9,7 @@ Custom.in_ts_group = function(allowed, disallowed, default)
   while node do
     local type = node:type()
 
-    -- Sometimes these are within math - if we see these before we see math,
-    -- we're currently in them, and should exit early
+    -- if we see one of these before our allowed groups, we should exit early
     if vim.tbl_contains(disallowed, type) then
       return false
     end
@@ -21,8 +20,5 @@ Custom.in_ts_group = function(allowed, disallowed, default)
     node = node:parent()
   end
 
-  if default == nil then
-    return false
-  end
-  return default
+  return default or false
 end
