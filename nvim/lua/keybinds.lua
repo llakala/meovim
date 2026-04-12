@@ -121,3 +121,6 @@ end, { nowait = true })
 -- Paste from selection clipboard
 nnoremap("gp", '"*p')
 nnoremap("gP", '"*P')
+
+nnoremap("[u", "<Cmd>earlier 1f<CR>")
+nnoremap("]u", "<Cmd>later 1f<CR>")
