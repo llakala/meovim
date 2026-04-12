@@ -3,8 +3,8 @@ local cond = require("nvim-autopairs.conds")
 
 -- Groups that are allowed/disallowed for triggering a pair
 local math = {
-  {},
-  { "content", "string", "code" },
+  { "content", "code" },
+  { "string" },
 }
 local content = {
   { "content" },
@@ -39,9 +39,7 @@ require("nvim-autopairs").add_rules({
       return Custom.in_ts_group(math[1], math[2], true)
     end)
     -- only allow moving past the right $, not the left one
-    :with_move(function()
-      return can_move_past("$")
-    end),
+    :with_move(can_move_past("$")),
 
   Rule("*", "*", "typst")
     :with_pair(function()
