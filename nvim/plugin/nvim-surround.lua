@@ -1,6 +1,3 @@
-local cache = require("nvim-surround.cache")
-local config = require("nvim-surround.config")
-
 -- The defaults use ( for whitespace, and ) for no whitespace. Silly!
 -- See https://github.com/kylechui/nvim-surround/issues/384
 function create_surround(left, right, use_whitespace)
@@ -76,11 +73,11 @@ require("nvim-surround").setup({
     -- Works with lines surrounding the current indentation level
     i = {
       delete = function()
-        return Custom.get_indent_selections(true, cache.delete.count)
+        return Custom.get_indent_selections(true, require("nvim-surround.cache").delete.count)
       end,
       change = {
         target = function()
-          return Custom.get_indent_selections(false, cache.change.count)
+          return Custom.get_indent_selections(false, require("nvim-surround.cache").change.count)
         end,
       },
     },
