@@ -5,22 +5,20 @@ local config = require("nvim-surround.config")
 -- See https://github.com/kylechui/nvim-surround/issues/384
 function create_surround(left, right, use_whitespace)
   local add = nil
-  local find = nil
   local delete = nil
 
   if use_whitespace == true then
-    add = { left .. " ", right .. " " } or {}
+    add = { left .. " ", " " .. right } or {}
     delete = "^(. ?)().-( ?.)()$"
   else
     add = { left, right }
     delete = "^(.)().-(.)()$"
   end
 
-  local x = {
+  return {
     add = add,
     delete = delete,
   }
-  return x
 end
 
 vim.g.nvim_surround_no_normal_mappings = true
