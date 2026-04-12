@@ -50,6 +50,10 @@ require("nvim-surround").setup({
     ["<"] = create_surround("<", ">", false),
     [">"] = create_surround("<", ">", true),
 
+    ["<CR>"] = {
+      find = "\n(\n)().-\n(\n)()",
+    },
+
     -- codeblock! We add this for all languages, since I still use codeblocks in
     -- languages where they aren't a feature (like git commit descriptions)
     ["C"] = {
