@@ -95,7 +95,7 @@ require("nvim-surround").setup({
         return { { char }, { char } }
       end,
       find = function(char)
-        if not char or char:find("[@a%c]") then
+        if not char or char:find("[%a%c]") then
           return nil
         end
         return require("nvim-surround.config").get_selection({
