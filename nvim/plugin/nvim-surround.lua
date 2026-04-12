@@ -76,6 +76,25 @@ require("nvim-surround").setup({
         end,
       },
     },
+
+    -- Modified defaults to also reject alphabetical characters, since I never
+    -- want to use them for surrounding
+    invalid_key_behavior = {
+      add = function(char)
+        if not char or char:find("[%a%c]") then
+          return nil
+        end
+        return { { char }, { char } }
+      end,
+      find = function(char)
+        if not char or char:find("[@a%c]") then
+          return nil
+        end
+        return require("nvim-surround.config").get_selection({
+          pattern = vim.pesc(char) .. ".-" .. vim.pesc(char),
+        })
+      end,
+    },
   },
 })
 
