@@ -10,3 +10,18 @@ require("mini.ai").setup({
     ["C"] = { "```%S*%s()[^`]+()```" },
   },
 })
+
+vnoremap("<CR>", function()
+  if vim.treesitter.get_parser(nil, nil, { error = false }) then
+    require("vim.treesitter._select").select_parent(vim.v.count1)
+  else
+    vim.lsp.buf.selection_range(vim.v.count1)
+  end
+end)
+vnoremap("<BS>", function()
+  if vim.treesitter.get_parser(nil, nil, { error = false }) then
+    require("vim.treesitter._select").select_child(vim.v.count1)
+  else
+    vim.lsp.buf.selection_range(-vim.v.count1)
+  end
+end)
