@@ -41,6 +41,8 @@ require("nvim-autopairs").add_rules({
     -- only allow moving past the right $, not the left one
     :with_move(can_move_past("$")),
 
+  Autopairs_utils.surrounding_spaces("$", " ", "$", "typst"),
+
   Rule("*", "*", "typst")
     :with_pair(function()
       return Custom.in_ts_group(content[1], content[2], true)
