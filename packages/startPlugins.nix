@@ -4,7 +4,6 @@ let
 in {
   # Custom plugins
   fFtT-highlights-nvim = callPackage ./startPlugins/fFtT-highlights-nvim.nix {};
-  lazydev-nvim = callPackage ./startPlugins/lazydev-nvim.nix {};
   canola-nvim = callPackage ./startPlugins/canola-nvim.nix {};
   canola-collection = callPackage ./startPlugins/canola-collection.nix {};
   mini-indentscope = callPackage ./startPlugins/mini-indentscope.nix {};
