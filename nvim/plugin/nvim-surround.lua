@@ -20,16 +20,16 @@ end
 
 vim.g.nvim_surround_no_normal_mappings = true
 
-nnoremap("s", "<Plug>(nvim-surround-normal)")
-nnoremap("ss", "<Plug>(nvim-surround-normal-cur)")
-nnoremap("gs", "<Plug>(nvim-surround-normal-line)")
-nnoremap("gss", "<Plug>(nvim-surround-normal-cur-line)")
+vim.keymap.set("n", "s", "<Plug>(nvim-surround-normal)")
+vim.keymap.set("n", "ss", "<Plug>(nvim-surround-normal-cur)")
+vim.keymap.set("n", "gs", "<Plug>(nvim-surround-normal-line)")
+vim.keymap.set("n", "gss", "<Plug>(nvim-surround-normal-cur-line)")
 
-vnoremap("s", "<Plug>(nvim-surround-visual)")
-vnoremap("gs", "<Plug>(nvim-surround-visual-line)")
+vim.keymap.set("x", "s", "<Plug>(nvim-surround-visual)")
+vim.keymap.set("x", "gs", "<Plug>(nvim-surround-visual-line)")
 
-nnoremap("ds", "<Plug>(nvim-surround-delete)")
-nnoremap("cs", "<Plug>(nvim-surround-change)")
+vim.keymap.set("n", "ds", "<Plug>(nvim-surround-delete)")
+vim.keymap.set("n", "cs", "<Plug>(nvim-surround-change)")
 
 require("nvim-surround").setup({
   move_cursor = "sticky",

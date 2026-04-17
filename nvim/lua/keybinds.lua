@@ -1,27 +1,3 @@
--- Create a map with noremap set to true
-local function mkNoremap(mode, key, map, opts)
-  opts = opts or {}
-
-  -- Merge the passed opts with the base ones. Using non-recursive tbl_extend.
-  -- If you need recursion, change it!
-  base_opts = { noremap = true, silent = true }
-  opts = vim.tbl_extend("force", base_opts, opts)
-
-  vim.keymap.set(mode, key, map, opts)
-end
-
-function nnoremap(key, map, opts)
-  mkNoremap("n", key, map, opts)
-end
-
-function vnoremap(key, map, opts)
-  mkNoremap("x", key, map, opts)
-end
-
-function inoremap(key, map, opts)
-  mkNoremap("i", key, map, opts)
-end
-
 function cabbrev(alias, expanded)
   local command = string.format("<c-r>=((getcmdtype()==':' && getcmdpos()==1) ? '%s' : '%s')<CR>", expanded, alias)
   vim.cmd.cnoreabbrev(alias, command)
@@ -29,18 +5,18 @@ end
 
 -- i<Esc> won't move the cursor at all, while a<Esc> will move the cursor
 -- one to the right. I prefer this, as I use i more than a. Helix-style!
-inoremap("<Esc>", "<Esc>l")
+vim.keymap.set("i", "<Esc>", "<Esc>l")
 
-nnoremap("U", "<C-r>", { desc = "Redo" })
+vim.keymap.set("n", "U", "<C-r>", { desc = "Redo" })
 
-nnoremap("<leader><leader>", "<C-^>")
-nnoremap("<A-w>", "<C-w>") -- I have <C-w> to close a tab in Kitty. Should get rid of that!
+vim.keymap.set("n", "<leader><leader>", "<C-^>")
+vim.keymap.set("n", "<A-w>", "<C-w>") -- I have <C-w> to close a tab in Kitty. Should get rid of that!
 
 local ERROR = vim.diagnostic.severity.ERROR
-nnoremap("[e", function()
+vim.keymap.set("n", "[e", function()
   vim.diagnostic.jump({ count = -1, severity = ERROR })
 end, { desc = "Previous error" })
-nnoremap("]e", function()
+vim.keymap.set("n", "]e", function()
   vim.diagnostic.jump({ count = 1, severity = ERROR })
 end, { desc = "Next error" })
 
@@ -51,7 +27,7 @@ end, { desc = "Next error" })
 -- y"/ for last search
 -- y". for last inserted test
 -- y"=sin(3.14) for your mathematical needs
-nnoremap('y"', function()
+vim.keymap.set("n", 'y"', function()
   local prompt = vim.fn.getcharstr()
   local contents
   -- Run expression and evaluate it
@@ -79,13 +55,13 @@ end
 
 -- Opt in to copying to clipboard. Since timeout is disabled, this makes `dyip`
 -- delete the current word and yank it
-nnoremap("dy", "d", { desc = "Delete and yank" })
-nnoremap("dY", "D", { desc = "Delete and yank rest of line" })
-vnoremap("D", "d", { desc = "Delete and yank selection" })
+vim.keymap.set("n", "dy", "d", { desc = "Delete and yank" })
+vim.keymap.set("n", "dY", "D", { desc = "Delete and yank rest of line" })
+vim.keymap.set("v", "D", "d", { desc = "Delete and yank selection" })
 
-nnoremap("cy", "c", { desc = "Change and yank" })
-nnoremap("cY", "C", { desc = "Change and yank rest of line" })
-vnoremap("C", "c", { desc = "Change and yank selection" })
+vim.keymap.set("n", "cy", "c", { desc = "Change and yank" })
+vim.keymap.set("n", "cY", "C", { desc = "Change and yank rest of line" })
+vim.keymap.set("v", "C", "c", { desc = "Change and yank selection" })
 
 -- q to close nvim entirely, d to close the current buffer. however, wq should
 -- only write the current buffer. if you really want to write all buffers, use
@@ -99,16 +75,16 @@ cabbrev("wqa", 'echoerr "just use :wq"')
 
 -- By default, J's count isn't relative, so 2J doesn't perform J twice. I hate
 -- this, so we fix it!
-nnoremap("J", function()
+vim.keymap.set("n", "J", function()
   vim.cmd("normal! " .. vim.v.count + 1 .. "J")
 end)
-nnoremap("gJ", function()
+vim.keymap.set("n", "gJ", function()
   vim.cmd("normal! " .. vim.v.count + 1 .. "gJ")
 end)
 
 -- Same idea as above, so 3: runs the command on the next 3 lines
 -- useful for substituting without needing visual mode
-nnoremap(":", function()
+vim.keymap.set("n", ":", function()
   local expr
   if vim.v.count == 0 then
     expr = ":"
@@ -119,8 +95,8 @@ nnoremap(":", function()
 end, { nowait = true })
 
 -- Paste from selection clipboard
-nnoremap("gp", '"*p')
-nnoremap("gP", '"*P')
+vim.keymap.set("n", "gp", '"*p')
+vim.keymap.set("n", "gP", '"*P')
 
-nnoremap("[u", "<Cmd>earlier 1f<CR>")
-nnoremap("]u", "<Cmd>later 1f<CR>")
+vim.keymap.set("n", "[u", "<Cmd>earlier 1f<CR>")
+vim.keymap.set("n", "]u", "<Cmd>later 1f<CR>")

@@ -4,7 +4,7 @@ vim.keymap.set({ "n", "x" }, "y", function()
 end, { expr = true })
 
 -- Yank into selection clipboard (the one used for middle click paste)
-nnoremap("gy", function()
+vim.keymap.set("n", "gy", function()
   vim.b.cursor_pre_yank = vim.api.nvim_win_get_cursor(0)
   return '"*y'
 end, { expr = true })

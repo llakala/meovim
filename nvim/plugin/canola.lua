@@ -150,7 +150,7 @@ vim.g.canola = {
   },
 }
 
-nnoremap("<leader>e", canola.open_float)
-nnoremap("<leader>E", function()
+vim.keymap.set("n", "<leader>e", canola.open_float)
+vim.keymap.set("n", "<leader>E", function()
   canola.open_float(".")
 end)
