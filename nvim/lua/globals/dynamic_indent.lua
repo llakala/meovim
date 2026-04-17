@@ -13,7 +13,7 @@ M.setup = function(opts)
   })
 end
 
-local safe_eval = function(x)
+local function safe_eval(x)
   local fn_name = x:gsub("%(%)$", "")
   if fn_name == "" then
     return

@@ -2,7 +2,7 @@ local npairs = require("nvim-autopairs")
 local Rule = require("nvim-autopairs.rule")
 local cond = require("nvim-autopairs.conds")
 
-local auto_semicolon = function(prefix)
+local function auto_semicolon(prefix)
   return Rule(prefix, ";", "nix")
     -- Don't add another semicolon if there already is one after the cursor
     :with_pair(cond.not_after_regex(";", 2))

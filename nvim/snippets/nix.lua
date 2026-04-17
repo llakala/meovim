@@ -1,4 +1,4 @@
-local not_in_comment = function()
+local function not_in_comment()
   local _, row, col, _ = unpack(vim.fn.getpos("."))
   local node = vim.treesitter.get_node({
     pos = { row - 1, col - 2 },

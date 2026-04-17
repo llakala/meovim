@@ -5,7 +5,7 @@ local ns = vim.api.nvim_create_namespace("CanolaHighlights")
 vim.b.search_char = nil
 local sort_by_recent = false
 
-local search_first_char = function(reuse_prompt, forward)
+local function search_first_char(reuse_prompt, forward)
   local buf = 0
 
   local prompt

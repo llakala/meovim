@@ -35,7 +35,7 @@ local function delete_buffer_action(selected, opts)
 
     -- If the current file has unsaved changes, prompt the user to save
     local is_dirty = utils.buffer_is_dirty(buf_to_delete, true, false)
-    local save_dialog = function()
+    local function save_dialog()
       return utils.save_dialog(buf_to_delete)
     end
 
