@@ -1,5 +1,4 @@
 local blink = require("blink.cmp")
-local types = require("blink.cmp.types")
 
 vim.lsp.config("*", {
   capabilities = blink.get_lsp_capabilities(),
@@ -96,7 +95,6 @@ blink.setup({
     accept = {
       auto_brackets = {
         enabled = true,
-
         -- Languages where we trust the lsp to complete brackets
         blocked_filetypes = { "gleam", "typst", "cpp" },
       },
@@ -105,7 +103,6 @@ blink.setup({
     menu = {
       draw = {
         columns = { { "kind_icon" }, { "label", "label_description" } },
-
         components = {
           label = {
             -- Removes label_details from being added to label by default
@@ -113,7 +110,6 @@ blink.setup({
             text = function(ctx)
               return ctx.label
             end,
-
             -- colorize each completion type
             highlight = require("colorful-menu").blink_components_highlight,
           },
@@ -131,15 +127,14 @@ blink.setup({
     },
 
     completion = {
-      -- In cmdline, we want to manually select something - and once it's
-      -- selected, we can keep scrolling
       list = {
+        -- In cmdline, we want to manually select something - and once it's
+        -- selected, we can keep scrolling
         selection = {
           preselect = false,
           auto_insert = true,
         },
       },
-
       menu = { auto_show = true },
     },
   },
@@ -161,14 +156,12 @@ blink.setup({
 
   signature = {
     enabled = true,
-
     window = { show_documentation = true },
   },
 
   -- Prioritizes exact matches higher
   fuzzy = {
     implementation = "prefer_rust_with_warning",
-
     sorts = {
       "exact",
       -- defaults
@@ -195,7 +188,7 @@ blink.setup({
         module = "blink.cmp.sources.lsp",
         transform_items = function(_, items)
           return vim.tbl_filter(function(item)
-            return item.kind == types.CompletionItemKind.Snippet
+            return item.kind == require("blink.cmp.types").CompletionItemKind.Snippet
           end, items)
         end,
       },
@@ -206,7 +199,7 @@ blink.setup({
         transform_items = function(_, items)
           -- the default transformer will do this
           return vim.tbl_filter(function(item)
-            return item.kind ~= types.CompletionItemKind.Keyword
+            return item.kind ~= require("blink.cmp.types").CompletionItemKind.Keyword
           end, items)
         end,
       },
