@@ -1,6 +1,7 @@
 vim.lsp.inlay_hint.enable(true)
 
 vim.diagnostic.config({
+  virtual_text = false, -- Have this through a plugin
   severity_sort = true,
   signs = false,
   float = {

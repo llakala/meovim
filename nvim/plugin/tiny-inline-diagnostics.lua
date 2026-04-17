@@ -1,5 +1,3 @@
-vim.diagnostic.config({ virtual_text = false })
-
 require("tiny-inline-diagnostic").setup({
   options = {
     -- Will show other diagnostics, even when they're not on the current line
