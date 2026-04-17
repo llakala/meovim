@@ -39,7 +39,14 @@ blink.setup({
           return
         end
         local current_providers = context.providers
-        local snippet_providers = { "snippets", "lazydev", "lsp_snippets" }
+        local filetype = vim.bo[context.bufnr].filetype
+
+        local snippet_providers
+        if filetype == "lua" then
+          snippet_providers = { "snippets", "lazydev", "lsp_snippets" }
+        else
+          snippet_providers = { "snippets", "lsp_snippets" }
+        end
 
         -- Toggle between previous set of providers and snippet providers.
         -- we need vim.inspect since `==` checks identity, not value. Yes, Lua
@@ -171,9 +178,10 @@ blink.setup({
   },
 
   sources = {
-    default = { "lazydev", "lsp", "path", "snippets", "omni" },
+    default = { "lsp", "path", "snippets", "omni" },
     per_filetype = {
-      nix = { "lazydev", "lsp_no_keywords", "path", "snippets", "omni" },
+      nix = { "lsp_no_keywords", "path", "snippets", "omni" },
+      lua = { "lazydev", "lsp", "path", "snippets", "omni" },
     },
     providers = {
       -- autosnippets are automatically expanded, so showing the completion
