@@ -5,16 +5,7 @@ let
 in
 mnw.lib.wrap pkgs {
   appName = "nvim";
-  neovim = pkgs.neovim.unwrapped.overrideAttrs {
-    version = "0.12.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "neovim";
-      repo = "neovim";
-      rev = "fc7e5cf6c93fef08effc183087a2c8cc9bf0d75a";
-      hash = "sha256-uWhrGAwQ2nnAkyJ46qGkYxJ5K1jtyUIQOAVu3yTlquk=";
-    };
-    doInstallCheck = false;
-  };
+  neovim = pkgs.neovim-unwrapped;
 
   luaFiles = [
     ./init.lua
