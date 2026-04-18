@@ -8,6 +8,7 @@ in {
   canola-collection = callPackage ./startPlugins/canola-collection.nix {};
   mini-indentscope = callPackage ./startPlugins/mini-indentscope.nix {};
   snacks-nvim = callPackage ./startPlugins/snacks-nvim.nix {};
+  vim-nix = callPackage ./startPlugins/vim-nix.nix {};
 
   inherit (pkgs.vimPlugins)
     # Essentials
