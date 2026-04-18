@@ -9,6 +9,7 @@ in {
   mini-indentscope = callPackage ./startPlugins/mini-indentscope.nix {};
   snacks-nvim = callPackage ./startPlugins/snacks-nvim.nix {};
   vim-nix = callPackage ./startPlugins/vim-nix.nix {};
+  tiny-inline-diagnostic-nvim = callPackage ./startPlugins/tiny-inline-diagnostic-nvim.nix {};
 
   inherit (pkgs.vimPlugins)
     # Essentials
@@ -27,7 +28,6 @@ in {
     colorful-menu-nvim # Show completion types in color
     luasnip
     nvim-highlight-colors # Highlight hex codes
-    tiny-inline-diagnostic-nvim # Better `virtual_lines` from nvim 0.11
     # mini-nvim stuff
     mini-ai
     mini-comment
