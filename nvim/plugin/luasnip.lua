@@ -1,6 +1,4 @@
-local ls = require("luasnip")
-
-ls.setup({
+require("luasnip").setup({
   enable_autosnippets = true,
   snip_env = {
     in_ts_group = Custom.in_ts_group,
