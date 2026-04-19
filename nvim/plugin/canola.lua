@@ -38,8 +38,8 @@ local function search_first_char(reuse_prompt, forward)
   vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
 
   -- Iterate through all the matched lines and highlight them
-  -- Note that we need to use `bufnr()` - bufnr of 0 doesn't work for matchbufline!
-  local matches = vim.fn.matchbufline(vim.fn.bufnr(), pattern, 1, "$")
+  -- Note that we need to get the current buf - bufnr of 0 doesn't work for matchbufline!
+  local matches = vim.fn.matchbufline(vim.api.nvim_get_current_buf(), pattern, 1, "$")
   for _, match in ipairs(matches) do
     local line = unpack(vim.api.nvim_buf_get_lines(buf, match.lnum - 1, match.lnum, true))
     local col = string.sub(line, search_col, search_col)
