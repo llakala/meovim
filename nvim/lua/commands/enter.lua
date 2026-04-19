@@ -6,12 +6,13 @@ vim.api.nvim_create_user_command("Enter", function(ctx)
   vim.cmd.edit("%:p:h/" .. ctx.fargs[1])
 end, {
   nargs = "?",
-  complete = function()
-    local dir = vim.fn.expand("%:p:h")
-    local ret = vim.split(vim.fn.glob(dir .. "/*"), "\n")
-    for idx, path in pairs(ret) do
-      ret[idx] = vim.fn.fnamemodify(path, ":t")
-    end
+  complete = function(arg_lead)
+    -- Set 'path' to the location of the current file, thereby reusing the
+    -- file_in_path logic. Setting arg_lead also allows us to use `../`
+    local old = vim.bo.path
+    vim.bo.path = "./" .. arg_lead
+    local ret = vim.fn.getcompletion("", "file_in_path", false)
+    vim.bo.path = old
     return ret
   end,
 })
