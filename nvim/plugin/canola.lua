@@ -19,12 +19,9 @@ local function search_first_char(reuse_prompt, forward)
     prompt = vim.fn.getcharstr()
   end
 
-  -- Move to the first column if we're not there already
-  vim.api.nvim_feedkeys("^", "n", false)
-
   -- Search for the prompt character, limiting the search range to the first
   -- column of every line.
-  local search_col = vim.fn.col(".")
+  local search_col = vim.api.nvim_win_get_cursor(0)[2] + 1
   local pattern = "\\%" .. search_col .. "c" .. prompt
   local flags = forward and "" or "b"
   vim.fn.search(pattern, flags)
