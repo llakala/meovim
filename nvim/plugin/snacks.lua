@@ -6,8 +6,12 @@ require("snacks").setup({
     enabled = true,
     win = {
       on_win = function()
-        if vim.g.normal_mode_input then
-          vim.g.normal_mode_input = false
+        if vim.g.input_completion then
+          vim.g.input_completion = false
+          vim.b.completion = true
+        end
+        if vim.g.input_normal_mode then
+          vim.g.input_normal_mode = false
           -- See https://github.com/folke/snacks.nvim/issues/2198
           vim.schedule(function()
             vim.cmd("stopinsert")

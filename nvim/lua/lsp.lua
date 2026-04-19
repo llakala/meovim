@@ -13,7 +13,7 @@ vim.diagnostic.config({
 -- change K, I can change R.
 vim.keymap.del("n", "grn")
 vim.keymap.set("n", "R", function()
-  vim.g.normal_mode_input = true
+  vim.g.input_normal_mode = true
   vim.lsp.buf.rename()
 end, { desc = "Rename symbol" })
 
