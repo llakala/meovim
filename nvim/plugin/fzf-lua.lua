@@ -106,7 +106,6 @@ require("fzf-lua").setup({
 
     actions = {
       ["ctrl-x"] = {
-        reload = true,
         fn = delete_buffer_action,
       },
     },
