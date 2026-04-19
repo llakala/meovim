@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd("TextChanged", {
     local pos = vim.b.cursor_pre_shift
     if pos ~= nil then
       local row, col = unpack(pos)
-      local shiftwidth = vim.fn.shiftwidth()
+      local shiftwidth = vim.bo.shiftwidth > 0 and vim.bo.shiftwidth or vim.bo.tabstop
       local sign = vim.v.operator == ">" and 1 or -1
       local new_pos = { row, math.max(0, col + (sign * shiftwidth)) }
 
