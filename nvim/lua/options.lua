@@ -30,7 +30,7 @@ vim.opt.matchpairs:append("<:>") -- % goes between <>
 local workspace_path = vim.g.repo_root
 if workspace_path ~= nil then
   local cache_dir = vim.fn.stdpath("data")
-  local unique_id = vim.fn.fnamemodify(workspace_path, ":t") .. "_" .. vim.fn.sha256(workspace_path):sub(1, 8)
+  local unique_id = vim.fs.basename(workspace_path) .. "_" .. vim.fn.sha256(workspace_path):sub(1, 8)
   local shadafile = cache_dir .. "/myshada/" .. unique_id .. ".shada"
   o.shadafile = shadafile
   o.shada = "'50,<0"
