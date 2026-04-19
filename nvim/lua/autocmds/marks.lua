@@ -61,7 +61,7 @@ end
 function M.delete_mark(mark)
   local bufnr = vim.api.nvim_get_current_buf()
   vim.fn.sign_unplace(M.config.group, { buffer = bufnr, id = mark:byte() })
-  vim.cmd("delmarks " .. mark)
+  vim.api.nvim_buf_del_mark(bufnr, mark)
 end
 
 function M.delete_all_marks()
