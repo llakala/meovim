@@ -28,25 +28,25 @@ vim.keymap.set("o", "si", Custom.operate_on_surrounding_indent)
 -- Custom goto_top and goto_bottom mappings, since I dislike how they're handled
 -- by default
 vim.keymap.set({ "o", "x" }, "[i", function()
-  if vim.fn.mode() ~= "V" then
+  if vim.api.nvim_get_mode().mode ~= "V" then
     vim.cmd("normal! V")
   end
   MiniIndentscope.move_cursor("top", false)
 end)
 vim.keymap.set({ "o", "x" }, "]i", function()
-  if vim.fn.mode() ~= "V" then
+  if vim.api.nvim_get_mode().mode ~= "V" then
     vim.cmd("normal! V")
   end
   MiniIndentscope.move_cursor("bottom", false)
 end)
 vim.keymap.set({ "o", "x" }, "[I", function()
-  if vim.fn.mode() ~= "V" then
+  if vim.api.nvim_get_mode().mode ~= "V" then
     vim.cmd("normal! V")
   end
   MiniIndentscope.move_cursor("top", true)
 end)
 vim.keymap.set({ "o", "x" }, "]I", function()
-  if vim.fn.mode() ~= "V" then
+  if vim.api.nvim_get_mode().mode ~= "V" then
     vim.cmd("normal! V")
   end
   MiniIndentscope.move_cursor("bottom", true)
