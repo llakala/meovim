@@ -32,17 +32,18 @@ vim.keymap.set("n", 'y"', function()
   local contents
   -- Run expression and evaluate it
   if prompt == "=" then
-    local expr = vim.fn.input({ prompt = "=" })
+    local expr = vim.fn.input({ prompt = "=", completion = "expression" })
     local unsplit_output = vim.fn.eval(expr)
     if type(unsplit_output) ~= "string" then
       contents = unsplit_output
     else
-      local split_output = vim.fn.split(unsplit_output, "\n")
+      local split_output = vim.split(unsplit_output, "\n")
       contents = #split_output == 1 and split_output[1] or unsplit_output
     end
   else
     contents = vim.fn.keytrans(vim.fn.getreg(prompt))
   end
+  vim.print("Setting register '" .. vim.v.register .. "' to '" .. contents .. "'")
   vim.fn.setreg(vim.v.register, contents)
 end)
 
