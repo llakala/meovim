@@ -91,7 +91,7 @@ vim.keymap.set("n", ":", function()
   else
     expr = ":.,.+" .. vim.v.count
   end
-  vim.fn.feedkeys(expr, "n")
+  vim.api.nvim_feedkeys(expr, "n", true)
 end, { nowait = true })
 
 -- Paste from selection clipboard
