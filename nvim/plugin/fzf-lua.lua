@@ -62,6 +62,7 @@ local function delete_buffer_action(selected, opts)
 end
 
 require("fzf-lua").setup({
+  ui_select = true,
   previewers = {
     builtin = {
       -- This breaks tex files, due to an error with `standalone.cls`! I hate
@@ -180,8 +181,6 @@ require("fzf-lua").setup({
     ["--cycle"] = true,
   },
 })
-
-FzfLua.register_ui_select()
 
 -- Replace default LSP bindings with fzf-lua equivalents We don't mess with
 -- rename and code actions - just actions that use a picker
