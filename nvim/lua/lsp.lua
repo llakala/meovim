@@ -12,7 +12,10 @@ vim.diagnostic.config({
 -- Replace mode is stupid, and nobody sane would ever use it. If neovim can
 -- change K, I can change R.
 vim.keymap.del("n", "grn")
-vim.keymap.set("n", "R", vim.lsp.buf.rename, { desc = "Rename symbol" })
+vim.keymap.set("n", "R", function()
+  vim.g.normal_mode_input = true
+  vim.lsp.buf.rename()
+end, { desc = "Rename symbol" })
 
 -- This is just ascii stuff by default - useless to me!
 vim.keymap.del({ "n", "x" }, "gra")

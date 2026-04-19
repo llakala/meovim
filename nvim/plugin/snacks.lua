@@ -6,11 +6,14 @@ require("snacks").setup({
     enabled = true,
     win = {
       on_win = function()
-        -- See https://github.com/folke/snacks.nvim/issues/2198
-        vim.schedule(function()
-          vim.cmd("stopinsert")
-          vim.cmd("norm ^")
-        end)
+        if vim.g.normal_mode_input then
+          vim.g.normal_mode_input = false
+          -- See https://github.com/folke/snacks.nvim/issues/2198
+          vim.schedule(function()
+            vim.cmd("stopinsert")
+            vim.cmd("norm ^")
+          end)
+        end
       end,
     },
   },
