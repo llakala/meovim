@@ -22,7 +22,7 @@ local function select_multiline_comment(operator)
   -- fine for most cases. We only keep going if we're doing anything other than
   -- `cic`
   -- TODO: is checking mode unnecessary here?
-  if vim.fn.mode() ~= "V" or operator ~= "c" then
+  if vim.api.nvim_get_mode().mode ~= "V" or operator ~= "c" then
     return
   end
 
@@ -78,14 +78,15 @@ local function select_eol_comment(operator, line, commentstr)
   -- reuse the current line number. And no, there's no support for doc comments
   -- like /* */ - mini.comment doesn't support them, and I can only handle so
   -- much regex.
-  local line_num = vim.fn.line(".")
+  local line_num = vim.api.nvim_win_get_cursor(0)[1]
 
   -- Till the end of the line, not including final newline
-  local to_col = line:len() - 1
+  local to_col = vim.api.nvim_get_current_line():len() - 1
 
   -- exit visual mode if we're currently in it, so we can select a range properly
   -- \22 is <C-v>, \27 is <Esc>
-  if vim.tbl_contains({ "v", "V", "\22" }, vim.fn.mode()) then
+  local mode = vim.api.nvim_get_mode().mode
+  if vim.tbl_contains({ "v", "V", "\22" }, mode) then
     vim.cmd("normal! \27")
   end
 
@@ -95,7 +96,8 @@ local function select_eol_comment(operator, line, commentstr)
 end
 
 vim.keymap.set({ "x", "o" }, "ic", function()
-  local operator = vim.fn.mode() == "v" and "v" or vim.v.operator
+  local mode = vim.api.nvim_get_mode().mode
+  local operator = mode == "v" and "v" or vim.v.operator
   local line = vim.api.nvim_get_current_line()
 
   -- Get the commentstring up until its space, then escape it for use in lua

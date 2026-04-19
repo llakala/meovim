@@ -145,9 +145,10 @@ blink.setup({
     -- Prevents snippet placeholders from staying when you leave insert mode
     active = function()
       local ls = require("luasnip")
+      local mode = vim.api.nvim_get_mode().mode
       if ls.in_snippet() and not blink.is_visible() then
         return true
-      elseif not ls.in_snippet() and vim.fn.mode() == "n" then
+      elseif not ls.in_snippet() and mode == "n" then
         ls.unlink_current()
       end
       return false
