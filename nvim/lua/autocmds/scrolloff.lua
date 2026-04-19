@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd({ "CursorMoved" }, {
   desc = "Center cursor",
   group = vim.api.nvim_create_augroup("CenterCurrentLine", {}),
   callback = function()
-    local curr_line = vim.fn.line(".")
+    local curr_line = vim.api.nvim_win_get_cursor(0)[1]
 
     -- Whenever we open a buffer, we'll always start at line 1 - even if we open
     -- at a specific line, nvim still starts at line 1, it just moves you after
