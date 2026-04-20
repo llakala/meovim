@@ -1,7 +1,7 @@
 local function not_in_comment()
-  local _, row, col, _ = unpack(vim.fn.getpos("."))
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   local node = vim.treesitter.get_node({
-    pos = { row - 1, col - 2 },
+    pos = { row - 1, col - 1 },
   })
   return node and node:type() ~= "comment"
 end
