@@ -34,16 +34,17 @@ local function select_multiline_comment(operator)
 
   -- NOTE: this depends on implementation detail that `MiniComment.textobject`
   -- puts cursor on last line of comment block
-  local from_line, to_line = vim.fn.line("v"), vim.fn.line(".")
+  local from_line = vim.fn.line("v")
+  local to_line = vim.api.nvim_win_get_cursor(0)[1]
 
-  vim.fn.feedkeys("v", "nx")
+  vim.api.nvim_feedkeys("v", "nx", true)
   local to_col = vim.fn.getline(to_line):find(vim.pesc(comment_right) .. "%s*$")
   vim.api.nvim_win_set_cursor(0, { to_line, to_col - 2 })
 
-  vim.fn.feedkeys("o", "nx")
+  vim.api.nvim_feedkeys("o", "nx", true)
   local _, from_col = vim.fn.getline(from_line):find("^%s*" .. vim.pesc(comment_left))
   vim.api.nvim_win_set_cursor(0, { from_line, from_col })
-  vim.fn.feedkeys("o", "nx")
+  vim.api.nvim_feedkeys("o", "nx", true)
 end
 
 local function select_eol_comment(operator, line, commentstr)
