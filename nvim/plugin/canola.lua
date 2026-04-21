@@ -61,7 +61,6 @@ vim.g.canola = {
   },
   delete = {
     wipe = true, -- Autodelete open buffers when file deleted
-    trash = true, -- Delete files to the system trash
   },
 
   keymaps = {
@@ -146,6 +145,9 @@ vim.g.canola = {
     end,
   },
 }
+
+-- Delete files to the system trash
+vim.g.canola_trash = {}
 
 vim.keymap.set("n", "<leader>e", canola.open_float)
 vim.keymap.set("n", "<leader>E", function()
