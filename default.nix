@@ -5,7 +5,9 @@ let
 in
 mnw.lib.wrap pkgs {
   appName = "nvim";
-  neovim = pkgs.neovim-unwrapped;
+  neovim = pkgs.neovim-unwrapped.overrideAttrs (oldAttrs: {
+    patches = (oldAttrs.patches or []) ++ [ ./packages/patches/better-e-binding.patch ];
+  });
 
   luaFiles = [
     ./init.lua
