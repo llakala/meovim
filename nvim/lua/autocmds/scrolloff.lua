@@ -1,3 +1,4 @@
+local group = vim.api.nvim_create_augroup("CenterCurrentLine", {})
 -- Better `:set scrolloff` for keeping the cursor centered. `zz` has the
 -- frustrating behavior of always clearing highlights, even if the current line
 -- is already centered. This breaks my `fFtT` character highlighting. To fix
@@ -8,7 +9,7 @@
 -- for the impl
 vim.api.nvim_create_autocmd({ "CursorMoved" }, {
   desc = "Center cursor",
-  group = vim.api.nvim_create_augroup("CenterCurrentLine", {}),
+  group = group,
   callback = function()
     local curr_line = vim.api.nvim_win_get_cursor(0)[1]
 
@@ -19,8 +20,12 @@ vim.api.nvim_create_autocmd({ "CursorMoved" }, {
     local prev_line = vim.b.prev_line or 1
 
     if prev_line ~= curr_line then
-      vim.api.nvim_command("normal! zz")
+      vim.cmd("normal! zz")
       vim.b.prev_line = curr_line
     end
   end,
 })
+
+vim.api.nvim_create_user_command("NoScrolloff", function()
+  vim.api.nvim_del_augroup_by_id(group)
+end, {})
