@@ -17,7 +17,7 @@ require("tiny-inline-diagnostic").setup({
     -- If the diagnostic is on another line, only show the first line of its
     -- message
     format = function(diag)
-      local current_line = vim.fn.line(".")
+      local current_line = vim.api.nvim_win_get_cursor(0)[1]
       local diag_line = diag.lnum
       if diag_line + 1 == current_line then
         return diag.message
