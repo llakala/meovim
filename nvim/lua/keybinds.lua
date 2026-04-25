@@ -95,6 +95,21 @@ vim.keymap.set("n", ":", function()
   vim.api.nvim_feedkeys(expr, "n", true)
 end, { nowait = true })
 
+-- Single-key macro recording. I recommend using Q to execute the macro rather
+-- than @q
+vim.keymap.set({ "n", "x" }, "q", function()
+  if vim.fn.reg_recording() == "" then
+    return "qq"
+  else
+    return "q"
+  end
+end, { expr = true })
+vim.keymap.set("n", "zq", "q")
+
+vim.keymap.set("n", "g:", "q:")
+vim.keymap.set("n", "g/", "q/")
+vim.keymap.set("n", "g?", "q?")
+
 -- Paste from selection clipboard
 vim.keymap.set("n", "gp", '"*p')
 vim.keymap.set("n", "gP", '"*P')
