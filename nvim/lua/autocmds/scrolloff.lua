@@ -26,6 +26,30 @@ vim.api.nvim_create_autocmd({ "CursorMoved" }, {
   end,
 })
 
+-- Deterministic H and L that scroll half a page. I would map these to <C-u> and
+-- <C-d>, but they have odd behavior where they reset the curswant column
+vim.keymap.set({ "n", "x" }, "H", function()
+  return vim.o.scroll .. "k"
+end, { expr = true })
+vim.keymap.set({ "n", "x" }, "L", function()
+  return vim.o.scroll .. "j"
+end, { expr = true })
+
+-- with buffer centering, M is annoying and scrolls up at the end of a buffer. I
+-- prefer it to consistently go to the "screen middle" of the current window,
+-- and be equivalent to ggL
+vim.keymap.set({ "n", "x" }, "M", function()
+  local current_line = vim.api.nvim_win_get_cursor(0)[1]
+  local visual_middle = vim.fn.line("w0") + vim.o.scroll
+
+  if current_line ~= visual_middle then
+    return visual_middle .. "G"
+  end
+end, { expr = true })
+
 vim.api.nvim_create_user_command("NoScrolloff", function()
   vim.api.nvim_del_augroup_by_id(group)
+  vim.keymap.del({ "n", "x" }, "H")
+  vim.keymap.del({ "n", "x" }, "M")
+  vim.keymap.del({ "n", "x" }, "L")
 end, {})
