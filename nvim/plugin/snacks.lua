@@ -15,7 +15,7 @@ require("snacks").setup({
           -- See https://github.com/folke/snacks.nvim/issues/2198
           vim.schedule(function()
             vim.cmd("stopinsert")
-            vim.cmd("norm ^")
+            vim.cmd("normal! ^")
           end)
         end
       end,

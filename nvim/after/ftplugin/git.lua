@@ -1,7 +1,7 @@
 vim.keymap.set("n", "]]", function()
   for _ = 1, vim.v.count1 do
     if vim.fn.search("^diff --git", "W") == 0 then
-      vim.cmd("norm! G0")
+      vim.cmd("normal! G0")
     end
   end
 end, { buffer = true })

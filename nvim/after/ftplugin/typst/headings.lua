@@ -9,15 +9,15 @@ local regex = "^=\\+"
 vim.keymap.set({ "n", "o", "x" }, "]]", function()
   for _ = 1, vim.v.count1 do
     if vim.fn.search(regex, "W") == 0 then
-      vim.cmd("norm! G^")
+      vim.cmd("normal! G^")
     end
   end
 end, { buffer = true })
 
 vim.keymap.set({ "n", "o", "x" }, "[[", function()
   for _ = 1, vim.v.count1 do
-    if vim.fn.line(".") == 1 then
-      vim.cmd("norm! ^")
+    if vim.api.nvim_win_get_cursor(0)[1] == 1 then
+      vim.cmd("normal! ^")
     end
     vim.fn.search(regex, "Wb")
   end
