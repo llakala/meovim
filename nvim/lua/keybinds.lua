@@ -83,6 +83,19 @@ vim.keymap.set("n", "gJ", function()
   vim.cmd("normal! " .. vim.v.count + 1 .. "gJ")
 end)
 
+-- Make H move an extra line with an an odd-number window height, so HL is
+-- deterministic
+vim.keymap.set({ "n", "x" }, "H", function()
+  if vim.api.nvim_win_get_height(0) % 2 == 1 then
+    return "H"
+  end
+  local top = vim.fn.line("w0")
+  if top == 1 then
+    return "H"
+  end
+  return (top - 1) .. "G"
+end, { expr = true })
+
 -- Same idea as above, so 3: runs the command on the next 3 lines
 -- useful for substituting without needing visual mode
 vim.keymap.set("n", ":", function()
