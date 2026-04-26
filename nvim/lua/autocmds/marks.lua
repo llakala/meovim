@@ -9,65 +9,49 @@ local M = {}
 
 M.config = {
   priority = 100,
-  group = "MarkGutter",
-  name_prefix = "MarkGutter_",
+  sign_group = "MarkSign",
+  name_prefix = "MarkSign_",
 }
 
--- Give all marks (global and local) for a current buffer.
----@param bufnr number Buffer number to get marks for
----@return vim.fn.getmarklist.ret.item[] List of marks where keys are mark names (a-z for local, A-Z for global) and values contain line/column positions
-function M.list_all_marks_for_buffer(bufnr)
-  local local_marks = vim.fn.getmarklist(bufnr)
-  local global_marks = vim.tbl_filter(function(mark)
-    -- pos is a 4-tuple with the bufnr, lnum, col, offset. See `:h getmarklist()`.
-    local global_mark_bufnr = mark.pos[1]
-    return global_mark_bufnr == bufnr
-  end, vim.fn.getmarklist())
+function M.place_mark(bufnr, mark, lnum)
+  local name = M.config.name_prefix .. mark
+  local id = mark:byte()
 
-  return vim.list_extend(local_marks, global_marks)
-end
-
-function M.render_mark(bufnr, mark, lnum)
-  if mark:match("[a-zA-Z]") then
-    vim.fn.sign_place(mark:byte(), M.config.group, M.config.name_prefix .. mark, bufnr, {
+  if mark:match("[A-Z]") then
+    -- Unplace all global marks with this label, even in other buffers
+    vim.fn.sign_unplace(M.config.sign_group, { id = id })
+    if lnum == 0 then
+      return
+    end
+    vim.fn.sign_place(id, M.config.sign_group, name, bufnr, {
+      lnum = lnum,
+      priority = M.config.priority,
+    })
+  elseif mark:match("[a-z]") then
+    -- Only unplace marks with this label in the current buffer
+    vim.fn.sign_unplace(M.config.sign_group, { id = id, buffer = bufnr })
+    if lnum == 0 then
+      return
+    end
+    vim.fn.sign_place(id, M.config.sign_group, name, bufnr, {
       lnum = lnum,
       priority = M.config.priority,
     })
   end
 end
 
--- Rerender all marks in the sign column
-function M.render_all_marks(bufnr)
-  -- Clear all existing marks
-  vim.fn.sign_unplace(M.config.group, { buffer = bufnr })
-
-  -- Get all marks
-  local all_marks = M.list_all_marks_for_buffer(bufnr)
-
-  -- Place signs for each mark
-  for _, mark in ipairs(all_marks) do
-    -- Extract the character from 'x
+function M.place_all_marks(bufnr)
+  local marks = vim.list_extend(vim.fn.getmarklist(), vim.fn.getmarklist(bufnr))
+  for _, mark in ipairs(marks) do
     local mark_char = mark.mark:sub(2, 2)
 
-    if mark_char:match("[a-zA-Z]") then
-      vim.fn.sign_place(mark_char:byte(), M.config.group, M.config.name_prefix .. mark_char, bufnr, {
+    if mark_char:match("[A-Za-z]") and mark.pos[1] == bufnr then
+      vim.fn.sign_place(mark_char:byte(), M.config.sign_group, M.config.name_prefix .. mark_char, mark.pos[1], {
         lnum = mark.pos[2],
         priority = M.config.priority,
       })
     end
   end
-end
-
-function M.delete_mark(mark)
-  local bufnr = vim.api.nvim_get_current_buf()
-  vim.fn.sign_unplace(M.config.group, { buffer = bufnr, id = mark:byte() })
-  vim.api.nvim_buf_del_mark(bufnr, mark)
-end
-
-function M.delete_all_marks()
-  local bufnr = vim.api.nvim_get_current_buf()
-  vim.fn.sign_unplace(M.config.group, { buffer = bufnr })
-  vim.cmd("delmarks A-Za-z")
 end
 
 function M.setup(user_config)
@@ -102,29 +86,43 @@ function M.setup(user_config)
     })
   end
 
-  local augroup = vim.api.nvim_create_augroup(M.config.group, { clear = true })
+  local augroup = vim.api.nvim_create_augroup(M.config.sign_group, { clear = true })
 
+  -- Render all marks in a given buffer
   vim.api.nvim_create_autocmd("BufWinEnter", {
     group = augroup,
-    callback = function(event)
-      M.render_all_marks(event.buf)
+    callback = function(ctx)
+      if not vim.bo[ctx.buf].buflisted then
+        return
+      end
+
+      -- The MarkSet autocmd uses sign_unplace to remove a global mark from an
+      -- existing buffer when it's set somewhere else, so we only need this
+      -- autocmd to trigger on first open
+      if not vim.b.marks_placed then
+        M.place_all_marks(ctx.buf)
+        vim.b.marks_placed = true
+      end
     end,
   })
 
   vim.api.nvim_create_autocmd("MarkSet", {
     group = augroup,
     callback = function(event)
-      M.render_mark(event.buf, event.data.name, event.data.line)
+      M.place_mark(event.buf, event.data.name, event.data.line)
     end,
   })
 
   vim.keymap.set("n", "dm", function()
     local mark = vim.fn.getcharstr()
-    M.delete_mark(mark)
+    -- This triggers MarkSet with an lnum and col of 0, and the autocmd handles
+    -- the sign deletion
+    vim.api.nvim_buf_del_mark(0, mark)
   end, { desc = "Delete mark" })
 
   vim.keymap.set("n", "dM", function()
-    M.delete_all_marks()
+    vim.fn.sign_unplace(M.config.sign_group)
+    vim.cmd("delmarks a-zA-Z")
   end, { desc = "Delete all marks" })
 end
 
