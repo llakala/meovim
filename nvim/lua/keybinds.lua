@@ -20,33 +20,6 @@ vim.keymap.set("n", "]e", function()
   vim.diagnostic.jump({ count = 1, severity = ERROR })
 end, { desc = "Next error" })
 
--- Yank contents of given register
--- Some highlists:
--- y"% for current filename
--- y": for last command
--- y"/ for last search
--- y". for last inserted test
--- y"=sin(3.14) for your mathematical needs
-vim.keymap.set("n", 'y"', function()
-  local prompt = vim.fn.getcharstr()
-  local contents
-  -- Run expression and evaluate it
-  if prompt == "=" then
-    local expr = vim.fn.input({ prompt = "=", completion = "expression" })
-    local unsplit_output = vim.fn.eval(expr)
-    if type(unsplit_output) ~= "string" then
-      contents = unsplit_output
-    else
-      local split_output = vim.split(unsplit_output, "\n")
-      contents = #split_output == 1 and split_output[1] or unsplit_output
-    end
-  else
-    contents = vim.fn.keytrans(vim.fn.getreg(prompt))
-  end
-  vim.print("Setting register '" .. vim.v.register .. "' to '" .. contents .. "'")
-  vim.fn.setreg(vim.v.register, contents)
-end)
-
 -- Use blackhole register for all editing keymaps
 for _, mode in pairs({ "x", "n" }) do
   for _, lhs in pairs({ "c", "C", "d", "D", "s", "S", "x", "X" }) do
@@ -95,18 +68,6 @@ vim.keymap.set({ "n", "x" }, "H", function()
   end
   return (top - 1) .. "G"
 end, { expr = true })
-
--- Same idea as above, so 3: runs the command on the next 3 lines
--- useful for substituting without needing visual mode
-vim.keymap.set("n", ":", function()
-  local expr
-  if vim.v.count == 0 then
-    expr = ":"
-  else
-    expr = ":.,.+" .. vim.v.count
-  end
-  vim.api.nvim_feedkeys(expr, "n", true)
-end, { nowait = true })
 
 -- Single-key macro recording. I recommend using Q to execute the macro rather
 -- than @q
