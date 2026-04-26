@@ -23,20 +23,14 @@ function M.place_mark(bufnr, mark, lnum)
     if lnum == 0 then
       return
     end
-    vim.fn.sign_place(id, M.config.sign_group, name, bufnr, {
-      lnum = lnum,
-      priority = M.config.priority,
-    })
+    vim.fn.sign_place(id, M.config.sign_group, name, bufnr, { lnum = lnum })
   elseif mark:match("[a-z]") then
     -- Only unplace marks with this label in the current buffer
     vim.fn.sign_unplace(M.config.sign_group, { id = id, buffer = bufnr })
     if lnum == 0 then
       return
     end
-    vim.fn.sign_place(id, M.config.sign_group, name, bufnr, {
-      lnum = lnum,
-      priority = M.config.priority,
-    })
+    vim.fn.sign_place(id, M.config.sign_group, name, bufnr, { lnum = lnum })
   end
 end
 
@@ -46,10 +40,13 @@ function M.place_all_marks(bufnr)
     local mark_char = mark.mark:sub(2, 2)
 
     if mark_char:match("[A-Za-z]") and mark.pos[1] == bufnr then
-      vim.fn.sign_place(mark_char:byte(), M.config.sign_group, M.config.name_prefix .. mark_char, mark.pos[1], {
-        lnum = mark.pos[2],
-        priority = M.config.priority,
-      })
+      vim.fn.sign_place(
+        mark_char:byte(),
+        M.config.sign_group,
+        M.config.name_prefix .. mark_char,
+        mark.pos[1],
+        { lnum = mark.pos[2] }
+      )
     end
   end
 end
@@ -83,6 +80,7 @@ function M.setup(user_config)
       texthl = "MarkGutterUpper",
       linehl = "",
       numhl = "",
+      priority = M.config.priority,
     })
   end
 
