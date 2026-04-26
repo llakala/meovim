@@ -88,20 +88,18 @@ function M.setup(user_config)
 
   local augroup = vim.api.nvim_create_augroup(M.config.sign_group, { clear = true })
 
-  -- Render all marks in a given buffer
+  -- Render all marks in a given buffer. We use BufWinEnter with manual logic to
+  -- only trigger once, since I can't find an event that triggers both once AND
+  -- late enough for signcolumn rendering
   vim.api.nvim_create_autocmd("BufWinEnter", {
     group = augroup,
     callback = function(ctx)
-      if not vim.bo[ctx.buf].buflisted then
-        return
-      end
-
       -- The MarkSet autocmd uses sign_unplace to remove a global mark from an
       -- existing buffer when it's set somewhere else, so we only need this
       -- autocmd to trigger on first open
-      if not vim.b.marks_placed then
-        M.place_all_marks(ctx.buf)
+      if vim.bo[ctx.buf].buflisted and not vim.b.marks_placed then
         vim.b.marks_placed = true
+        M.place_all_marks(ctx.buf)
       end
     end,
   })
