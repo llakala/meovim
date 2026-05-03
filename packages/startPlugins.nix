@@ -27,7 +27,6 @@ in {
     # Neat features
     colorful-menu-nvim # Show completion types in color
     luasnip
-    nvim-highlight-colors # Highlight hex codes
     # mini-nvim stuff
     mini-ai
     mini-comment
@@ -38,4 +37,9 @@ in {
     # Dependencies
     nvim-web-devicons
     ;
+
+    # Since there's no license in the repo of this package, it defaults to
+    # unfree. I could add config.allowUnfree to the flake.nix, but I prefer to
+    # lie
+    nvim-highlight-colors = pkgs.vimPlugins.nvim-highlight-colors.overrideAttrs { meta.license = []; };
 }
