@@ -55,7 +55,7 @@ local function generate_matrix(_, snip)
 end
 
 return {
-  autoparse("sum", "sum_(i=${1:1})^(${2:N})"),
+  autoparse("sumt", "sum_(${1:i}=${2:0})^(${3:N})"),
   autoparse("ihat", "hat(i)"),
   autoparse("jhat", "hat(j)"),
   autoparse("khat", "hat(k)"),
