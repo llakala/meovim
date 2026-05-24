@@ -6,7 +6,7 @@
   src = fetchFromGitHub {
     owner = "barrettruth";
     repo = "canola.nvim";
-    rev = "4d32c1f28359ea4b86baa08cfcc3d81e202f4c56";
-    hash = "sha256-qmClgnZfMnXUcobZsPLeRTE5OUhyl6NWsCOo85h3QlQ=";
+    rev = "3838f1380e9aeea0597a80beb6ab28da73e38525";
+    hash = "sha256-iQh/QeKeELxNsWsWPO/GsNiYdXhZM7vv7Q0uQjO4sJE=";
   };
 }
