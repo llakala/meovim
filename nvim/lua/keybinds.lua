@@ -95,3 +95,26 @@ vim.keymap.set("n", "<A-j>", "<C-w>j")
 vim.keymap.set("n", "<A-k>", "<C-w>k")
 vim.keymap.set("n", "<A-h>", "<C-w>h")
 vim.keymap.set("n", "<A-l>", "<C-w>l")
+
+local shift = require("custom.shift")
+
+vim.keymap.set("n", ">", function()
+  return shift.operator(">")
+end, { expr = true })
+vim.keymap.set("n", "<", function()
+  return shift.operator("<")
+end, { expr = true })
+
+vim.keymap.set("n", ">>", function()
+  return shift.operator(">") .. "_"
+end, { expr = true })
+vim.keymap.set("n", "<<", function()
+  return shift.operator("<") .. "_"
+end, { expr = true })
+
+vim.keymap.set("n", ".", function()
+  if vim.go.operatorfunc == "v:lua.require'custom.shift'.operator_callback" then
+    shift.cache.pos = vim.api.nvim_win_get_cursor(0)
+  end
+  return "."
+end, { expr = true })
