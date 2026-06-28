@@ -68,17 +68,6 @@ vim.keymap.set({ "n", "x" }, "H", function()
   return (top - 1) .. "G"
 end, { expr = true })
 
--- Single-key macro recording. I recommend using Q to execute the macro rather
--- than @q
-vim.keymap.set({ "n", "x" }, "q", function()
-  if vim.fn.reg_recording() == "" then
-    return "qq"
-  else
-    return "q"
-  end
-end, { expr = true })
-vim.keymap.set("n", "zq", "q")
-
 vim.keymap.set("n", "g:", "q:")
 vim.keymap.set("n", "g/", "q/")
 vim.keymap.set("n", "g?", "q?")
