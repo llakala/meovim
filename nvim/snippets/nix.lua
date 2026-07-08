@@ -11,4 +11,9 @@ return {
     trig = "let",
     show_condition = not_in_comment,
   }, fmt("let\n  {}\nin ", { i(1) }), {}),
+
+  s({
+    trig = "inherit",
+    show_condition = not_in_comment,
+  }, fmt("inherit ({}) {};", { i(1), i(2) })),
 }
