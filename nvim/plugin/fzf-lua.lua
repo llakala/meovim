@@ -62,7 +62,7 @@ local function delete_buffer_action(selected, opts)
 end
 
 require("fzf-lua").setup({
-  ui_select = true,
+  ui_select = {},
   previewers = {
     builtin = {
       -- This breaks tex files, due to an error with `standalone.cls`! I hate
