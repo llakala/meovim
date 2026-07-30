@@ -2,10 +2,18 @@ local session = require("auto-session")
 local Lib = require("auto-session.lib")
 
 local arg_count = vim.fn.argc()
+local cwd = vim.uv.cwd()
+local repo_root = vim.g.repo_root
+
+vim.api.nvim_create_autocmd({ "StdinReadPre" }, {
+  callback = function()
+    vim.g.stdin_set = true
+  end,
+})
 
 session.setup({
   -- Only create a new session if you're at the root of a git repo
-  auto_create = vim.g.repo_root == vim.uv.cwd(),
+  auto_create = cwd == repo_root,
 
   legacy_cmds = false,
 
@@ -23,9 +31,11 @@ session.setup({
 
   no_restore_cmds = {
     function()
-      if vim.g.repo_root ~= nil and arg_count == 0 then
-        vim.cmd.cd(vim.g.repo_root) -- Neovim cd for stuff like oil
-        session.restore_session(vim.g.repo_root, { show_message = false })
+      if repo_root and arg_count == 0 and not vim.g.stdin_set then
+        if cwd ~= repo_root then
+          vim.cmd.cd(repo_root) -- Neovim cd for stuff like oil
+        end
+        session.restore_session(repo_root, { show_message = false })
       end
     end,
   },
