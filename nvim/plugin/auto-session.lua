@@ -15,6 +15,9 @@ session.setup({
   -- Only create a new session if you're at the root of a git repo
   auto_create = cwd == repo_root,
 
+  -- I handle restoring myself
+  auto_restore = false,
+
   legacy_cmds = false,
 
   -- Still save the session if a help file fails to load. Some help files are
@@ -31,7 +34,7 @@ session.setup({
 
   no_restore_cmds = {
     function()
-      if repo_root and arg_count == 0 and not vim.g.stdin_set then
+      if arg_count == 0 and not vim.g.stdin_set and vim.go.errorfile == "errors.err" then
         if cwd ~= repo_root then
           vim.cmd.cd(repo_root) -- Neovim cd for stuff like oil
         end
