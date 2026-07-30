@@ -1,65 +1,5 @@
 vim.env.FZF_DEFAULT_OPTS = nil
 local utils = require("fzf-lua.utils")
-local path = require("fzf-lua.path")
-
--- Return a list of the open bufnrs, sorted by how recently they were accessed
-local function get_sorted_buflist()
-  local info = vim.fn.getbufinfo()
-
-  -- Sort on how recently the buffer was used
-  info = vim.fn.sort(info, function(a, b)
-    return a.lastused < b.lastused
-  end)
-
-  -- Don't include the buffer if it was hidden or unlisted (with an exception
-  -- for helpfiles, which can be unlisted)
-  info = vim.tbl_filter(function(buf)
-    return vim.bo[buf.bufnr].filetype == "help" or buf.listed == 1
-  end, info)
-
-  -- Take the full info and turn it into just the bufnrs
-  local bufnrs = {}
-  for index, current in ipairs(info) do
-    bufnrs[index] = current.bufnr
-  end
-
-  return bufnrs
-end
-
--- Custom action that allows deleting the current buffer. If you do, it swaps to
--- the last buffer you used!
-local function delete_buffer_action(selected, opts)
-  for _, sel in ipairs(selected) do
-    local file = path.entry_to_file(sel, opts)
-    local buf_to_delete = file.bufnr
-
-    -- If the current file has unsaved changes, prompt the user to save
-    local is_dirty = utils.buffer_is_dirty(buf_to_delete, true, false)
-    local function save_dialog()
-      return utils.save_dialog(buf_to_delete)
-    end
-
-    if buf_to_delete and (not is_dirty or vim.api.nvim_buf_call(buf_to_delete, save_dialog)) then
-      local sorted_buflist = get_sorted_buflist()
-      local current_buf = sorted_buflist[1]
-
-      if buf_to_delete == current_buf then
-        local windows = vim.fn.win_findbuf(current_buf)
-
-        -- We need the buffer we accessed most recently after the current buf.
-        -- We can't use alternate file here, because the REAL current buf is
-        -- actually the picker - so we need to go two files back.
-        local new_buf = sorted_buflist[2]
-
-        for _, win in ipairs(windows) do
-          vim.api.nvim_win_set_buf(win, new_buf)
-        end
-      end
-
-      vim.api.nvim_buf_delete(buf_to_delete, { force = true })
-    end
-  end
-end
 
 require("fzf-lua").setup({
   ui_select = {},
@@ -100,24 +40,6 @@ require("fzf-lua").setup({
   },
 
   buffers = {
-    fzf_opts = {
-      ["--header-lines"] = false,
-    },
-
-    actions = {
-      ["ctrl-x"] = {
-        fn = delete_buffer_action,
-      },
-    },
-
-    keymap = {
-      fzf = {
-        -- Buffer picker shouldn't start on the current buffer
-        -- TODO: find a way to not trigger this when closing the current buffer
-        load = "pos(2)",
-      },
-    },
-
     -- We want to show helpfiles, but they're unlisted - so we allow all
     -- unlisted buffers, but filter them for only helpfiles
     show_unlisted = true,
