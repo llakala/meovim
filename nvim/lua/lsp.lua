@@ -20,6 +20,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.lsp.buf.rename()
     end, { desc = "Rename symbol" })
 
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
     vim.keymap.set("n", "grd", vim.diagnostic.setloclist)
     vim.keymap.set("n", "grD", vim.diagnostic.setqflist)
 
