@@ -103,17 +103,6 @@ require("fzf-lua").setup({
   },
 })
 
--- Replace default LSP bindings with fzf-lua equivalents We don't mess with
--- rename and code actions - just actions that use a picker
-vim.keymap.set("n", "grr", FzfLua.lsp_references)
-vim.keymap.set("n", "gri", FzfLua.lsp_definitions)
-vim.keymap.set("n", "grt", FzfLua.lsp_typedefs)
-vim.keymap.set("n", "gO", FzfLua.lsp_document_symbols)
-
--- Not a default bind, but good for some LSPs like gleam, where you want to see
--- diagnostics in other files
-vim.keymap.set("n", "grd", FzfLua.diagnostics_workspace)
-
 vim.keymap.set("n", "<leader>b", FzfLua.buffers, { desc = "Swap buffer, including hidden buffers" })
 
 vim.keymap.set("n", "<leader>f", FzfLua.files, { desc = "Add new file in project" })
