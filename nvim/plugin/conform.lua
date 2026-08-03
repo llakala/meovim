@@ -1,3 +1,14 @@
+local whitelisted_paths = {
+  "/Documents/repos/nixpkgs",
+}
+local blacklisted_paths = {
+  "/Documents/repos",
+  "/Documents/classes",
+  "/Documents/projects/nixos",
+  "/Documents/projects/meovim",
+  "/Documents/projects/menu",
+}
+
 require("conform").setup({
   -- Sometimes a formatter will fail. We should write to the file anyways
   notify_on_error = false,
@@ -41,20 +52,32 @@ require("conform").setup({
   format_on_save = nil,
 
   format_after_save = function(bufnr)
-    -- Be sure to use `vim.b`, not anything else like `vim.o`
-    if vim.b[bufnr].disable_autoformat then
-      return nil
-    end
-
-    local bufname = vim.api.nvim_buf_get_name(bufnr)
-
-    if bufname:match("/Documents/repos/*") or bufname:match("/Documents/classes/*") then
-      return nil
-    end
-
     -- Calls conform.format(). We put our options in default_format_opts
     -- above, so they're applied when calling :fmt too
-    return { async = true }
+    local success = { async = true }
+    local failure = nil
+
+    -- Priority 1: current buffer disabled
+    if vim.b[bufnr].disable_autoformat then
+      return failure
+    end
+
+    -- Priority 2 - current path whitelisted
+    local bufname = vim.api.nvim_buf_get_name(bufnr)
+    for _, pattern in ipairs(whitelisted_paths) do
+      if bufname:match(pattern) then
+        return success
+      end
+    end
+
+    -- Priority 3: current path blacklisted
+    for _, pattern in ipairs(blacklisted_paths) do
+      if bufname:match(pattern) then
+        return failure
+      end
+    end
+
+    return success
   end,
 })
 
