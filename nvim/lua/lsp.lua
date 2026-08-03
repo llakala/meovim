@@ -41,7 +41,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.lsp.buf.selection_range(vim.v.count1)
       end, args)
     elseif vim.treesitter.get_parser(nil, nil, { error = false }) then
-      vim.print("treeistter")
       vim.keymap.set("x", "<CR>", function()
         vim.treesitter.select("parent", vim.v.count1)
       end, args)
