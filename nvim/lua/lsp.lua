@@ -5,6 +5,8 @@ vim.keymap.del({ "n", "x" }, "gra")
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(event)
     local args = { buf = event.buf }
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+
     vim.lsp.inlay_hint.enable(true)
 
     vim.diagnostic.config({
@@ -29,5 +31,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "grD", vim.diagnostic.setqflist, args)
 
     vim.keymap.set({ "n", "x" }, "ga", vim.lsp.buf.code_action, args)
+
+    if client and client.server_capabilities.selectionRangeProvider then
+      -- Prefer lsp-based incremental selection if it exists
+      vim.keymap.set("x", "<CR>", function()
+        vim.lsp.buf.selection_range(vim.v.count1)
+      end, args)
+      vim.keymap.set("x", "<BS>", function()
+        vim.lsp.buf.selection_range(vim.v.count1)
+      end, args)
+    elseif vim.treesitter.get_parser(nil, nil, { error = false }) then
+      vim.print("treeistter")
+      vim.keymap.set("x", "<CR>", function()
+        vim.treesitter.select("parent", vim.v.count1)
+      end, args)
+      vim.keymap.set("x", "<BS>", function()
+        vim.treesitter.select("child", vim.v.count1)
+      end, args)
+    end
   end,
 })
