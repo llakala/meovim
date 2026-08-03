@@ -6,7 +6,7 @@ vimPlugins.snacks-nvim.overrideAttrs {
   src = fetchFromGitHub {
     owner = "llakala";
     repo = "snacks.nvim";
-    rev = "47ca25afc8a3e0c86ce7f9fb8099a378f3fed12b";
-    hash = "sha256-7X2KeYWdrXDp9xL5ujXXqHlsMJUpOVsXqzrepYrn9Mk=";
+    rev = "81224281ac37f23bb8569e4fa941712fa9d7aae3";
+    hash = "sha256-6zwoUH7G/l/CueGEPL0wmWrOZMQKlOfiVl+JMpMfDW0=";
   };
 }
