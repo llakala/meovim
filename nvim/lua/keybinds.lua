@@ -1,6 +1,12 @@
 function cabbrev(alias, expanded)
-  local command = string.format("<c-r>=((getcmdtype()==':' && getcmdpos()==1) ? '%s' : '%s')<CR>", expanded, alias)
-  vim.cmd.cnoreabbrev(alias, command)
+  vim.keymap.set("ca", alias, function()
+    local cmdline = vim.fn.getcmdline()
+    if vim.fn.getcmdtype() == ":" and (cmdline == alias or cmdline == "'<,'>" .. alias) then
+      return expanded
+    else
+      return alias
+    end
+  end, { expr = true })
 end
 
 -- i<Esc> won't move the cursor at all, while a<Esc> will move the cursor
