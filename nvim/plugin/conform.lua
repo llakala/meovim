@@ -94,7 +94,7 @@ vim.api.nvim_create_user_command("Format", function(args)
   end
 
   require("conform").format({ range = range, async = true })
-end, { range = true })
+end, { range = true, bar = true })
 
 -- Fine, I'm not supposed to make custom commands that are lowercase
 -- I'll just abbreviate it. Happy?
