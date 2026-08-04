@@ -24,3 +24,5 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.treesitter.start()
   end,
 })
+
+require("fundo").setup()

@@ -7,6 +7,7 @@ in {
   canola-nvim = callPackage ./startPlugins/canola-nvim.nix {};
   canola-collection = callPackage ./startPlugins/canola-collection.nix {};
   mini-indentscope = callPackage ./startPlugins/mini-indentscope.nix {};
+  nvim-fundo = callPackage ./startPlugins/nvim-fundo.nix {};
   snacks-nvim = callPackage ./startPlugins/snacks-nvim.nix {};
   vim-nix = callPackage ./startPlugins/vim-nix.nix {};
 
@@ -36,6 +37,7 @@ in {
     tokyonight-nvim
     # Dependencies
     nvim-web-devicons
+    promise-async
     ;
 
     # Since there's no license in the repo of this package, it defaults to
