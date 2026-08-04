@@ -81,7 +81,7 @@ require("conform").setup({
   end,
 })
 
-vim.api.nvim_create_user_command("Fmt", function(args)
+vim.api.nvim_create_user_command("Format", function(args)
   local range = nil
 
   if args.count ~= -1 then
@@ -100,6 +100,6 @@ end, { range = true })
 -- I'll just abbreviate it. Happy?
 -- Called when auto-format is disabled for a language or folder,
 -- but we want to format it anyways
-cabbrev("fmt", "Fmt")
+cabbrev("fmt", "Format")
 
 vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
