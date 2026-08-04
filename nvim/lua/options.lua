@@ -9,15 +9,21 @@ o.backup = false
 o.writebackup = false
 o.undofile = true -- Persistent undo
 
-o.clipboard = "unnamedplus"
-o.hidden = false
-o.jumpoptions = "stack,view"
+-- According to Neovim example init, this helps performance
+vim.api.nvim_create_autocmd("UIEnter", {
+  callback = function()
+    vim.o.clipboard = "unnamedplus"
+  end,
+})
+
 g.mapleader = " "
 o.mouse = ""
 o.splitbelow = true
 o.splitright = true
 o.timeout = false
 o.virtualedit = "block"
+o.hidden = false
+o.confirm = true
 
 vim.opt.matchpairs:append("<:>") -- % goes between <>
 
