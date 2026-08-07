@@ -74,9 +74,9 @@ vim.keymap.set({ "n", "x" }, "H", function()
   return (top - 1) .. "G"
 end, { expr = true })
 
-vim.keymap.set("n", "g:", "q:")
-vim.keymap.set("n", "g/", "q/")
-vim.keymap.set("n", "g?", "q?")
+-- Prevents an annoying issue where <Leader><Esc> moves the character one to the
+-- right
+vim.keymap.set({ "n", "x" }, "<Space>", "<Nop>")
 
 -- Paste from selection clipboard
 vim.keymap.set("n", "gp", '"*p')
