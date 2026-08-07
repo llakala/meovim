@@ -13,15 +13,13 @@ require("globals/dynamic_indent").setup({ pattern = "*.md" })
 -- Enable synchronous treesitter parsing to prevent flashing
 vim.g._ts_force_sync_parsing = true
 
-local max_lines = 2500
 vim.api.nvim_create_autocmd("FileType", {
   pattern = vim.treesitter.language._complete(),
   group = vim.api.nvim_create_augroup("LoadTreesitter", {}),
-  callback = function(event)
-    if vim.api.nvim_buf_line_count(event.buf) > max_lines then
-      return
+  callback = function()
+    if not vim.b.disable_treesitter then
+      vim.treesitter.start()
     end
-    vim.treesitter.start()
   end,
 })
 
