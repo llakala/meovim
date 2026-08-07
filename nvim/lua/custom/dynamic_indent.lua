@@ -7,7 +7,7 @@ M.setup = function(opts)
     pattern = opts.pattern,
     group = vim.api.nvim_create_augroup("DynamicIndent", {}),
     callback = function()
-      local template = 'v:lua.require("globals/dynamic_indent").context_indent("%s")'
+      local template = 'v:lua.require("custom/dynamic_indent").context_indent("%s")'
       vim.bo.indentexpr = template:format(vim.bo.indentexpr)
     end,
   })

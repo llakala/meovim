@@ -8,7 +8,7 @@ require("rainbow-delimiters.setup").setup({
   },
 })
 
-require("globals/dynamic_indent").setup({ pattern = "*.md" })
+require("custom/dynamic_indent").setup({ pattern = "*.md" })
 
 -- Enable synchronous treesitter parsing to prevent flashing
 vim.g._ts_force_sync_parsing = true
