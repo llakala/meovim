@@ -5,7 +5,6 @@ local blacklisted_paths = {
   "/Documents/repos",
   "/Documents/classes",
   "/Documents/projects/nixos",
-  "/Documents/projects/meovim",
   "/Documents/projects/menu",
 }
 
