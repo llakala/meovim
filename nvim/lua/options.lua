@@ -22,6 +22,7 @@ o.splitbelow = true
 o.splitright = true
 o.timeout = false
 o.virtualedit = "block"
+vim.opt.jumpoptions:append("view")
 o.hidden = false
 o.confirm = true
 
