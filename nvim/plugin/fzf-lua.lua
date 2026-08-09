@@ -114,3 +114,7 @@ vim.keymap.set("n", "<leader>s", FzfLua.live_grep, { desc = "Search text in proj
 vim.keymap.set("n", "<leader>S", function()
   FzfLua.live_grep_native({ cwd = vim.fn.expand("%:p:h") })
 end, { desc = "Search text in current folder" })
+
+vim.keymap.set("n", "<leader>h", require("custom.hifiki").hire, {})
+vim.keymap.set("n", "<leader>u", require("custom.hifiki").fire, {})
+vim.keymap.set("n", "<leader>k", require("custom.hifiki").kill, {})
